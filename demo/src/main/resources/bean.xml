@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- no -->
+	<bean id="person" class="com.demo.main.Person" />
+	<bean id="customer" class="com.demo.main.Customer">
+		<property name="person" ref="person" />
+	</bean>
+	
+	<!-- byname -->
+	<bean id="agent" class="com.demo.main.Agent" autowire="byName" />
+	<bean id="address" class="com.demo.main.Address" >
+		<property name="fulladdress" value="dfsd fafdf sfsadf" />
+	</bean>
+	
+	<!-- byType -->
+	<bean id="personByType" class="com.demo.main.Person" autowire="byType" />
+	<bean id="invisible" class="com.demo.main.Ability" >
+		<property name="skill" value="Invisible" />
+	</bean>
+	
+	<!-- Constructor -->
+	<bean id="developer" class="com.demo.main.Developer" autowire="constructor" />
+	<bean id="language" class="com.demo.main.Language" >
+		<property name="name" value="Java" />
+	</bean>
+	
+	<!-- autodetect -->
+	
+	
+	
+</beans>
