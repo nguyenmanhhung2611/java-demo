@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tctav.demo.dao.IWeekly">
+
+<!-- 	<resultMap id="result" type="user"> -->
+<!--         <result property="id" column="id"/> -->
+<!--         <result property="name" column="name"/> -->
+<!--         <result property="standard" column="standard"/> -->
+<!--         <result property="age" column="age"/> -->
+<!--         <result property="sex" column="sex"/> -->
+<!--     </resultMap> -->
+
+	<select id="getWeeklySalaryWithEmployeeID" resultType="salary">
+		SELECT *
+		FROM tbl_weeklysalary
+		where (user_id = #{ID})
+	</select>
+
+	<insert id="insertSalary" parameterType="salary">
+		INSERT INTO tbl_weeklysalary
+		(user_id, basic_salary, worked_hour, gross_sale, commission_rate, gross_salary, net_salary, created_date, comment)
+		VALUES 
+		(#{userID},#{basicSalary},#{workedHour}, #{grossSale},#{commissionRate},#{grossSalary}, #{netSalary},#{createDate},#{comment})
+	</insert>
+
+	
+	<update id="updateByUserID" parameterType="salary">
+		UPDATE tbl_weeklysalary
+		SET basic_salary = #{basicSalary}, worked_hour = #{workedHour}, gross_sale = #{grossSale},
+		commission_rate = #{commissionRate}, gross_salary = #{grossSalary}, net_salary = #{netSalary},
+		created_date = #{createDate}, comment = #{comment}
+		WHERE (user_id = #{userID})
+	</update>
+
+</mapper>

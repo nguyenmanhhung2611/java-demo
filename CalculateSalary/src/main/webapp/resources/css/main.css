@@ -1,0 +1,281 @@
+/*------------------------------------------------------------------------------
+	CSS Settings
+------------------------------------------------------------------------------*/
+
+/*------------------------------------------------
+	Header
+------------------------------------------------*/
+div.header1 {
+	margin: 0px 0px 0px 0px;
+	padding: 0;
+	background-color:#000080;
+	float:left;
+	width:40%;
+	height:50px;
+	text-align:left;
+    display: table;
+}
+div.header2 {
+	margin: 0px 0px 0px 0px;
+	padding: 0;
+	background-color:#000080;
+	float:left;
+	width:38%;
+	height:50px;
+	text-align:right;
+
+	font-family: "Bodoni MT Black", "ÉÅÉCÉäÉI", Meiryo, sans-serif;
+	font-size:12px;
+	color:#ffffff;
+}
+div.header3 {
+	margin: 0px 0px 0px 0px;
+	padding: 0;
+	background-color:#000080;
+	float:left;
+	width:20%;
+	height:50px;
+	text-align:right;
+}
+div.header4 {
+	margin: 0px 0px 0px 0px;
+	padding: 0;
+	background-color:#000080;
+	float:left;
+	width:2%;
+	height:50px;
+	text-align:right;
+}
+
+/*------------------------------------------------
+	Footer
+------------------------------------------------*/
+div.hooter1 {
+	margin: 0px 0px 0px 0px;
+	padding: 0;
+	background-color:#000080;
+	float:left;
+	width:5%;
+	height:40px;
+	text-align:center;
+    display: table;
+}
+div.hooter2 {
+	margin: 0px 0px 0px 0px;
+	padding: 0;
+	background-color:#000080;
+	float:left;
+	width:90%;
+	height:40px;
+	text-align:left;
+    display: table;
+
+	font-family: "Bodoni MT Black", "ÉÅÉCÉäÉI", Meiryo, sans-serif;
+	font-size:12px;
+	color:#ffffff;
+}
+div.hooter3 {
+	margin: 0px 0px 0px 0px;
+	padding: 0;
+	background-color:#000080;
+	float:left;
+	width:5%;
+	height:40px;
+	text-align:center;
+    display: table;
+}
+
+/*------------------------------------------------
+	Main
+------------------------------------------------*/
+body {
+	margin: 0px 0px 0px 0px;
+	padding: 0;
+	background-color:#b0c4de;
+	font-size:12px;
+	font-family: "ÉqÉâÉMÉmäpÉS ProN W3", "Hiragino Kaku Gothic ProN", "ÉÅÉCÉäÉI", Meiryo, sans-serif;
+}
+
+h1 {
+	margin: 0px 0px 0px 0px;
+	padding: 0;
+	font-size:20px;
+	filter:Shadow(Color=#999999, Strength=2, Direction=135);
+	color:#ffffff;
+    display: table-cell;
+    vertical-align: middle;
+}
+h2 {
+	margin: 0px 0px 0px 0px;
+	padding: 0;
+	font-family: "Bodoni MT Black", "ÉÅÉCÉäÉI", Meiryo, sans-serif;
+	font-size:22px;
+	filter:Shadow(Color=#999999, Strength=2, Direction=135);
+	color:#ffff00;
+}
+h3 {
+	margin: 0px 0px 0px 0px;
+	padding: 0;
+	font-size:10px;
+	color:#ffffff;
+}
+h4 {
+	margin: 0px 0px 0px 0px;
+	padding: 0;
+	font-family: "Bodoni MT Black", "ÉÅÉCÉäÉI", Meiryo, sans-serif;
+	font-size:14px;
+	filter:Shadow(Color=#999999, Strength=2, Direction=135);
+	color:#ffffff;
+}
+
+div.contents {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+div.search_ptn1 {
+	margin:0 auto 0 auto;
+	float:left;
+	width:49%;
+}
+div.search_ptn2 {
+	margin:0 auto 0 auto;
+	float:left;
+	width:49%;
+}
+
+table.search_line{
+	width:100%;
+	border-collapse: collapse;
+	border-spacing:0;
+}
+
+/*------------------------------------------------
+	Table
+------------------------------------------------*/
+
+tr {
+	white-space: nowrap;
+	background-color:#CCCCCC;
+}
+
+th {
+	background-color:#6495ed;
+	white-space: nowrap;
+	color:#000000;
+}
+
+th.hissu {
+	background-color:#6495ed;
+	white-space: nowrap;
+	color:#ff0000;
+}
+
+th.gray {
+	background-color:#cccccc;
+	white-space: nowrap;
+	color:#000000;
+}
+
+th.bt{
+	border-top: 1px solid black;
+}
+th.bb{
+	border-bottom: 1px solid black;
+}
+th.bl{
+	border-left: 1px solid black;
+}
+th.br{
+	border-right: 1px solid black;
+}
+
+td {
+	background-color:#FFFFFF;
+	color:#000000;
+}
+
+td.bt{
+	border-top: 2px solid mediumaquamarine;
+}
+td.bb{
+	border-bottom: 2px solid mediumaquamarine;
+}
+td.bl{
+	border-left: 2px solid mediumaquamarine;
+}
+td.br{
+	border-right: 2px solid mediumaquamarine;
+}
+
+
+/* text align */
+td.l {text-align:left;}
+td.c {text-align:center;}
+td.r {text-align:right;}
+
+td.total {text-align:right;color:#0000FF;font-weight: bold;}
+
+/* text fore color */
+td.fkin {color:#0000FF;}			/* ã‡äz */
+td.ftime {color:#006400;}			/* éûä‘ */
+
+/* text backdound color */
+td.bwh {background-color:#FFFFFF}
+td.bcr {background-color:#FAFCB6}
+td.bgr {background-color:#99ff99}
+td.bpi {background-color:#FFECFF}
+td.bye {background-color:#FFFFB0}
+td.bsum {background-color:#D2ECD2}
+
+input.btn {
+	width:140px;
+	height:30px;
+	cursor:pointer;
+	font-family: "ÉqÉâÉMÉmäpÉS ProN W3", "Hiragino Kaku Gothic ProN", "ÉÅÉCÉäÉI", Meiryo, sans-serif;
+}
+
+div.view_money1 {
+	margin: 0px 0px 0px 0px;
+	padding: 0;
+	width:49%;
+	float:left;
+    display: table;
+	text-align:left;
+}
+div.view_money2 {
+	margin: 0px 0px 0px 0px;
+	padding: 0;
+	width:25%;
+	float:left;
+    display: table;
+	text-align:left;
+}
+div.view_money3 {
+	margin: 0px 0px 0px 0px;
+	padding: 0;
+	width:24%;
+	float:left;
+    display: table;
+	text-align:left;
+}
+
+div.view_kosu {
+	margin: 0px 0px 0px 0px;
+	padding: 0;
+	width:49%;
+	float:left;
+    display: table;
+	text-align:left;
+}
+
+div.view_haccyu {
+	margin: 0px 0px 0px 0px;
+	padding: 0;
+	width:49%;
+	float:left;
+    display: table;
+	text-align:left;
+}
+
+
