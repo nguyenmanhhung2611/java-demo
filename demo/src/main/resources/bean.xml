@@ -27,8 +27,7 @@
 		<property name="name" value="Java" />
 	</bean>
 	
-	<!-- autodetect -->
-	
+	<!-- autodetect : Constructor, byType -->
 	
 	
 </beans>

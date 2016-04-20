@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+	
+	<!-- Way 1 -->
+	<context:annotation-config />
+	
+	<!-- Way 2 -->
+	<!-- <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/> -->
+	
+	<!-- Spring Auto-Wiring Beans with @Autowired annotation -->
+	<bean id="CustomerBean" class="com.demo.main.autowire_annotation.Customer">
+		<property name="action" value="buy" />
+		<property name="type" value="1" />
+	</bean>
+
+	<bean id="PersonBean" class="com.demo.main.autowire_annotation.Person">
+		<property name="name" value="mkyong" />
+		<property name="address" value="address 123" />
+		<property name="age" value="28" />
+	</bean>
+	
+	<bean id="PersonBean2" class="com.demo.main.autowire_annotation.Person">
+		<property name="name" value="mkyong2" />
+		<property name="address" value="address 456" />
+		<property name="age" value="29" />
+	</bean>
+	
+</beans>
