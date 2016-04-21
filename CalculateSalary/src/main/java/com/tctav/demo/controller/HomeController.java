@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -62,10 +63,28 @@ public class HomeController {
 	}
 
 	
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	/*@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public @ResponseBody String logincheck(@RequestParam(value = "username") final String username,
 											@RequestParam(value = "password") final String password, Model model) {
 		User user = userService.authenticated(username, password);
+		String result = "";
+		if (null != user) {
+			model.addAttribute("user", user);
+			result = "loginOK";
+		} else {
+			result = "login";
+		}
+		return result;
+		
+	}*/
+	
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public @ResponseBody String logincheck (@ModelAttribute ("user") User u, Model model) {
+		
+		System.out.println(u.getUsername());		
+		System.out.println(u.getPassword());
+		
+		User user = userService.authenticated(u.getUsername(), u.getPassword());
 		String result = "";
 		if (null != user) {
 			model.addAttribute("user", user);
