@@ -1,0 +1,32 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="
+   http://www.springframework.org/schema/beans     
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+   
+     <bean id="customerInheritanceParrent" class="com.demo.spring.demoInheritance.Customer">
+   		<property name="action" value="action 1" />
+		<property name="type" value="1" />
+		<property name="country" value="country 1" />
+	</bean>
+	
+	<bean id="customer" parent="customerInheritanceParrent">
+		<property name="country" value="country 2" />
+		<property name="action" value="action 2" />
+		<property name="type" value="2" />
+	</bean>
+   
+   <bean id="customer2" parent="customerInheritanceParrent">
+		
+	</bean>
+
+
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+	
+   
+ 
+</beans>

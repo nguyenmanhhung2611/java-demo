@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- <beans xmlns="http://www.springframework.org/schema/beans" -->
+<!-- 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context" -->
+<!-- 	xsi:schemaLocation="http://www.springframework.org/schema/beans -->
+<!--     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd -->
+<!--     http://www.springframework.org/schema/context -->
+<!--      http://www.springframework.org/schema/context/spring-context.xsd "> -->
+     
+     
+     <beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:context="http://www.springframework.org/schema/context"
+xmlns:mvc="http://www.springframework.org/schema/mvc" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="
+    http://www.springframework.org/schema/beans     
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/context 
+    http://www.springframework.org/schema/context/spring-context-3.0.xsd
+    http://www.springframework.org/schema/mvc
+    http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+    
+<mvc:annotation-driven />
+     
+<!--  test  -->
+    <!--  <beans xmlns="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+    xmlns:p="http://www.springframework.org/schema/p"  
+    xmlns:context="http://www.springframework.org/schema/context"  
+    xsi:schemaLocation="http://www.springframework.org/schema/beans  
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd  
+        http://www.springframework.org/schema/context  
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd">-->
+        
+     
+	<context:component-scan base-package="com.demo.spring" />
+	
+	
+<!-- 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"> -->
+<!-- 		<property name="prefix" value="/WEB-INF/jsp/" /> -->
+<!-- 		<property name="suffix" value=".jsp" /> -->
+<!-- 	</bean>  -->
+
+
+
+<!-- inheritance -->
+<!-- 	<bean id="customerInheritanceParrent" class="com.demo.spring.demoInheritance.Customer1"> -->
+<!-- 		<property name="action" value="action 1" /> -->
+<!-- 		<property name="type" value="1" /> -->
+<!-- 		<property name="country" value="country 1" /> -->
+<!-- 	</bean> -->
+
+	<bean id="customer" class="com.demo.spring.demoInheritance.Customer1">
+		<property name="country" value="country 2" />
+		<property name="action" value="action 2" />
+		<property name="type" value="2" />
+	</bean>
+
+	<bean id="customer2" parent="customer"></bean>
+	
+	<!-- scop -->
+	<bean id="customerscop" class="com.demo.spring.scopes.Customer" scope="prototype"></bean>
+	
+<!-- 	<bean id="customerscop" class="com.demo.spring.scopes.Customer" > -->
+<!-- 		<property name="message" value="I am Tho"></property> -->
+<!-- 	</bean> -->
+	
+	
+	
+	
+	
+	<!-- tiles -->
+	
+	 <bean id="viewResolver"  
+        class="org.springframework.web.servlet.view.UrlBasedViewResolver">  
+        <property name="viewClass" value =" org.springframework.web.servlet.view.tiles2.TilesView " /> 
+    </bean>  
+    
+    <bean id="tilesConfigurer"  
+        class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">  
+        <property name="definitions">  
+            <list>  
+                <value>/WEB-INF/tiles.xml</value>  
+            </list>  
+        </property>  
+    </bean>  
+	
+
+    
+    <!-- bind your messages.properties -->
+	<bean class="org.springframework.context.support.ResourceBundleMessageSource"
+		id="messageSource">
+		<property name="basename" value="message" />
+	</bean>
+	
+	
+	
+	
+	
+	
+	
+	
+
+</beans>
