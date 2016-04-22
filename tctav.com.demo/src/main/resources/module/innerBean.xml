@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+	<!-- Spring inner bean examples -->
+	<!-- Closed function in Class Constructor -->
+<!-- 	<bean id="customerBean" class="tctav.com.demo.innerBean.Customer"> -->
+<!-- 		<property name="person" ref="personBean" /> -->
+<!-- 	</bean> -->
+	
+<!-- 	<bean id="personBean" class="tctav.com.demo.innerBean.Person"> -->
+<!-- 		<property name="name" value="mhnguyen" /> -->
+<!-- 		<property name="address" value="326 Vo Van Kiet" /> -->
+<!-- 		<property name="age" value="27"/> -->
+<!-- 	</bean> -->
+	
+	
+	<!-- Closed function in Class Constructor -->
+<!-- 	<bean id="customerBean" class="tctav.com.demo.innerBean.Customer"> -->
+<!-- 		<property name="person"> -->
+<!-- 			<bean class="tctav.com.demo.innerBean.Person"> -->
+<!-- 				<property name="name" value="mhnguyen" /> -->
+<!-- 				<property name="address" value="326 Vo Van Kiet" /> -->
+<!-- 				<property name="age" value="27"/> -->
+<!-- 			</bean> -->
+<!-- 		</property> -->
+<!-- 	</bean> -->
+	
+	
+	<!-- Open function in Class Constructor -->
+	<bean id="customerBean" class="tctav.com.demo.innerBean.Customer">
+		<constructor-arg>
+			<bean class="tctav.com.demo.innerBean.Person">
+				<property name="name" value="mhnguyen" />
+				<property name="address" value="326 Vo Van Kiet" />
+				<property name="age" value="27"/>
+			</bean>
+		</constructor-arg>
+	</bean>
+	
+</beans>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+	<!-- Farm -->
+	<bean id="dogBean" class="tctav.com.demo.farm.Dog" />
+	<bean id="catBean" class="tctav.com.demo.farm.Cat" />
+	<bean id="houseBean" class="tctav.com.demo.farm.House">
+		<property name="animal1" ref="dogBean" />
+		<property name="animal2" ref="catBean" />
+	</bean>
+	
+	
+	<!-- Difference XML -->
+<!-- 	<bean id="dogBean" class="tctav.com.demo.farm.Dog" /> -->
+<!-- 	<bean id="catBean" class="tctav.com.demo.farm.Cat" /> -->
+	
+<!-- 	<bean id="houseBean" class="tctav.com.demo.farm.House"> -->
+<!-- 		<property name="animal1"> -->
+<!-- 			<ref bean="dogBean" /> -->
+<!-- 		</property> -->
+<!-- 		<property name="animal2"> -->
+<!-- 			<ref bean="catBean" /> -->
+<!-- 		</property> -->
+<!-- 	</bean> -->
+	
+	<!-- Same as XML -->
+<!-- 	<bean id="dogBean" class="tctav.com.demo.farm.Dog" /> -->
+<!-- 	<bean id="catBean" class="tctav.com.demo.farm.Cat" /> -->
+	
+<!-- 	<bean id="houseBean" class="tctav.com.demo.farm.House"> -->
+<!-- 		<property name="animal1"> -->
+<!-- 			<ref local="dogBean" /> -->
+<!-- 		</property> -->
+<!-- 		<property name="animal2"> -->
+<!-- 			<ref local="catBean" /> -->
+<!-- 		</property> -->
+<!-- 	</bean> -->
+	
+</beans>
