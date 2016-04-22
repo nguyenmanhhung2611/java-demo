@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:p="http://www.springframework.org/schema/p"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+	<!-- Inject value in properties -->
+	<!-- 1. Normal way -->
+	<bean id="FileNameGenerator1" class="tctav.com.demo.model.FileNameGenerator">
+		<property name="name">
+			<value>mhnguyen1</value>
+		</property>
+		<property name="type">
+			<value>txt</value>
+		</property>
+	</bean>
+	
+	<!-- 2. Shortcut -->
+	<bean id="FileNameGenerator2" class="tctav.com.demo.model.FileNameGenerator">
+		<property name="name" value="mhnguyen2" />
+		<property name="type" value="exe" />
+	</bean>
+	
+	<!-- 3. "p" schema -->
+	<bean id="FileNameGenerator3" class="tctav.com.demo.model.FileNameGenerator" p:name="mhnguyen3" p:type="pdf" />
+	
+</beans>

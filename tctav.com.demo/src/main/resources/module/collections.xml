@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+	<bean id="personBean" class="ctcav.com.demo.collections.Person">
+		<property name="name" value="mhnguyen" />
+		<property name="address" value="326 Vo Van Kiet" />
+		<property name="age" value="27" />
+	</bean>
+
+	<bean id="customercollections" class="ctcav.com.demo.collections.CustomerCollections">
+		<!-- java.util.List -->
+		<property name="lists">
+			<list> <!-- value-type="java.lang.String" -->
+				<value>1</value>
+				<ref bean="personBean"/>
+				<bean class="ctcav.com.demo.collections.Person">
+					<property name="name" value="mhnguyen2" />
+					<property name="address" value="123 Vo Van Kiet" />
+					<property name="age" value="28" />
+				</bean>
+			</list>
+		</property>
+		
+		<!-- java.util.Set -->
+		<property name="sets">
+			<set>
+				<value>1</value>
+				<ref bean="personBean"/>
+				<bean class="ctcav.com.demo.collections.Person">
+					<property name="name" value="mhnguyen2" />
+					<property name="address" value="123 Vo Van Kiet" />
+					<property name="age" value="28" />
+				</bean>
+			</set>
+		</property>
+		
+		<!-- java.util.Map -->
+		<property name="maps">
+			<map>
+				<entry key="key 1" value="value 1"/>
+				<entry key="key 2" value="value 2"/>
+				<entry key="key 3">
+					<ref bean="personBean"/>
+				</entry>
+				<entry key="key 4">
+					<bean class="ctcav.com.demo.collections.Person">
+						<property name="name" value="mhnguyen2" />
+						<property name="address" value="123 Vo Van Kiet" />
+						<property name="age" value="28" />
+					</bean>
+				</entry>
+			</map>
+		</property>
+		
+		<!-- java.util.properties -->
+		<property name="pros">
+			<props>
+				<prop key="admin">123</prop>
+				<prop key="support">456</prop>
+			</props>
+		</property>
+		
+	</bean>
+	
+	
+	<!-- Example in web -->
+	<!-- ArrayList -->
+	<bean id="arrayListBean" class="java.util.ArrayList">
+		<constructor-arg>
+			<list>
+				<value>1</value>
+				<value>2</value>
+				<value>3</value>
+			</list>
+		</constructor-arg>
+	</bean>
+	
+	<!-- HashMap -->
+	<bean id="hasmapBean" class="java.util.HashMap">
+		<constructor-arg>
+			<map key-type="java.lang.Integer" value-type="java.lang.String">
+				<entry key="1" value="value 1"/>
+				<entry key="2" value="value 2"/>
+				<entry key="3" value="value 3"/>
+			</map>
+		</constructor-arg>
+	</bean>
+	
+</beans>
