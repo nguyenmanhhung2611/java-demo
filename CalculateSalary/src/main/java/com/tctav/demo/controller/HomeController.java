@@ -95,6 +95,9 @@ public class HomeController {
 		return result;
 		
 	}
+	
+	
+	
 
 	@RequestMapping(value = "/homeEmployee", method = RequestMethod.GET)
 	public String homeEmployee(Model model) {
