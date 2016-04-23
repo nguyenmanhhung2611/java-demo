@@ -4,7 +4,13 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
 	<!-- no -->
-	<bean id="person" class="com.demo.main.Person" />
+	<bean id="person" class="com.demo.main.Person">
+		<property name="ability">
+			<bean class="com.demo.main.Ability">
+				<property name="skill" value="adfsfsa" />
+			</bean>
+		</property>
+	</bean>
 	<bean id="customer" class="com.demo.main.Customer">
 		<property name="person" ref="person" />
 	</bean>
