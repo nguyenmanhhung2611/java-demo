@@ -52,4 +52,20 @@ public class HomeController {
 		return "home";
 	}
 	
+	@RequestMapping(value = "/{number}/{name}", method = RequestMethod.GET)
+	public String home2(Locale locale, Model model, @PathVariable String number, @PathVariable String name) {
+		logger.info("Welcome home! The client locale is {}.", locale);
+		
+		Date date = new Date();
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+		
+		String formattedDate = dateFormat.format(date);
+		
+		model.addAttribute("serverTime", formattedDate );
+		model.addAttribute("number", number);
+		model.addAttribute("name", name);
+		
+		return "home";
+	}	
+	
 }

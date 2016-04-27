@@ -12,7 +12,7 @@
 </h1>
 
 <P>  The time on the server is ${serverTime}. </P>
-<p><customTag:convertText number="${number}" />
+<p><customTag:convertText number="${number}" name ="${name} }"/>
 <p><customTag:outPutCurrentText>This is demo custom tag</customTag:outPutCurrentText>
 </body>
 </html>
