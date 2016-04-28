@@ -1,0 +1,281 @@
+== URL =============
+http://pana.com:8080/buy/house/12/detail/H002990185/
+
+*** == ***
+applicationContext.xml
+=====================
+  <!-- Database -->
+  <bean id="mysqlDS" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
+    <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+    <property name="url" value="jdbc:mysql://localhost:3306/panasonicdb?characterEncoding=ms932&amp;zeroDateTimeBehavior=convertToNull&amp;profileSQL=false&amp;traceProtocol=false" />
+    <property name="username" value="root" />
+    <property name="password" value="root" />
+  </bean>
+
+  <bean id="requestScopeDS" class="jp.co.transcosmos.dm3.transaction.RequestScopeDataSource" scope="request">
+    <property name="dataSource" ref="mysqlDS"/>
+    <property name="commitOrRollbackOnDestruct" value="true"/>
+    <aop:scoped-proxy/>
+  </bean>
+  
+  <!-- DAO -->
+  <bean id="partSrchMstDAO" class="jp.co.transcosmos.dm3.dao.ReflectingDAO">
+    <property name="dataSource" ref="requestScopeDS"/>
+    <property name="valueObjectClassName" value="jp.co.transcosmos.dm3.core.vo.PartSrchMst"/>
+    <property name="pkFields" value="partSrchCd"/>
+    <property name="emptyStringsToNull" value="true"/>
+    <property name="useAutonumberColumns" value="false"/>
+  </bean>
+  
+  <bean id="partKindInfoDAO" class="jp.co.transcosmos.dm3.dao.ReflectingDAO">
+    <property name="dataSource" ref="requestScopeDS"/>
+    <property name="valueObjectClassName" value="jp.co.transcosmos.dm3.corePana.vo.PartKindInfo"/>
+    <property name="emptyStringsToNull" value="true" />
+    <property name="useAutonumberColumns" value="false"/>
+  </bean>
+  
+  <bean id="partSrchMstListDAO" class="jp.co.transcosmos.dm3.dao.StarJoinDAO">
+    <property name="dataSource" ref="requestScopeDS"/>
+    <property name="mainDAO" ref="partSrchMstDAO"/>
+    <property name="mainAlias" value="partSrchMst"/>
+    <property name="childDAOs">
+      <list>
+        <bean class="jp.co.transcosmos.dm3.dao.StarJoinDAODescriptor">
+          <property name="dao" ref="partKindInfoDAO"/>
+          <property name="alias" value="partKindInfo"/>
+          <property name="conditions">
+            <bean class="jp.co.transcosmos.dm3.dao.JoinCondition">
+              <property name="field1" value="partSrchCd"/>
+              <property name="field2" value="partSrchCd"/>
+            <property name="joinType" value="INNER JOIN"/>
+            </bean>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+  <bean id="adminLoginInfoDAO" class="jp.co.transcosmos.dm3.dao.ReflectingDAO">
+    <property name="dataSource" ref="requestScopeDS"/>
+    <property name="valueObjectClassName" value="jp.co.transcosmos.dm3.core.vo.AdminLoginInfo"/>
+    <property name="sequenceNextvalExpression" value="SELECT CONCAT('A', LPAD(admin_user_id_nextval(), 19, '0'))"/>
+    <property name="pkFields" value="adminUserId"/>
+    <property name="emptyStringsToNull" value="true"/>
+    <property name="useAutonumberColumns" value="false"/>
+  </bean>
+  
+  <bean id="reformManager" class="jp.co.transcosmos.dm3.corePana.model.reform.ReformPartThumbnailProxy">
+    <property name="reformManager" ref="reformManagerTarget" />
+    <property name="thumbnailCreator" ref="thumbnailCreator" />
+    <property name="commonParameters" ref="commonParameters" />
+  </bean>
+  
+  <bean id="housingDtlInfoDAO" class="jp.co.transcosmos.dm3.dao.ReflectingDAO">
+    <property name="dataSource" ref="requestScopeDS"/>
+    <property name="valueObjectClassName" value="jp.co.transcosmos.dm3.core.vo.HousingDtlInfo"/>
+    <property name="pkFields" value="sysHousingCd"/>
+    <property name="emptyStringsToNull" value="true"/>
+    <property name="useAutonumberColumns" value="false"/>
+  </bean>
+  
+  <bean id="housingInspectionDAO" class="jp.co.transcosmos.dm3.dao.ReflectingDAO">
+    <property name="dataSource" ref="requestScopeDS"/>
+    <property name="valueObjectClassName" value="jp.co.transcosmos.dm3.corePana.vo.HousingInspection"/>
+    <property name="pkFields" value="sysHousingCd"/>
+    <property name="emptyStringsToNull" value="true"/>
+    <property name="useAutonumberColumns" value="false"/>
+  </bean>
+  
+  <bean id="housingInfoDAO" class="jp.co.transcosmos.dm3.dao.ReflectingDAO">
+    <property name="dataSource" ref="requestScopeDS"/>
+    <property name="valueObjectClassName" value="jp.co.transcosmos.dm3.corePana.vo.HousingInfo"/>
+    <property name="sequenceNextvalExpression" value="SELECT CONCAT('H', LPAD(sys_housing_cd_nextval(), 6, '0'), LPAD(TRUNCATE(RAND()*1000,0),3, '0'))"/>
+    <property name="pkFields" value="sysHousingCd"/>
+    <property name="emptyStringsToNull" value="true"/>
+    <property name="useAutonumberColumns" value="false"/>
+  </bean>
+  
+  <bean id="housingStatusInfoDAO" class="jp.co.transcosmos.dm3.dao.ReflectingDAO">
+    <property name="dataSource" ref="requestScopeDS"/>
+    <property name="valueObjectClassName" value="jp.co.transcosmos.dm3.corePana.vo.HousingStatusInfo"/>
+    <property name="pkFields" value="sysHousingCd"/>
+    <property name="emptyStringsToNull" value="true"/>
+    <property name="useAutonumberColumns" value="false"/>
+  </bean>
+  
+  <bean id="housingMainJoinDAO" class="jp.co.transcosmos.dm3.dao.StarJoinDAO">
+    <property name="dataSource" ref="requestScopeDS"/>
+    <property name="mainDAO" ref="housingInfoDAO"/>
+    <property name="mainAlias" value="housingInfo"/>
+    <property name="childDAOs">
+      <list>
+        <bean class="jp.co.transcosmos.dm3.dao.StarJoinDAODescriptor">
+          <property name="dao" ref="housingDtlInfoDAO"/>
+          <property name="alias" value="housingDtlInfo"/>
+          <property name="conditions">
+            <bean class="jp.co.transcosmos.dm3.dao.JoinCondition">
+              <property name="field1" value="sysHousingCd"/>
+              <property name="field2" value="sysHousingCd"/>
+              <property name="joinType" value="LEFT JOIN"/>
+            </bean>
+          </property>
+        </bean>
+        <bean class="jp.co.transcosmos.dm3.dao.StarJoinDAODescriptor">
+          <property name="dao" ref="housingStatusInfoDAO"/>
+          <property name="alias" value="housingStatusInfo"/>
+          <property name="conditions">
+            <bean class="jp.co.transcosmos.dm3.dao.JoinCondition">
+              <property name="field1" value="sysHousingCd"/>
+              <property name="field2" value="sysHousingCd"/>
+              <property name="joinType" value="LEFT JOIN"/>
+            </bean>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+  
+  <bean id="recentlyInfoDAO" class="jp.co.transcosmos.dm3.dao.ReflectingDAO">
+    <property name="dataSource" ref="requestScopeDS" />
+    <property name="valueObjectClassName"
+      value="jp.co.transcosmos.dm3.corePana.vo.RecentlyInfo" />
+    <property name="pkFields" value="sysHousingCd,userId" />
+    <property name="emptyStringsToNull" value="true" />
+    <property name="useAutonumberColumns" value="false"/>
+  </bean>
+  
+  <!-- Model -->
+  <bean id="panaHousingManagerTarget" class="jp.co.transcosmos.dm3.corePana.model.housing.PanaHousingManageImpl">
+    <property name="valueObjectFactory" ref="valueObjectFactory" />
+    <property name="buildingManager" ref="buildingManager" />
+    <property name="reformManager" ref="reformManager" />
+    <property name="housingInfoDAO" ref="housingInfoDAO" />
+    <property name="housingDtlInfoDAO" ref="housingDtlInfoDAO" />
+    <property name="housingInspectionDAO" ref="housingInspectionDAO" />
+    <property name="housingStatusInfoDAO" ref="housingStatusInfoDAO" />
+    <property name="buildingDtlInfoDAO" ref="buildingDtlInfoDAO" />
+    <property name="housingImageInfoDAO" ref="housingImageInfoDAO" />
+    <property name="housingExtInfoDAO" ref="housingExtInfoDAO" />
+    <property name="housingMainJoinDAO" ref="housingMainJoinDAO" />
+    <property name="panaSearchHousingDAO" ref="panaSearchHousingDAO" />
+    <property name="equipListDAO" ref="equipListDAO" />
+    <property name="housingEquipInfoDAO" ref="housingEquipInfoDAO" />
+    <property name="buildingInfoDAO" ref="buildingInfoDAO" />
+    <property name="housingEquipListDAO" ref="housingEquipListDAO" />
+    <property name="adminLoginInfoDAO" ref="adminLoginInfoDAO" />
+    <property name="imgUtils" ref="imgUtils" />
+    <property name="commonParameters" ref="commonParameters" />
+  </bean>
+  
+  <!-- Service -->
+  <bean id="panaHousingManager" class="jp.co.transcosmos.dm3.corePana.model.housing.PanaHousingPartThumbnailProxy">
+    <property name="housingManage" ref="panaHousingManagerTarget" />
+    <property name="partSrchMstListDAO" ref="partSrchMstListDAO" />
+    <property name="reformManage" ref="reformManager" />
+    <property name="housingImageInfoDAO" ref="housingImageInfoDAO" />
+    <property name="commonParameters" ref="commonParameters" />
+    <property name="thumbnailCreator" ref="thumbnailCreator" />
+    <property name="partCreateors">
+      <list>
+        <ref bean="equipPartCreator" />
+        <ref bean="panaHousingPartCreator" />
+        <ref bean="panaImagePartCreator" />
+      </list>
+    </property>
+  </bean>
+
+  <bean id="codeLookupManager" class="jp.co.transcosmos.dm3.lookup.CodeLookupManager"/>
+  
+  <bean id="recentlyInfoManage" class="jp.co.transcosmos.dm3.corePana.model.recentlyInfo.RecentlyInfoManageImpl">
+    <property name="recentlyInfoHousingListDAO" ref="recentlyInfoHousingListDAO" />
+    <property name="recentlyInfoDAO" ref="recentlyInfoDAO" />
+    <property name="housingInfoDAO" ref="housingInfoDAO" />
+    <property name="housingStatusInfoDAO" ref="housingStatusInfoDAO" />
+    <property name="panaHousingManage" ref="panaHousingManager" />
+    <property name="valueObjectFactory" ref="valueObjectFactory" />
+    <property name="commonParameters" ref="commonParameters"/>
+  </bean>
+  
+*** == ***
+housingDetailed.xml
+=====================
+<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+	<property name="urlPattern"
+		value="/buy/mansion/###prefCd###/detail/###sysHousingCd###/" />
+	<property name="defaultCommandName" value="housingDetailedCommand" />
+	<property name="defaultViewName"
+		value="/WEB-INF/jsp/front/housingDetailed/HousingDetailedInit.jsp" />
+	<property name="namedViews">
+		<props>
+			<prop key="404">/WEB-INF/jsp/front/common/404.jsp</prop>
+		</props>
+	</property>
+</bean>
+
+<bean id="housingDetailedCommand"
+	class="jp.co.transcosmos.dm3.webFront.housingDetailed.command.HousingDetailedCommand"
+	scope="prototype">
+	<property name="mode" value="detail" />
+	<property name="panaHousingManage" ref="panaHousingManager" />
+	<property name="commonParameters" ref="commonParameters" />
+	<property name="recentlyInfoManage" ref="recentlyInfoManage" />
+	<property name="codeLookupManager" ref="codeLookupManager" />
+	<property name="panaFileUtil" ref="fileUtil" />
+	<property name="panamCommonManager" ref="panamCommonManager" />
+</bean>
+
+*** == ***
+webFrontPana\jp.co.transcosmos.dm3.webFront.housingDetailed.command.HousingDetailedCommand.java
+=====================
+
+jp.co.transcosmos.dm3.corePana.model.housing.PanaHousingPartThumbnailProxy.java
+public Housing searchHousingPk(String sysHousingCd) throws Exception {
+	return this.housingManage.searchHousingPk(sysHousingCd);
+}
+
+~~~
+webCorePana\jp.co.transcosmos.dm3.corePana.model.housing\PanaHousingManageImpl.java
+public Housing searchHousingPk(String sysHousingCd) throws Exception {
+	return searchHousingPk(sysHousingCd, false);
+}
+->
+public Housing searchHousingPk(String sysHousingCd, boolean full) throws Exception {
+		PanaHousing panaHousing = (PanaHousing) super.searchHousingPk(sysHousingCd, full);
+		if (panaHousing != null) {
+			panaHousing.setHousingInspections(this.searchHousingInspection(sysHousingCd));
+->
+public List<HousingInspection> searchHousingInspection(String sysHousingCd) throws Exception {
+	DAOCriteria criteria = new DAOCriteria();
+	criteria.addWhereClause("sysHousingCd", sysHousingCd);
+	List<HousingInspection> housingInspection = this.housingInspectionDAO.selectByFilter(criteria);
+	return housingInspection;
+}
+
+
+*** == ***
+webCorePana\WEB-INF\jsp\include\housingDetailed\housingInfoForm.jsh
+=====================
+
+*** == SQL == ***
+=====================
+SELECT * FROM panasonicdb.recently_info
+WHERE panasonicdb.recently_info.user_id='C0000000000000001466';
+
+SELECT * FROM panasonicdb.housing_info
+WHERE panasonicdb.housing_info.sys_housing_cd = 'H001840365';
+
+SELECT * FROM panasonicdb.housing_status_info
+WHERE panasonicdb.housing_status_info.sys_housing_cd = 'H001840365';
+
+...
+
+*** == UI == ***
+=====================
+Display for Property Name H001840365
+recentlyInfoList -> housingInfo -> value1
+
+private void execute(PanaHousingDetailed outPutForm, HttpServletRequest request, HttpServletResponse response) throws Exception, NotFoundException {
+	detailedMap.put("recentlyInfoList", recentlyInfoList);
+
+
+

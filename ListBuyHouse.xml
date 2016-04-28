@@ -1,0 +1,276 @@
+== URL =============
+http://pana.com:8080/buy/house/11/list/
+
+*** == ***
+applicationContext.xml
+=====================
+  <!-- Database -->
+  <bean id="mysqlDS" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
+    <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+    <property name="url" value="jdbc:mysql://localhost:3306/panasonicdb?characterEncoding=ms932&amp;zeroDateTimeBehavior=convertToNull&amp;profileSQL=false&amp;traceProtocol=false" />
+    <property name="username" value="root" />
+    <property name="password" value="root" />
+  </bean>
+
+  <bean id="requestScopeDS" class="jp.co.transcosmos.dm3.transaction.RequestScopeDataSource" scope="request">
+    <property name="dataSource" ref="mysqlDS"/>
+    <property name="commitOrRollbackOnDestruct" value="true"/>
+    <aop:scoped-proxy/>
+  </bean>
+  
+  <!-- DAO -->
+  <bean id="partSrchMstDAO" class="jp.co.transcosmos.dm3.dao.ReflectingDAO">
+    <property name="dataSource" ref="requestScopeDS"/>
+    <property name="valueObjectClassName" value="jp.co.transcosmos.dm3.core.vo.PartSrchMst"/>
+    <property name="pkFields" value="partSrchCd"/>
+    <property name="emptyStringsToNull" value="true"/>
+    <property name="useAutonumberColumns" value="false"/>
+  </bean>
+  
+  <bean id="partKindInfoDAO" class="jp.co.transcosmos.dm3.dao.ReflectingDAO">
+    <property name="dataSource" ref="requestScopeDS"/>
+    <property name="valueObjectClassName" value="jp.co.transcosmos.dm3.corePana.vo.PartKindInfo"/>
+    <property name="emptyStringsToNull" value="true" />
+    <property name="useAutonumberColumns" value="false"/>
+  </bean>
+  
+  <bean id="partSrchMstListDAO" class="jp.co.transcosmos.dm3.dao.StarJoinDAO">
+    <property name="dataSource" ref="requestScopeDS"/>
+    <property name="mainDAO" ref="partSrchMstDAO"/>
+    <property name="mainAlias" value="partSrchMst"/>
+    <property name="childDAOs">
+      <list>
+        <bean class="jp.co.transcosmos.dm3.dao.StarJoinDAODescriptor">
+          <property name="dao" ref="partKindInfoDAO"/>
+          <property name="alias" value="partKindInfo"/>
+          <property name="conditions">
+            <bean class="jp.co.transcosmos.dm3.dao.JoinCondition">
+              <property name="field1" value="partSrchCd"/>
+              <property name="field2" value="partSrchCd"/>
+            <property name="joinType" value="INNER JOIN"/>
+            </bean>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+  <bean id="adminLoginInfoDAO" class="jp.co.transcosmos.dm3.dao.ReflectingDAO">
+    <property name="dataSource" ref="requestScopeDS"/>
+    <property name="valueObjectClassName" value="jp.co.transcosmos.dm3.core.vo.AdminLoginInfo"/>
+    <property name="sequenceNextvalExpression" value="SELECT CONCAT('A', LPAD(admin_user_id_nextval(), 19, '0'))"/>
+    <property name="pkFields" value="adminUserId"/>
+    <property name="emptyStringsToNull" value="true"/>
+    <property name="useAutonumberColumns" value="false"/>
+  </bean>
+  
+  <bean id="reformManager" class="jp.co.transcosmos.dm3.corePana.model.reform.ReformPartThumbnailProxy">
+    <property name="reformManager" ref="reformManagerTarget" />
+    <property name="thumbnailCreator" ref="thumbnailCreator" />
+    <property name="commonParameters" ref="commonParameters" />
+  </bean>
+  
+  <!-- Model -->
+  <bean id="panaHousingManagerTarget" class="jp.co.transcosmos.dm3.corePana.model.housing.PanaHousingManageImpl">
+    <property name="valueObjectFactory" ref="valueObjectFactory" />
+    <property name="buildingManager" ref="buildingManager" />
+    <property name="reformManager" ref="reformManager" />
+    <property name="housingInfoDAO" ref="housingInfoDAO" />
+    <property name="housingDtlInfoDAO" ref="housingDtlInfoDAO" />
+    <property name="housingInspectionDAO" ref="housingInspectionDAO" />
+    <property name="housingStatusInfoDAO" ref="housingStatusInfoDAO" />
+    <property name="buildingDtlInfoDAO" ref="buildingDtlInfoDAO" />
+    <property name="housingImageInfoDAO" ref="housingImageInfoDAO" />
+    <property name="housingExtInfoDAO" ref="housingExtInfoDAO" />
+    <property name="housingMainJoinDAO" ref="housingMainJoinDAO" />
+    <property name="panaSearchHousingDAO" ref="panaSearchHousingDAO" />
+    <property name="equipListDAO" ref="equipListDAO" />
+    <property name="housingEquipInfoDAO" ref="housingEquipInfoDAO" />
+    <property name="buildingInfoDAO" ref="buildingInfoDAO" />
+    <property name="housingEquipListDAO" ref="housingEquipListDAO" />
+    <property name="adminLoginInfoDAO" ref="adminLoginInfoDAO" />
+    <property name="imgUtils" ref="imgUtils" />
+    <property name="commonParameters" ref="commonParameters" />
+  </bean>
+  
+  <!-- Service -->
+  <bean id="panaHousingManager" class="jp.co.transcosmos.dm3.corePana.model.housing.PanaHousingPartThumbnailProxy">
+    <property name="housingManage" ref="panaHousingManagerTarget" />
+    <property name="partSrchMstListDAO" ref="partSrchMstListDAO" />
+    <property name="reformManage" ref="reformManager" />
+    <property name="housingImageInfoDAO" ref="housingImageInfoDAO" />
+    <property name="commonParameters" ref="commonParameters" />
+    <property name="thumbnailCreator" ref="thumbnailCreator" />
+    <property name="partCreateors">
+      <list>
+        <ref bean="equipPartCreator" />
+        <ref bean="panaHousingPartCreator" />
+        <ref bean="panaImagePartCreator" />
+      </list>
+    </property>
+  </bean>
+
+  <bean id="codeLookupManager" class="jp.co.transcosmos.dm3.lookup.CodeLookupManager"/>
+  
+*** == ***
+housingListMation.xml
+=====================
+<bean id="housingListMatinoInitCommandHouse"
+	class="jp.co.transcosmos.dm3.webFront.housingListMation.command.HousingListMatinoInitCommand"
+	scope="prototype">
+	<property name="panaHousingManager" ref="panaHousingManager" />
+	<property name="codeLookupManager" ref="codeLookupManager" />
+	<property name="reformManager" ref="reformManager" />
+	<property name="panaCommonManage" ref="panamCommonManager" />
+	<property name="commonParameters" ref="commonParameters"/>
+	<property name="panaFileUtil" ref="fileUtil" />
+	<property name="buildingManager" ref="buildingManager" />
+
+	<property name="rowsPerPage" value="15"/>
+	<property name="housingKindCd" value="02" />
+</bean>
+
+
+
+<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+	<property name="urlPattern" value="/buy/house/###prefCd###/list/" />
+	<property name="defaultCommandName" value="housingListMatinoInitCommandHouse" />
+	<property name="defaultViewName" value="/WEB-INF/jsp/front/housingListMation/HousingListMationInit.jsp" />
+</bean>
+
+*** == ***
+jp.co.transcosmos.dm3.webFront.housingListMation.command.HousingListMatinoInitCommand.java
+=====================
+
+// Budget
+Iterator<String> priceIte = this.codeLookupManager.getKeysByLookup("price");
+
+mapping webFrontPana\code-loockup\housing.xml
+<bean class="jp.co.transcosmos.dm3.lookup.CodeLookupList">
+	<property name="codeLookupManager">
+		<ref bean="codeLookupManager" />
+	</property>
+	<property name="lookups">
+		<map>
+			<entry key="price">
+				<list>
+					<value>1:500</value>
+					<value>2:1000</value>
+					<value>3:2000</value>
+					<value>4:3000</value>
+					<value>5:4000</value>
+					<value>6:5000</value>
+					<value>7:6000</value>
+					<value>8:7000</value>
+					<value>9:8000</value>
+					<value>10:9000</value>
+					<value>11:10000</value>
+				</list>
+			</entry>
+		</map>
+	</property>
+</bean>
+
+applicationContext.xml
+<bean id="codeLookupManager" class="jp.co.transcosmos.dm3.lookup.CodeLookupManager"/>
+
+--
+int listSize = this.panaHousingManager.searchHousing(housingListMationForm);
+
+BuildingInfo buildingInfo = (BuildingInfo) housingListMationForm
+		.getVisibleRows().get(count).getBuilding()
+		.getBuildingInfo().getItems().get("buildingInfo");
+
+HousingInfo housingInfo = (HousingInfo) housingListMationForm
+		.getVisibleRows().get(count).getHousingInfo().getItems()
+		.get("housingInfo");
+
+BuildingDtlInfo buildingDtlInfo = (BuildingDtlInfo) housingListMationForm
+		.getVisibleRows().get(count).getBuilding().getBuildingInfo().getItems()
+		.get("buildingDtlInfo");
+
+~~~
+webCorePana\jp.co.transcosmos.dm3.corePana.model.housing\PanaHousingManageImpl.java
+public int searchHousing(HousingSearchForm searchForm, boolean full) throws Exception {
+	PanaHousingSearchForm panaSearchForm = (PanaHousingSearchForm) searchForm;
+	List<Housing> housingList = null;
+	try {
+		housingList = this.panaSearchHousingDAO.panaSearchHousing(panaSearchForm);
+	} catch (NotEnoughRowsException err) {
+		int pageNo = (err.getMaxRowCount() - 1) / panaSearchForm.getRowsPerPage() + 1;
+		panaSearchForm.setSelectedPage(pageNo);
+		housingList = this.panaSearchHousingDAO.panaSearchHousing(panaSearchForm);
+	}
+	panaSearchForm.setRows(housingList); // Lấy ra danh sách housing và add vào panaSearchForm (housingListMationForm trong controller)
+	return housingList.size();
+}
+->
+public class PanaHousingSearchForm extends HousingSearchForm implements Validateable {
+->
+public class HousingSearchForm extends PagingListForm<Housing> {
+->
+public class PagingListForm<E> {
+	public void setRows(List<E> rows) {
+        this.rows = rows;
+        if (this.rows == null) {
+            this.selectedPage = 1;
+        } else {
+            this.selectedPage = Math.min(this.selectedPage, getMaxPages());
+        }
+    }
+	
+	public List<E> getVisibleRows() {
+        if (this.rows == null) {
+            return null;
+        } else {
+            return this.rows.subList(getStartIndex(), getEndIndex());
+        }
+    }
+}
+
+
+~~~
+webCorePana\jp.co.transcosmos.dm3.corePana.model.housing.dao.impl.PanaSearchHousingDAOImpl.java
+public List<Housing> panaSearchHousing(PanaHousingSearchForm searchForm) {
+	JdbcTemplate template = new JdbcTemplate(dataSource);
+
+	StringBuffer sbSql = new StringBuffer();
+	List<Object> params = new ArrayList<Object>();
+
+	createSql(searchForm, sbSql, params);
+
+	log.debug("SQL : " + sbSql.toString());
+	List<Housing> housings = (List<Housing>) template.query(sbSql.toString(), (Object[]) params.toArray(),
+			new FragmentResultSetExtractor<Object>(this.panaSearchHousingRowMapper, searchForm.getStartIndex(),
+			searchForm.getEndIndex()));
+	return housings;
+}
+
+~~~
+protected void createSql(PanaHousingSearchForm searchForm, StringBuffer sbSql, List<Object> params) {
+SELECT distinct housingInfo.sys_housing_cd AS housingInfo_sysHousingCd, housingInfo.housing_cd AS housingInfo_housingCd, housingInfo.display_housing_name AS housingInfo_displayHousingName, housingInfo.display_housing_name_kana AS housingInfo_displayHousingNameKana, housingInfo.room_no AS housingInfo_roomNo, housingInfo.sys_building_cd AS housingInfo_sysBuildingCd, housingInfo.price AS housingInfo_price, housingInfo.price_full_min AS housingInfo_priceFullMin, housingInfo.price_full_max AS housingInfo_priceFullMax, housingInfo.upkeep AS housingInfo_upkeep, housingInfo.common_area_fee AS housingInfo_commonAreaFee, housingInfo.mente_fee AS housingInfo_menteFee, housingInfo.sec_deposit AS housingInfo_secDeposit, housingInfo.sec_deposit_crs AS housingInfo_secDepositCrs, housingInfo.bond_chrg AS housingInfo_bondChrg, housingInfo.bond_chrg_crs AS housingInfo_bondChrgCrs, housingInfo.deposit_div AS housingInfo_depositDiv, housingInfo.deposit AS housingInfo_deposit, housingInfo.deposit_crs AS housingInfo_depositCrs, housingInfo.layout_cd AS housingInfo_layoutCd, housingInfo.layout_comment AS housingInfo_layoutComment, housingInfo.floor_no AS housingInfo_floorNo, housingInfo.floor_no_note AS housingInfo_floorNoNote, housingInfo.land_area AS housingInfo_landArea, housingInfo.land_area_memo AS housingInfo_landAreaMemo, housingInfo.personal_area AS housingInfo_personalArea, housingInfo.personal_area_memo AS housingInfo_personalAreaMemo, housingInfo.movein_flg AS housingInfo_moveinFlg, housingInfo.parking_situation AS housingInfo_parkingSituation, housingInfo.parking_emp_exist AS housingInfo_parkingEmpExist, housingInfo.display_parking_info AS housingInfo_displayParkingInfo, housingInfo.window_direction AS housingInfo_windowDirection, housingInfo.icon_cd AS housingInfo_iconCd, housingInfo.basic_comment AS housingInfo_basicComment, housingInfo.reform_comment AS housingInfo_reformComment, housingInfo.min_walking_time AS housingInfo_minWalkingTime, housingInfo.ins_date AS housingInfo_insDate, housingInfo.ins_user_id AS housingInfo_insUserId, housingInfo.upd_date AS housingInfo_updDate, housingInfo.upd_user_id AS housingInfo_updUserId, housingDtlInfo.sys_housing_cd AS housingDtlInfo_sysHousingCd, housingDtlInfo.used_area_cd AS housingDtlInfo_usedAreaCd, housingDtlInfo.transact_type_div AS housingDtlInfo_transactTypeDiv, housingDtlInfo.display_contract_term AS housingDtlInfo_displayContractTerm, housingDtlInfo.land_right AS housingDtlInfo_landRight, housingDtlInfo.movein_timing AS housingDtlInfo_moveinTiming, housingDtlInfo.movein_timing_day AS housingDtlInfo_moveinTimingDay, housingDtlInfo.movein_note AS housingDtlInfo_moveinNote, housingDtlInfo.display_movein_timing AS housingDtlInfo_displayMoveinTiming, housingDtlInfo.display_movein_proviso AS housingDtlInfo_displayMoveinProviso, housingDtlInfo.upkeep_type AS housingDtlInfo_upkeepType, housingDtlInfo.upkeep_corp AS housingDtlInfo_upkeepCorp, housingDtlInfo.renew_chrg AS housingDtlInfo_renewChrg, housingDtlInfo.renew_chrg_crs AS housingDtlInfo_renewChrgCrs, housingDtlInfo.renew_chrg_name AS housingDtlInfo_renewChrgName, housingDtlInfo.renew_due AS housingDtlInfo_renewDue, housingDtlInfo.renew_due_crs AS housingDtlInfo_renewDueCrs, housingDtlInfo.brokerage_chrg AS housingDtlInfo_brokerageChrg, housingDtlInfo.brokerage_chrg_crs AS housingDtlInfo_brokerageChrgCrs, housingDtlInfo.change_key_chrg AS housingDtlInfo_changeKeyChrg, housingDtlInfo.insur_exist AS housingDtlInfo_insurExist, housingDtlInfo.insur_chrg AS housingDtlInfo_insurChrg, housingDtlInfo.insur_term AS housingDtlInfo_insurTerm, housingDtlInfo.insur_lank AS housingDtlInfo_insurLank, housingDtlInfo.other_chrg AS housingDtlInfo_otherChrg, housingDtlInfo.contact_road AS housingDtlInfo_contactRoad, housingDtlInfo.contact_road_dir AS housingDtlInfo_contactRoadDir, housingDtlInfo.private_road AS housingDtlInfo_privateRoad, housingDtlInfo.balcony_area AS housingDtlInfo_balconyArea, housingDtlInfo.special_instruction AS housingDtlInfo_specialInstruction, housingDtlInfo.dtl_comment AS housingDtlInfo_dtlComment, housingStatusInfo.sys_housing_cd AS housingStatusInfo_sysHousingCd, housingStatusInfo.hidden_flg AS housingStatusInfo_hiddenFlg, housingStatusInfo.status_cd AS housingStatusInfo_statusCd, housingStatusInfo.user_id AS housingStatusInfo_userId, housingStatusInfo.note AS housingStatusInfo_note, memberInfo.user_id AS memberInfo_userId, memberInfo.member_lname AS memberInfo_memberLname, memberInfo.member_fname AS memberInfo_memberFname, memberInfo.member_lname_kana AS memberInfo_memberLnameKana, memberInfo.member_fname_kana AS memberInfo_memberFnameKana, memberInfo.email AS memberInfo_email, memberInfo.cookie_login_token AS memberInfo_cookieLoginToken, memberInfo.zip AS memberInfo_zip, memberInfo.pref_cd AS memberInfo_pref_cd, memberInfo.address AS memberInfo_address, memberInfo.address_other AS memberInfo_address_other, memberInfo.TEL AS memberInfo_TEL, memberInfo.FAX AS memberInfo_FAX, memberInfo.password AS memberInfo_password, memberInfo.mail_send_flg AS memberInfo_mailSendFlg, memberInfo.resident_flg AS memberInfo_residentFlg, memberInfo.hope_pref_cd AS memberInfo_hopePrefCd, memberInfo.hope_address AS memberInfo_hopeAddress, memberInfo.entry_route AS memberInfo_entryRoute, memberInfo.promo_cd AS memberInfo_promoCd, memberInfo.ref_cd AS memberInfo_refCd, memberInfo.fail_cnt AS memberInfo_failCnt, memberInfo.last_fail_date AS memberInfo_lastFailDate, memberInfo.lock_flg AS memberInfo_lockFlg, memberInfo.pre_login AS memberInfo_preLogin, memberInfo.last_login AS memberInfo_lastLogin, memberInfo.ins_date AS memberInfo_insDate, memberInfo.ins_user_id AS memberInfo_insUserId, memberInfo.upd_date AS memberInfo_updDate, memberInfo.upd_user_id AS memberInfo_updUserId, buildingInfo.sys_building_cd AS buildingInfo_sysBuildingCd, buildingInfo.building_cd AS buildingInfo_buildingCd, buildingInfo.housing_kind_cd AS buildingInfo_housingKindCd, buildingInfo.struct_cd AS buildingInfo_structCd, buildingInfo.display_building_name AS buildingInfo_displayBuildingName, buildingInfo.display_building_name_kana AS buildingInfo_displayBuildingNameKana, buildingInfo.zip AS buildingInfo_zip, buildingInfo.pref_cd AS buildingInfo_prefCd, buildingInfo.address_cd AS buildingInfo_addressCd, buildingInfo.address_name AS buildingInfo_addressName, buildingInfo.address_other1 AS buildingInfo_addressOther1, buildingInfo.address_other2 AS buildingInfo_addressOther2, buildingInfo.comp_date AS buildingInfo_compDate, buildingInfo.comp_ten_days AS buildingInfo_compTenDays, buildingInfo.total_floors AS buildingInfo_totalFloors, buildingInfo.ins_date AS buildingInfo_insDate, buildingInfo.ins_user_id AS buildingInfo_insUserId, buildingInfo.upd_date AS buildingInfo_updDate, buildingInfo.upd_user_id AS buildingInfo_updUserId, buildingDtlInfo.sys_building_cd AS buildingDtlInfo_sysBuildingCd, buildingDtlInfo.building_area AS buildingDtlInfo_buildingArea, buildingDtlInfo.building_area_memo AS buildingDtlInfo_buildingAreaMemo, buildingDtlInfo.coverage AS buildingDtlInfo_coverage, buildingDtlInfo.coverage_memo AS buildingDtlInfo_coverageMemo, buildingDtlInfo.building_rate AS buildingDtlInfo_buildingRate, buildingDtlInfo.building_rate_memo AS buildingDtlInfo_buildingRateMemo, buildingDtlInfo.total_house_cnt AS buildingDtlInfo_totalHouseCnt, buildingDtlInfo.lease_house_cnt AS buildingDtlInfo_leaseHouseCnt, buildingDtlInfo.building_latitude AS buildingDtlInfo_buildingLatitude, buildingDtlInfo.building_longitude AS buildingDtlInfo_buildingLongitude, prefMst.pref_cd AS prefMst_prefCd, prefMst.pref_name AS prefMst_prefName, prefMst.r_pref_name AS prefMst_rPrefName, prefMst.area_cd AS prefMst_areaCd, prefMst.sort_order AS prefMst_sortOrder, prefMst.ins_date AS prefMst_insDate, prefMst.ins_user_id AS prefMst_insUserId, prefMst.upd_date AS prefMst_updDate, prefMst.upd_user_id AS prefMst_updUserId, adminLoginInfo1.admin_user_id AS adminLoginInfo1_adminUserId, adminLoginInfo1.user_name AS adminLoginInfo1_userName, adminLoginInfo2.admin_user_id AS adminLoginInfo2_adminUserId, adminLoginInfo2.user_name AS adminLoginInfo2_userName
+FROM  housing_info housingInfo LEFT OUTER JOIN housing_status_info housingStatusInfo ON housingInfo.sys_housing_cd = housingStatusInfo.sys_housing_cd INNER JOIN building_info buildingInfo ON housingInfo.sys_building_cd = buildingInfo.sys_building_cd LEFT OUTER JOIN building_dtl_info buildingDtlInfo ON housingInfo.sys_building_cd = buildingDtlInfo.sys_building_cd LEFT OUTER JOIN pref_mst prefMst ON buildingInfo.pref_cd = prefMst.pref_cd LEFT OUTER JOIN housing_dtl_info housingDtlInfo ON housingInfo.sys_housing_cd = housingDtlInfo.sys_housing_cd LEFT OUTER JOIN member_info memberInfo ON housingStatusInfo.user_id = memberInfo.user_id LEFT OUTER JOIN admin_login_info adminLoginInfo1 ON housingInfo.ins_user_id = adminLoginInfo1.admin_user_id LEFT OUTER JOIN admin_login_info adminLoginInfo2 ON housingInfo.upd_user_id = adminLoginInfo2.admin_user_id\
+createWhere(searchForm, sbSql, params);
+createOrderBy(sbSql, searchForm.getKeyOrderType());
+
+--
+List<JoinResult> searchPartSrchMstList = this.panaHousingManager.searchPartSrchMst(housingListMationForm.getHousingKindCd());
+
+webCorePana\jp.co.transcosmos.dm3.corePana.model.housing.PanaHousingPartThumbnailProxy.java
+public List<JoinResult> searchPartSrchMst(String housingKindCd) throws Exception {
+	DAOCriteria criteria = new DAOCriteria();
+	criteria.addWhereClause("housingKindCd", housingKindCd);
+	return this.partSrchMstListDAO.selectByFilter(criteria);
+}
+
+*** == ***
+webFrontPana\WEB-INF\jsp\include\housingListMation\SearchList.jsh
+=====================
+
+
+
+
+
+
+
+
