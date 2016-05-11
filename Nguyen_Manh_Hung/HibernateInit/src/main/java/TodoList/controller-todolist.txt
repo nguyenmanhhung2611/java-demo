@@ -1,0 +1,16 @@
+1. UserContoller
+	- Login
+		+ Receive username and password from HTTPrequest.
+		+ Call AuthenticationService to check username and password.
+		+ Call ProductServiceImpl to get all product in database.
+		+ Send all product to BuyProduct controller.
+
+2. ProductController
+		- Check login session information 
+		- Call ProductServiceImpl to get all product
+		- Redirect to listproduct.jsp
+		- Call ProductServiceImpl to get product by name when user "ADD to CART"
+		- Set list product to session
+		- Redirect to cartdetail.jsp
+		
+	

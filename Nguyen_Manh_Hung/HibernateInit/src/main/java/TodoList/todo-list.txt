@@ -1,0 +1,10 @@
++ Import Database.
++ Create Dynamic Web Project with html, css file available.
++ Create package:
+	- Controller: ProductController, UserController
+	- Domain: Product, User
+	- Model: Product, User
+	- Service: service and service implement
+	- Dao: dao and dao implement query database
+	- Filter: filter url in controller
+	- Utils: Common contains static method

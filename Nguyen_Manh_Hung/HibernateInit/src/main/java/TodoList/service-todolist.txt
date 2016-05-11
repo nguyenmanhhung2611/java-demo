@@ -1,0 +1,25 @@
+1. AuthenticationService
+	+ login
+		- Receive data from Authenticate (username and password).
+		- Hash password use SHA256
+		- Call UserDaoImpl.getUser to get User object and check whether the user has null.
+		- Return result to Authenticate controller and save user into session.
+	+ logout
+		- Remove session saved 
+		
+
+2. UserServiceImpl
+	+ checkLogin
+		- Compare password user input and password from database
+		- Check user isActive?
+		- Return page to controller
+
+3. ProductServiceImpl
+	+ findAll
+		- ProductDaoImpl object get all product from database.
+		- Return to Product controller.
+	+ findById
+		- Receive product id from controller.
+		- ProductDaoImpl object get a product from database.
+		- Return to Product controller.
+	
