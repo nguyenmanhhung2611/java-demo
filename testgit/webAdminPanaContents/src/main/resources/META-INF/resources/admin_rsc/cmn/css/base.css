@@ -1,0 +1,82 @@
+@charset "shift_jis";
+
+html, body {
+	margin: 0;
+	padding: 0;
+	font-size: 100%;
+	line-height: 100%;
+}
+
+h1, h2, h3, h4, h5, h6, address {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 100%;
+}
+
+div, blockquote, p, pre, ul, ol, li, dl, dt, dd {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+}
+
+table, caption, th, td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 100%;
+}
+
+hr {
+	margin: 0;
+	padding: 0;
+	font-size: 100%;
+}
+
+iframe {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+}
+
+form, fieldset, select, optgroup, option, textarea,
+label, legend {
+	margin: 0;
+	padding: 0;
+	font-size: 100%;
+}
+
+span, em, strong, dfn, code, samp, kbd, var, cite, abbr, acronym, q, br,
+ins, del, a, img, object {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-style: normal;
+	font-weight: inherit;
+	font-size: 100%;
+}
+
+
+html, body, div, span, address, em, strong, dfn, cite, abbr, acronym,
+blockquote, q, sub, sup, p, ins, del, ul, ol, li, dl, dt, dd, caption,
+th, td, input, button, select, optgroup, option, textarea, label, legend {
+	font-family: Meiryo, "\FF2D\FF33\20\FF30\30B4\30B7\30C3\30AF", Helvetica, Osaka, Arial, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: Verdana, Helvetica, Arial, Meiryo, "\FF2D\FF33\20\FF30\30B4\30B7\30C3\30AF", Osaka, sans-serif;
+}
+
+pre, code, samp, kbd, var {
+	font-family: monospace, Meiryo, "\FF2D\FF33\20\FF30\30B4\30B7\30C3\30AF", Osaka;
+}
+
+sub, sup {
+	font-size: 50%;
+}

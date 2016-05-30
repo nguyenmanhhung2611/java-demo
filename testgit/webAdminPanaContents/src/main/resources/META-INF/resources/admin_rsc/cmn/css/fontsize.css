@@ -1,0 +1,45 @@
+@charset "shift_jis";
+
+body {
+	font-size: 12pt;
+}
+
+#headerNavArea ul li.home {
+	font-size: 70%;
+}
+
+#headerNavArea ul li.logout {
+	font-size: 75%;
+}
+
+p.h7 {
+	font-size: 80%;
+}
+
+#manageInfo p.small {
+	font-size: 70%;
+}
+
+#lnavBlockA01 {
+	font-size: 75%;
+}
+
+#panList {
+	font-size: 70%;
+}
+
+.headingAreaA01 h1 {
+	font-size: 87.5%;
+}
+
+.headingAreaB01 h2 {
+	font-size: 75%;
+}
+
+.contentsAreaInner p {
+	font-size: 75%;
+}
+
+th, td {
+	font-size: 75%;
+}

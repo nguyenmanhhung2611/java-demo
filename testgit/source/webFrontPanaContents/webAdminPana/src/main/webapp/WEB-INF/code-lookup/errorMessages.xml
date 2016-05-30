@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+  <bean class="jp.co.transcosmos.dm3.lookup.CodeLookupList">
+    <property name="codeLookupManager"><ref bean="codeLookupManager"/></property>
+    <property name="lookups">
+      <map>
+
+        <entry key="errorTemplates">
+          <props>
+            <prop key="nullOrEmpty">エラー：[#fieldName]は必須項目です。入力してください。</prop>
+            <prop key="minLength">エラー：[#fieldName]は[#extraInfo]桁以上で入力してください。</prop>
+            <prop key="maxLength">エラー：[#fieldName]は[#extraInfo]桁以内で入力してください。</prop>
+            <prop key="length">エラー：[#fieldName]は[#extraInfo]文字にしてください。</prop>
+            <prop key="numericOnly">エラー：[#fieldName]は半角数字で入力してください。</prop>
+            <prop key="positNumberOnly">エラー：[#fieldName]は半角数字のみ入力してください。</prop>
+            <prop key="decimal">エラー：[#fieldName]は半角数字で入力してください。</prop>
+            <prop key="alphanumericOnly">エラー：[#fieldName]は半角英数字で入力してください。</prop>
+            <prop key="aplhaNumMarkOnly">エラー：[#fieldName]には半角の英小文字、英大文字、数字、および[#extraInfo]の記号文字を使用してください。</prop>
+            <prop key="asciiOnly">エラー：[#fieldName]は半角英数記号文字で入力してください。</prop>
+            <prop key="zenkakuOnly">エラー：[#fieldName]は全角文字で入力してください。</prop>
+            <prop key="validDate">エラー：[#fieldName]はyyyy/mm/ddの形式で入力してください。</prop>
+            <prop key="email">エラー：[#fieldName]を正しく入力してください。</prop>
+            <prop key="compare">エラー：[#fieldName]が[#extraInfo]と一致しません。</prop>
+            <prop key="notCompare">エラー：[#fieldName]に[#extraInfo]と同じ値は使用できません。</prop>
+            <prop key="codeNotFound">エラー：[#fieldName]に[#fieldValue]は入力できません。</prop>
+            <prop key="arrayMember">エラー：[#fieldName]に[#fieldValue]は入力できません。</prop>
+            <prop key="notExistsInDB">エラー：[#fieldName]、[#fieldValue]はデータベースに存在しません。</prop>
+            <prop key="zenkakuKana">エラー：[#fieldName]は全角カタカナで入力してください。</prop>
+            <prop key="noFileUploaded">エラー：[#fieldName]が指定されていません。</prop>
+            <prop key="notCsv">エラー：指定されたファイルはCSVファイルではありません。</prop>
+            <prop key="csvFormat">エラー：指定されたファイルはフォーマットが正しくありません。</prop>
+            <prop key="csvListCnt">[#fieldName]行目　</prop>
+            <prop key="duplicate">エラー：その[#fieldName]は既に登録されています。お手数ですが、他の[#fieldName]を設定してください。</prop>
+            <prop key="passwordNG">エラー：[#fieldName]は半角英小文字、半角英大文字、半角数字のうち、３種類以上を含む８文字以上で入力してください。</prop>
+            <prop key="passwordMarkNG">エラー：[#fieldName]は半角英小文字、半角英大文字、数字、記号（[#extraInfo]）の4種類を含めた８文字以上で入力してください。</prop>
+            <prop key="fileExtNG">エラー：[#fieldName]のファイル名では[#extraInfo]の拡張子を使用してください。</prop>
+            <prop key="traversal">エラー：[#fieldName]のファイル名ではドライブ名やフォルダ名は使用できません。</prop>
+
+            <prop key="reformImgNotNull">エラー：[#fieldName]がある場合、[#fieldValue]を入力してください。</prop>
+            <prop key="reformDtlNotNull">エラー：アップロード画像,表示順,名称,価格の中には一つ以上入力した場合、ほかの項目も必須です。</prop>
+            <prop key="housingInfoNotNull">エラー：[#fieldName]物件情報が存在しない。</prop>
+            <prop key="url">エラー：[#fieldName]はURLの形式で入力してください。</prop>
+            <prop key="reformInsertError">エラー：リフォームプラン情報のinsert処理が異常を発生する</prop>
+            <prop key="reformUpdateError">エラー：リフォームプラン情報のupdate処理が異常を発生する</prop>
+            <prop key="mustInput1">エラー：[#fieldName]を入力した場合、[#fieldValue]を選択してください。</prop>
+            <prop key="mustInput2">エラー：[#fieldName]を選択した場合、[#fieldValue]と[#extraInfo]を少なくとも一つ入力してください。</prop>
+            <prop key="equipCategoryNotNull">エラー：[#fieldName]を[#extraInfo]した場合、[#fieldValue]を入力してください。</prop>
+            <prop key="checkJpg">エラー：[#fieldName]には[#fieldValue]ファイルを登録してください。</prop>
+            <prop key="fileSizeError">エラー：指定したファイルが最大のファイルサイズ[#fieldValue]MBを超過しています。</prop>
+            <prop key="role">エラー：権限がないため、[#fieldName]を変更できません。</prop>
+            <prop key="eachExits">エラー：[#extraInfo][#fieldName]を選択した場合、対応する[#extraInfo][#fieldValue]を選択してください。</prop>
+            <prop key="inspectionValue">エラー：[#fieldName]が「有」を選択した場合は、[#fieldValue]をすべて選択してください。</prop>
+            <prop key="housingInfoImg">エラー：[#fieldName]が「有」を選択した場合は、[#fieldValue]も必須です。</prop>
+            <prop key="housingInfoInput">エラー：[#fieldName]を入力した場合は、[#extraInfo]を入力してください。</prop>
+            <prop key="housingInfoZipInput">エラー：郵便番号を確認してください。</prop>
+            <prop key="housingInfoZipNotInput">エラー：郵便番号を入力してください。</prop>
+            <prop key="housingInfoCompDate">エラー：[#fieldName]は[#fieldValue]の形式で入力してください。</prop>
+            <prop key="housingInfoArea">エラー：[#fieldName]は整数[#fieldValue]桁目、小数点[#extraInfo]桁目で入力してください。</prop>
+            <prop key="memberInfoEmailError">エラー：その[#fieldName]は既に登録されています。お手数ですが、他の[#fieldName]を設定してください。</prop>
+            <prop key="reformImgFileNotNull">エラー：[#fieldName]が存在しません。</prop>
+            <prop key="reformImgFileAllNull">エラー：[#fieldName]を少なくとも一つ入力してください。</prop>
+
+			<prop key="housingKindCdError">エラー：[#fieldName]を変更できません。</prop>
+            <prop key="urlError">エラー：[#fieldName]はURLの形式で入力してください。</prop>
+            <prop key="checkCsv">エラー：[#fieldName]には有効なファイルを入力してください。</prop>
+            <prop key="dateFromToCheck">エラー：[#fieldName]は[#fieldValue]以前の日付を入力してください。</prop>
+            <prop key="zipError">エラー：[#fieldName]は郵便番号形式で入力してください。</prop>
+            <prop key="telError">エラー：[#fieldName]は電話番号形式で入力してください。</prop>
+            <prop key="faxError">エラー：[#fieldName]はFAX番号形式で入力してください。</prop>
+            <prop key="sameValueError">エラー：入力した[#fieldName]と[#fieldValue]が一致しません。</prop>
+            <prop key="pointNumberError">エラー：[#fieldName]は整数部[#fieldValue]桁目以下、小数部[#extraInfo]桁目以下で入力してください。</prop>
+            <prop key="oneInputOtherMustInput">エラー：[#extraInfo]のいずれか一つ以上を入力した場合、ほかの項目も必須です。</prop>
+            <prop key="housingImageInfoError">エラー：内観は会員のみ閲覧可能です。</prop>
+            <!-- 問合一覧 -->
+            <prop key="inquiryTypeJoinError">エラー：[#fieldName]又は[#fieldValue]を入力した場合、[#extraInfo]のみ選択可になります。</prop>
+            <!-- 地域情報 -->
+            <prop key="landMarkError">エラー：[#fieldName]を入力した場合、[#fieldValue]も入力してください。</prop>
+            <prop key="landMarkDistanceError">エラー：[#fieldName]には有効な数値を入力してください。</prop>
+            <!-- お知らせ情報 -->
+            <prop key="informationError">エラー：[#fieldName]を選択した場合は、[#fieldValue]を入力してください。</prop>
+            <prop key="informationMailError">エラー：[#fieldName]を選択した場合は、[#fieldValue]のみ選択できます。</prop>
+			<prop key="eqLength">エラー：[#fieldName]は[#extraInfo]桁で入力してください。</prop>
+          </props>
+        </entry>
+
+        <entry key="errorLabels">
+          <props>
+            <!-- ログイン画面 -->
+            <prop key="loginID">ユーザID</prop>
+            <prop key="password">パスワード</prop>
+
+            <!-- 管理ユーザの検索 -->
+            <prop key="user.search.keyLoginId">ログインID</prop>
+            <prop key="user.search.keyUserName">ユーザー名</prop>
+
+            <!-- 管理ユーザ情報編集 -->
+            <prop key="user.input.loginId">ログインID</prop>
+            <prop key="user.input.password">パスワード</prop>
+            <prop key="user.input.rePassword">パスワード確認</prop>
+            <prop key="user.input.adminUserName">氏名</prop>
+            <prop key="user.input.email">メールアドレス</prop>
+            <prop key="user.input.roleId">権限</prop>
+            <prop key="user.input.lockFlg">ロック状態</prop>
+
+            <!-- 管理ユーザーパスワード変更入力 -->
+            <prop key="user.pwd.oldPassword">現在のパスワード</prop>
+            <prop key="user.pwd.newPassword">新パスワード</prop>
+            <prop key="user.pwd.newRePassword">新パスワード確認</prop>
+
+            <!-- マスター管理・ファイルアップロード共通 -->
+            <prop key="master.csvFile.file">アップロードファイル</prop>
+
+            <!-- マスター管理・住所マスタ更新 -->
+            <prop key="addressCsv.prefCd">都道府県CD</prop>
+            <prop key="addressCsv.addressCd">市区町村CD</prop>
+            <prop key="addressCsv.addressName">市区町村名</prop>
+            <prop key="addressCsv.zip">郵便番号</prop>
+
+            <!-- マスター管理・駅マスタ更新 -->
+            <prop key="stationCsv.routeCd">路線コード</prop>
+            <prop key="stationCsv.rrName">会社名</prop>
+            <prop key="stationCsv.routeNameFull">路線名1括弧あり</prop>
+            <prop key="stationCsv.routeNameRr">路線名2括弧あり</prop>
+            <prop key="stationCsv.stationCd">駅コード</prop>
+            <prop key="stationCsv.stationName">駅名括弧あり</prop>
+            <prop key="stationCsv.srSortOrder">停車順1</prop>
+            <prop key="stationCsv.prefCd">都道府県コード</prop>
+
+            <!-- お知らせ検索条件 -->
+            <prop key="information.search.keyInformationNo">お知らせ番号</prop>
+            <prop key="information.search.keyTitle">タイトル</prop>
+            <prop key="information.search.keyInsDateFrom">登録日・開始</prop>
+            <prop key="information.search.keyInsDateTo">登録日・終了</prop>
+            <prop key="information.search.keyUserId">対象会員</prop>
+
+            <!-- お知らせ入力 -->
+            <prop key="information.input.informationType">種別</prop>
+            <prop key="information.input.dspFlg">公開対象区分</prop>
+            <prop key="information.input.userId">特定会員</prop>
+            <prop key="information.input.title">タイトル</prop>
+            <prop key="information.input.informationMsg">お知らせ内容</prop>
+            <prop key="information.input.startDate">表示期間開始日</prop>
+            <prop key="information.input.endDate">表示期間終了日</prop>
+            <prop key="information.input.url">リンク先URL</prop>
+
+            <!-- マイページ会員検索条件 -->
+            <prop key="mypage.search.keyUserId">会員ID</prop>
+            <prop key="mypage.search.keyEmail">メールアドレス</prop>
+            <prop key="mypage.search.keyMemberLname">氏名・姓</prop>
+            <prop key="mypage.search.keyMemberFname">氏名・名</prop>
+            <prop key="mypage.search.keyMemberLnameKana">氏名・カナ・セイ</prop>
+            <prop key="mypage.search.keyMemberFnameKana">氏名・カナ・メイ</prop>
+            <prop key="mypage.search.keyInsDateFrom">登録日・開始</prop>
+            <prop key="mypage.search.keyInsDateTo">登録日・終了</prop>
+
+            <!-- マイページ会員入力 -->
+            <prop key="mypage.input.email">メールアドレス</prop>
+            <prop key="mypage.input.password">パスワード</prop>
+            <prop key="mypage.input.rePassword">パスワード確認</prop>
+            <prop key="mypage.input.memberLname">お名前（姓）</prop>
+            <prop key="mypage.input.memberFname">お名前（名）</prop>
+            <prop key="mypage.input.memberLnameKana">フリガナ（セイ）</prop>
+            <prop key="mypage.input.memberFnameKana">フリガナ（メイ）</prop>
+            <prop key="mypage.input.zip">住所_郵便番号</prop>
+            <prop key="mypage.input.prefCd">住所_都道府県</prop>
+            <prop key="mypage.input.address">住所_市区町村・番地</prop>
+            <prop key="mypage.input.addressOther">住所_建物名</prop>
+            <prop key="mypage.input.hopePrefCd">物件希望地域_都道府県</prop>
+            <prop key="mypage.input.hopeAddress">物件希望地域_市区町村</prop>
+            <prop key="mypage.input.residentFlg">居住形態</prop>
+            <prop key="mypage.input.tel">電話番号</prop>
+            <prop key="mypage.input.fax">FAX番号</prop>
+            <prop key="mypage.input.mailSendFlg">メール配信</prop>
+            <prop key="mypage.input.entryRoute">登録経路</prop>
+            <prop key="mypage.input.lockFlg">有効区分</prop>
+            <prop key="mypage.input.questionId">アンケート回答</prop>
+            <prop key="mypage.input.etcAnswer1">アンケートの入力内容1</prop>
+            <prop key="mypage.input.etcAnswer2">アンケートの入力内容2</prop>
+            <prop key="mypage.input.etcAnswer3">アンケートの入力内容3</prop>
+
+            <!-- 建物情報検索条件 -->
+            <prop key="building.search.keyBuildingCd">建物番号</prop>
+            <prop key="building.search.keyDisplayBuildingName">表示用建物名</prop>
+
+            <!-- 建物基本情報入力 -->
+            <prop key="buildingInfo.input.buildingCd">建物番号</prop>
+            <prop key="buildingInfo.input.displayBuildingName">表示用建物名</prop>
+            <prop key="buildingInfo.input.displayBuildingNameKana">表示用建物名ふりがな</prop>
+            <prop key="buildingInfo.input.zip">所在地・郵便番号</prop>
+            <prop key="buildingInfo.input.prefCd">所在地・都道府県</prop>
+            <prop key="buildingInfo.input.addressOther1">所在地・町名番地</prop>
+            <prop key="buildingInfo.input.addressOther2">所在地・建物名その他</prop>
+            <prop key="buildingInfo.input.compDate">竣工年月</prop>
+            <prop key="buildingInfo.input.compTenDays">竣工旬</prop>
+            <prop key="buildingInfo.input.totalFloors">建物階数</prop>
+
+            <!-- 最寄り駅情報入力 -->
+            <prop key="buildingStationInfo.input.defaultRouteCd">路線</prop>
+            <prop key="buildingStationInfo.input.stationCd">駅</prop>
+            <prop key="buildingStationInfo.input.wayFromStation">最寄り駅からの手段</prop>
+            <prop key="buildingStationInfo.input.distanceFromStation">駅からの距離</prop>
+            <prop key="buildingStationInfo.input.timeFromStation">駅からの徒歩時間</prop>
+            <prop key="buildingStationInfo.input.busCompany">バス会社名</prop>
+            <prop key="buildingStationInfo.input.busRequiredTime">バスの所要時間</prop>
+            <prop key="buildingStationInfo.input.busStopName">バス停名</prop>
+            <prop key="buildingStationInfo.input.timeFromBusStop">バス停からの徒歩時間</prop>
+            <prop key="buildingStationInfo.input.sortOrder">表示順</prop>
+
+            <!-- 地域情報入力 -->
+            <prop key="buildingLandmark.input.landmarkType">ランドマークの種類</prop>
+            <prop key="buildingLandmark.input.landmarkName">ランドマーク名</prop>
+            <prop key="buildingLandmark.input.wayFromLandmark">ランドマークからの手段</prop>
+            <prop key="buildingLandmark.input.timeFromLandmark">ランドマークからの徒歩時間</prop>
+            <prop key="buildingLandmark.input.distanceFromLandmark">ランドマークからの距離</prop>
+            <prop key="buildingLandmark.input.sortOrder">表示順</prop>
+
+            <!-- 物件基本情報入力 -->
+            <prop key="housing.input.housingCd">物件番号</prop>
+            <prop key="housing.input.displayHousingName">表示用物件名</prop>
+            <prop key="housing.input.displayHousingNameKana">表示用物件名（カナ）</prop>
+            <prop key="housing.input.roomNo">部屋番号</prop>
+            <prop key="housing.input.price">賃料・価格</prop>
+            <prop key="housing.input.upkeep">管理費</prop>
+            <prop key="housing.input.commonAreaFee">共益費</prop>
+            <prop key="housing.input.menteFee">修繕積立費</prop>
+            <prop key="housing.input.secDeposit">敷金</prop>
+            <prop key="housing.input.secDepositCrs">敷金単位</prop>
+            <prop key="housing.input.bondChrg">保証金</prop>
+            <prop key="housing.input.bondChrgCrs">保証金単位</prop>
+            <prop key="housing.input.depositDiv">敷引礼金区分</prop>
+            <prop key="housing.input.deposit">敷引礼金額</prop>
+            <prop key="housing.input.depositCrs">敷引礼金単位</prop>
+            <prop key="housing.input.layoutCd">間取</prop>
+            <prop key="housing.input.layoutComment">間取詳細コメント</prop>
+            <prop key="housing.input.floorNo">物件の所在階</prop>
+            <prop key="housing.input.floorNoNote">物件の所在階のコメント</prop>
+            <prop key="housing.input.landArea">土地面積</prop>
+            <prop key="housing.input.landAreaMemo">土地面積補足</prop>
+            <prop key="housing.input.personalArea">専有面積</prop>
+            <prop key="housing.input.moveinFlg">入居状態</prop>
+            <prop key="housing.input.parkingSituation">駐車場の状況</prop>
+            <prop key="housing.input.parkingEmpExist">駐車場空の有無</prop>
+            <prop key="housing.input.displayParkingInfo">駐車場</prop>
+            <prop key="housing.input.windowDirection">窓の向き</prop>
+
+            <!-- 物件詳細情報入力 -->
+            <prop key="housingDtl.input.usedAreaCd">用途地域</prop>
+            <prop key="housingDtl.input.transactTypeDiv">取引形態区分</prop>
+            <prop key="housingDtl.input.displayContractTerm">表示用契約期間</prop>
+            <prop key="housingDtl.input.landRight">土地権利</prop>
+            <prop key="housingDtl.input.moveinTiming">入居可能時期フラグ</prop>
+            <prop key="housingDtl.input.moveinTimingDay">入居可能時期</prop>
+            <prop key="housingDtl.input.moveinNote">引渡時期コメント</prop>
+            <prop key="housingDtl.input.displayMoveinTiming">表示用入居可能時期</prop>
+            <prop key="housingDtl.input.displayMoveinProviso">表示用入居諸条件</prop>
+            <prop key="housingDtl.input.upkeepType">管理形態・方式</prop>
+            <prop key="housingDtl.input.upkeepCorp">管理会社</prop>
+            <prop key="housingDtl.input.renewChrg">更新料</prop>
+            <prop key="housingDtl.input.renewChrgCrs">更新料単位</prop>
+            <prop key="housingDtl.input.renewChrgName">更新料名</prop>
+            <prop key="housingDtl.input.renewDue">更新手数料</prop>
+            <prop key="housingDtl.input.renewDueCrs">更新手数料単位</prop>
+            <prop key="housingDtl.input.brokerageChrg">仲介手数料</prop>
+            <prop key="housingDtl.input.brokerageChrgCrs">仲介手数料単位</prop>
+            <prop key="housingDtl.input.changeKeyChrg">鍵交換料</prop>
+            <prop key="housingDtl.input.insurExist">瑕疵保険</prop>
+            <prop key="housingDtl.input.insurTerm">損保年数</prop>
+            <prop key="housingDtl.input.insurLank">損保認定ランク</prop>
+            <prop key="housingDtl.input.otherChrg">諸費用</prop>
+            <prop key="housingDtl.input.contactRoad">接道状況</prop>
+            <prop key="housingDtl.input.contactRoadDir">接道方向/幅員</prop>
+            <prop key="housingDtl.input.privateRoad">私道負担</prop>
+            <prop key="housingDtl.input.balconyArea">バルコニー面積</prop>
+            <prop key="housingDtl.input.specialInstruction">特記事項</prop>
+            <prop key="housingDtl.input.dtlComment">物件コメント</prop>
+            <prop key="housingDtl.input.buildingDataValue">建物構造</prop>
+            <prop key="housingDtl.input.preDataValue">現況</prop>
+            <prop key="housingDtl.input.coverageMemo">建ぺい率</prop>
+            <prop key="housingDtl.input.buildingRateMemo">容積率</prop>
+            <prop key="housingDtl.input.totalHouseCntDataValue">総戸数</prop>
+            <prop key="housingDtl.input.scaleDataValue">規模</prop>
+            <prop key="housingDtl.input.floorNo">所在階数</prop>
+            <prop key="housingDtl.input.floorNoNote">所在階数コメント</prop>
+            <prop key="housingDtl.input.orientedDataValue">向き</prop>
+            <prop key="housingDtl.input.workerDataValue">担当者名</prop>
+            <prop key="housingDtl.input.pictureDataValue">担当者写真</prop>
+            <prop key="housingDtl.input.companyDataValue">会社名</prop>
+            <prop key="housingDtl.input.branchDataValue">支店名</prop>
+            <prop key="housingDtl.input.freeCdDataValue">免許番号</prop>
+            <prop key="housingDtl.input.infDataValue">インフラ</prop>
+            <prop key="housingDtl.input.basicComment">担当者のコメント</prop>
+            <prop key="housingDtl.input.reformComment">リフォーム準備中コメント</prop>
+            <prop key="housingDtl.input.vendorComment">売主コメント</prop>
+            <prop key="housingDtl.input.urlDataValue">動画リンクURL</prop>
+
+            <!-- 物件画像情報入力 -->
+            <prop key="housingImg.input.fileName">画像ファイル名</prop>
+            <prop key="housingImg.input.sortOrder">表示順</prop>
+            <prop key="housingImg.input.imageType">画像タイプ</prop>
+            <prop key="housingImg.input.caption">キャプション</prop>
+            <prop key="housingImg.input.imgComment">コメント</prop>
+            <prop key="housingImg.input.delFlg">削除フラグ</prop>
+            <prop key="housingImg.input.divNo">枝番</prop>
+
+            <!-- お問合せ情報検索条件 -->
+            <prop key="inquiryList.search.housingCd">物件番号</prop>
+            <prop key="inquiryList.search.displayHousingName">物件名</prop>
+            <prop key="inquiryList.search.userId">会員番号</prop>
+            <prop key="inquiryList.search.inquiryDateStart">問合日時開始日</prop>
+            <prop key="inquiryList.search.inquiryDateEnd">問合日時終了日</prop>
+            <prop key="inquiryList.search.keyEmail">メールアドレス</prop>
+            <prop key="inquiryList.search.inquiryId">物件問合番号</prop>
+            <prop key="inquiryList.search.keyAnswerStatus">対応ステータス</prop>
+            <prop key="inquiryList.search.inquiryType">問合種別</prop>
+            <prop key="inquiryList.search.inquiryDtlType">問合せ内容種別</prop>
+
+            <!-- お問合せ情報入力 -->
+            <prop key="inquiry.input.answerStatus">ステータス </prop>
+            <prop key="inquiry.input.answerText">備考 </prop>
+
+            <!-- リフォーム情報編集 -->
+            <prop key="reform.input.hiddenFlg">公開区分</prop>
+            <prop key="reform.input.planName">リフォームプラン名</prop>
+            <prop key="reform.input.planPrice">価格</prop>
+            <prop key="reform.input.constructionPeriod">工期</prop>
+            <prop key="reform.input.salesPoint">セールスポイント</prop>
+            <prop key="reform.input.note">備考</prop>
+            <prop key="reform.input.beforeMovieUrl">動画_Before</prop>
+            <prop key="reform.input.afterMovieUrl">動画_After</prop>
+            <prop key="reform.input.roleId">閲覧権限</prop>
+            <prop key="reform.input.chartKey">評価基準</prop>
+            <prop key="reform.input.chartValue">評価基準の選択項目</prop>
+            <prop key="reform.input.pathName">レーダーチャート画像</prop>
+
+            <!-- リフォーム詳細情報編集 -->
+            <prop key="field.reformDtl.PathName">アップロード画像</prop>
+            <prop key="field.reformDtl.SortOrder">表示順</prop>
+            <prop key="field.reformDtl.ImgName">名称</prop>
+            <prop key="field.reformDtl.ReformPrice">価格</prop>
+
+            <!-- リフォーム画像編集 -->
+            <prop key="field.reformImg.SortOrder">表示順</prop>
+            <prop key="field.reformImg.BeformComment">コメント_Before</prop>
+            <prop key="field.reformImg.BeforePathName">アップロード画像_Before</prop>
+            <prop key="field.reformImg.AfterComment">コメント_After</prop>
+            <prop key="field.reformImg.AfterPathName">アップロード画像_After</prop>
+            <prop key="field.reformImg.RoleId">閲覧権限</prop>
+
+            <!-- 物件ステータス変更確認 -->
+            <prop key="housingStatus.input.displayHousingName">物件名称</prop>
+            <prop key="housingStatus.input.housingKindCd">物件種別</prop>
+            <prop key="housingStatus.input.hiddenFlg">公開区分</prop>
+            <prop key="housingStatus.input.statusCd">ステータス</prop>
+            <prop key="housingStatus.input.note">備考</prop>
+
+            <!-- 物件閲覧画面 -->
+            <prop key="housingBrowse.input.hiddenFlg">公開区分</prop>
+            <prop key="housingBrowse.input.statusCd">ステータス</prop>
+            <prop key="housingBrowse.input.note">備考</prop>
+
+            <!-- 住宅診断情報編集 -->
+            <prop key="field.housingInspection.Trust">評価基準</prop>
+            <prop key="field.housingInspection.Value">確認範囲</prop>
+            <prop key="field.housingInspection.Key">評価基準</prop>
+            <prop key="field.housingInspection">住宅診断実施有無</prop>
+
+            <!-- 管理者用設備情報編集 -->
+            <prop key="equipDtl.input.equipCategory">設備項目</prop>
+            <prop key="equipDtl.input.equip">設備</prop>
+
+            <!-- 物件一覧 -->
+            <prop key="housingList.input.keyHousingCd">物件番号</prop>
+            <prop key="housingList.input.keyDisplayHousingName">物件名</prop>
+            <prop key="housingList.input.insDateStart">登録開始日</prop>
+            <prop key="housingList.input.insDateEnd">登録終了日</prop>
+            <prop key="housingList.input.updDate">更新日時</prop>
+            <prop key="housingList.input.userId">会員番号</prop>
+            <prop key="housingList.input.hiddenFlg">公開区分</prop>
+            <prop key="housingList.input.statusCd">ステータス</prop>
+
+            <!-- 物件基本情報編集 -->
+            <prop key="housingInfo.input.displayHousingName">物件名称</prop>
+            <prop key="housingInfo.input.housingKindCd">物件種別</prop>
+            <prop key="housingInfo.input.layoutCd">間取り</prop>
+            <prop key="housingInfo.input.price">価格</prop>
+            <prop key="housingInfo.input.compDate">築年</prop>
+            <prop key="housingInfo.input.zip">住所_郵便番号</prop>
+            <prop key="housingInfo.input.prefCd">住所_都道府県</prop>
+            <prop key="housingInfo.input.addressCd">住所_市区町村</prop>
+            <prop key="housingInfo.input.addressOther1">住所１</prop>
+            <prop key="housingInfo.input.addressOther2">住所２</prop>
+            <prop key="housingInfo.input.busCompany1">バス_1</prop>
+            <prop key="housingInfo.input.timeFromBusStop1">徒歩_1</prop>
+            <prop key="housingInfo.input.busCompany2">バス_2</prop>
+            <prop key="housingInfo.input.timeFromBusStop2">徒歩_2</prop>
+            <prop key="housingInfo.input.busCompany3">バス_3</prop>
+            <prop key="housingInfo.input.timeFromBusStop3">徒歩_3</prop>
+            <prop key="housingInfo.input.buildingArea">建物面積</prop>
+            <prop key="housingInfo.input.buildingAreaMemo">建物面積_コメント</prop>
+            <prop key="housingInfo.input.landArea">土地面積</prop>
+            <prop key="housingInfo.input.landAreaMemo">土地面積_コメント</prop>
+            <prop key="housingInfo.input.personalArea">専有面積</prop>
+            <prop key="housingInfo.input.personalAreaMemo">専有面積_コメント</prop>
+
+            <!-- 物件画像情報 -->
+            <prop key="housingImageInfo.input.pathName">アップロード画像</prop>
+            <prop key="housingImageInfo.input.pathName1">アップロード画像_Before</prop>
+            <prop key="housingImageInfo.input.pathName2">アップロード画像_After</prop>
+            <prop key="housingImageInfo.input.sortOrder">表示順</prop>
+            <prop key="housingImageInfo.input.imageType">種別</prop>
+            <prop key="housingImageInfo.input.roleId">閲覧権限</prop>
+            <prop key="housingImageInfo.input.imgComment">コメント</prop>
+
+            <!-- 会員検索（ポップアップ）条件 -->
+            <prop key="user.search.userId">会員番号</prop>
+            <prop key="user.search.keyMemberLname">お名前（姓）</prop>
+            <prop key="user.search.keyMemberFname">お名前（名）</prop>
+            <prop key="user.search.keyMemberLnameKana">フリガナ(セイ)</prop>
+            <prop key="user.search.keyMemberFnameKana">フリガナ(メイ)</prop>
+
+            <!-- 会員検索条件 -->
+            <prop key="member.search.keyEmail">メールアドレス</prop>
+            <prop key="member.search.KeyPromoCd">プロモコード</prop>
+            <prop key="member.search.keyMemberLname">お名前（姓）</prop>
+            <prop key="member.search.keyMemberFname">お名前（名）</prop>
+            <prop key="member.search.keyMemberLnameKana">フリガナ(セイ)</prop>
+            <prop key="member.search.keyMemberFnameKana">フリガナ(メイ)</prop>
+            <prop key="member.search.keyInsDateFrom">登録日・開始 </prop>
+            <prop key="member.search.keyInsDateTo">登録日・終了 </prop>
+            <prop key="member.search.keyEntryRoute">登録経路</prop>
+            <prop key="member.search.keyInflowRoute">流入経路</prop>
+
+            <!-- おすすめポイント編集 -->
+            <prop key="recommendPoint.input.icon">おすすめポイント</prop>
+            
+            <!-- 管理ユーザーメンテナンス -->
+            <prop key="adminLogList.input.keyLoginId">ログインID</prop>
+            <prop key="adminLogList.input.keyUserName">ユーザー名</prop>
+            <prop key="adminLogList.input.insDateStart">登録開始日</prop>
+            <prop key="adminLogList.input.insDateEnd">登録終了日</prop>
+            <prop key="adminLogList.input.adminLogFC">ステータス</prop>
+            
+
+          </props>
+        </entry>
+
+        <entry key="errorCustom">
+          <props>
+            <prop key="logincheck_notfound">エラー：ログインに失敗しました</prop>
+            <!-- アカウントロック時のメッセージ（セキュリティの問題もあるので同じメッセージを出力） -->
+            <prop key="logincheck_userlock">エラー：ログインに失敗しました</prop>
+            <!-- パスワード変更で、旧パスワード照合時にメッセージの一部として使用 -->
+            <prop key="db_old_value">登録している値</prop>
+          </props>
+        </entry>
+
+      </map>
+    </property>
+  </bean>
+</beans>

@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+  <bean class="jp.co.transcosmos.dm3.lookup.CodeLookupList">
+    <property name="codeLookupManager"><ref bean="codeLookupManager"/></property>
+    <property name="lookups">
+      <map>
+
+        <entry key="errorTemplates">
+          <props>
+            <prop key="nullOrEmpty">・[#fieldName]は必須項目です。入力してください。</prop>
+            <prop key="minLength">・[#fieldName]は[#extraInfo]文字以上で入力してください。</prop>
+            <prop key="maxLength">・[#fieldName]は[#extraInfo]文字以内で入力してください。</prop>
+            <prop key="length">・[#fieldName]は[#extraInfo]文字で入力してください。</prop>
+            <prop key="numericOnly">・[#fieldName]は半角数字で入力してください。</prop>
+            <prop key="positNumberOnly">・[#fieldName]は半角数字のみ入力してください。</prop>
+            <prop key="alphanumericOnly">・[#fieldName]は半角英数字で入力してください。</prop>
+            <prop key="aplhaNumMarkOnly">・[#fieldName]は半角英数字か[#extraInfo]の半角記号で入力してください。</prop>
+            <prop key="asciiOnly">・[#fieldName]は半角英数記号文字で入力してください。</prop>
+            <prop key="zenkakuOnly">・[#fieldName]は全角文字で入力してください。</prop>
+            <prop key="validDate">・[#fieldName]はyyyy/mm/ddの形式で入力してください。</prop>
+            <prop key="validDateTime">・[#fieldName]は[#fieldValue]の形式で入力してください。</prop>
+            <prop key="email">・[#fieldName]を正しく入力してください。</prop>
+            <prop key="compare">・[#fieldName]が一致しません。</prop>
+            <prop key="codeNotFound">・[#fieldName]に[#fieldValue]は入力できません。</prop>
+            <prop key="arrayMember">・[#fieldName]に[#fieldValue]は入力できません。</prop>
+            <prop key="noFileUploaded">・[#fieldName]が指定されていません。</prop>
+            <prop key="notCsv">・指定されたファイルはCSVファイルではありません。</prop>
+            <prop key="csvListCnt">・[#fieldName]行目　</prop>
+            <prop key="duplicate">・その[#fieldName]は既に登録されています。お手数ですが、他の[#fieldName]を設定してください。</prop>
+            <prop key="reformPrice">・[#fieldName]場合、[#fieldValue]を「上限なし」/「下限なし」以外を選択してください。</prop>
+            <prop key="dataCheck">・[#fieldName]が[#fieldValue]を上回っています。</prop>
+            <prop key="zenkakuKana">・[#fieldName]は全角カタカナで入力してください。</prop>
+            <prop key="notfound">・メールアドレスまたはパスワードが異なっています。</prop>
+            <prop key="userlock">・5回連続で入力に誤りがありました。今から24時間ログインする事ができません。申し訳ありませんが24時間後にもう一度ご利用ください。</prop>
+			<prop key="housingInfoZipInput">・該当郵便番号の住所はありません。</prop>
+			<prop key="sameValueError">・[#fieldValue]が[#fieldName]と一致しません。</prop>
+			<prop key="passwordNG">・[#fieldName]は半角英小文字、半角英大文字、半角数字のうち、３種類以上を含む８文字以上で入力してください。</prop>
+			<prop key="pointNumberError">・[#fieldName]は整数部[#fieldValue]桁以下、小数部[#extraInfo]桁以下で入力してください。</prop>
+			<prop key="emailExitsError">・メールアドレスに誤りがあります。</prop>
+			<prop key="favoriteAddSuccess">お気に入りに追加しました。</prop>
+			<prop key="favoriteAddOver">お気に入り登録件数の上限（[#fieldName]件）を上回っています。</prop>
+			<prop key="favoriteAddAlready">すでにお気に入り登録済みの物件です。</prop>
+			<prop key="favoriteAddError">登録できませんでした。</prop>
+			<prop key="maxAddError">物件リクエスト登録件数の上限（[#fieldName]件）を上回っています。</prop>
+            <prop key="mustInput1">・[#fieldName]を入力した場合、[#fieldValue]を選択してください。</prop>
+
+          </props>
+        </entry>
+
+        <entry key="errorLabels">
+          <props>
+            <!-- 物件一覧 -->
+            <prop key="housingRequest.input.valPriceLower">予算_下限</prop>
+            <prop key="housingRequest.input.valPriceUpper">予算_上限</prop>
+            <prop key="housingRequest.input.valPersonalAreaLower">専有面積_下限</prop>
+            <prop key="housingRequest.input.valPersonalAreaUpper">専有面積_上限</prop>
+            <prop key="housingRequest.input.valBuildingAreaLower">建物面積_下限</prop>
+            <prop key="housingRequest.input.valBuildingAreaUpper">建物面積_上限</prop>
+            <prop key="housingRequest.input.valLandAreaLower">土地面積_下限</prop>
+            <prop key="housingRequest.input.valLandAreaUpper">土地面積_上限</prop>
+            <prop key="housingRequest.input.valPrefCd">都道府県</prop>
+            <prop key="housingRequest.input.valLayoutCd">間取り</prop>
+            <prop key="housingRequest.input.valCompDate">築年数</prop>
+            <prop key="housingRequest.input.valIcon">おすすめのポイント</prop>
+            <prop key="housingRequest.input.valHousingKindCd">物件種別</prop>
+            <!-- 物件のお問い合わせ　入力 -->
+            <prop key="inquiryHousing.input.valInquiryDtlType">お問い合わせ内容</prop>
+            <prop key="inquiryHousing.input.valInquiryText">お問い合わせ内容詳細</prop>
+            <prop key="inquiryHousing.input.valLname">お名前（姓）</prop>
+            <prop key="inquiryHousing.input.valFname">お名前（名）</prop>
+            <prop key="inquiryHousing.input.valLnameKana">お名前（フリガナ）（姓）</prop>
+            <prop key="inquiryHousing.input.valFnameKana">お名前（フリガナ）（名）</prop>
+            <prop key="inquiryHousing.input.valEmail">メールアドレス</prop>
+            <prop key="inquiryHousing.input.valTel">電話番号</prop>
+            <prop key="inquiryHousing.input.valFax">FAX番号</prop>
+            <prop key="inquiryHousing.input.valZip">郵便番号</prop>
+            <prop key="inquiryHousing.input.valPrefName">都道府県</prop>
+            <prop key="inquiryHousing.input.valAddress">市区町村番地</prop>
+            <prop key="inquiryHousing.input.valAddressOther">建物名</prop>
+            <prop key="inquiryHousing.input.valContactType">ご希望の連絡方法</prop>
+            <prop key="inquiryHousing.input.valContactTime">連絡可能な時間帯</prop>
+            <prop key="inquiryHousing.input.ansCd">アンケート回答</prop>
+            <prop key="inquiryHousing.input.etcAnswer1">アンケートの入力内容1</prop>
+            <prop key="inquiryHousing.input.etcAnswer2">アンケートの入力内容2</prop>
+            <prop key="inquiryHousing.input.etcAnswer3">アンケートの入力内容3</prop>
+            <!-- 汎用お問い合わせ　入力 -->
+            <prop key="inquiryGeneral.input.inquiryDtlType">お問い合わせ内容</prop>
+            <prop key="inquiryGeneral.input.eventName">セミナー・イベント名</prop>
+            <prop key="inquiryGeneral.input.eventDateTimeMonth">日時（月）</prop>
+            <prop key="inquiryGeneral.input.eventDateTimeDay">日時（日）</prop>
+            <prop key="inquiryGeneral.input.eventDateTimeHour">日時（時）</prop>
+            <prop key="inquiryGeneral.input.eventDateTimeMinute">日時（分）</prop>
+            <prop key="inquiryGeneral.input.eventDateTime">日時</prop>
+            <prop key="inquiryGeneral.input.inquiryText">お問い合わせ内容詳細</prop>
+            <prop key="inquiryGeneral.input.lname">お名前（姓）</prop>
+            <prop key="inquiryGeneral.input.fname">お名前（名）</prop>
+            <prop key="inquiryGeneral.input.lnameKana">お名前（フリガナ）（姓）</prop>
+            <prop key="inquiryGeneral.input.fnameKana">お名前（フリガナ）（名）</prop>
+            <prop key="inquiryGeneral.input.email">メールアドレス</prop>
+            <prop key="inquiryGeneral.input.tel">電話番号</prop>
+            <prop key="inquiryGeneral.input.inquiryContactType">ご希望の連絡方法</prop>
+            <prop key="inquiryGeneral.input.inquiryContactTime">連絡可能な時間帯</prop>
+            <prop key="inquiryGeneral.input.ansCd">アンケート回答</prop>
+            <prop key="inquiryGeneral.input.etcAnswer1">アンケートの入力内容1</prop>
+            <prop key="inquiryGeneral.input.etcAnswer2">アンケートの入力内容2</prop>
+            <prop key="inquiryGeneral.input.etcAnswer3">アンケートの入力内容3</prop>
+            <!-- マイページ会員入力 -->
+            <prop key="mypage.input.email">メールアドレス</prop>
+            <prop key="mypage.input.password">パスワード</prop>
+            <prop key="mypage.input.rePassword">パスワード確認</prop>
+            <prop key="mypage.input.memberLname">お名前（姓）</prop>
+            <prop key="mypage.input.memberFname">お名前（名）</prop>
+            <prop key="mypage.input.memberLnameKana">お名前（フリガナ）（姓）</prop>
+            <prop key="mypage.input.memberFnameKana">お名前（フリガナ）（名）</prop>
+            <prop key="member.input.zip">郵便番号</prop>
+            <prop key="member.input.residentFlg">居住形態</prop>
+            <prop key="member.input.prefCd">お客様情報・都道府県</prop>
+            <prop key="member.input.address">市区町村番地</prop>
+            <prop key="member.input.addressOther">建物名</prop>
+            <prop key="member.input.tel">電話番号</prop>
+			<prop key="member.input.hopePrefCd">物件希望地域・都道府県</prop>
+			<prop key="member.input.hopeAddress">物件希望地域・市区町村</prop>
+            <prop key="member.input.mailSendFlg">メルマガ配信</prop>
+            <prop key="member.input.ansCd">アンケート回答</prop>
+            <prop key="member.input.etcAnswer1">アンケートの入力内容1</prop>
+            <prop key="member.input.etcAnswer2">アンケートの入力内容2</prop>
+            <prop key="member.input.etcAnswer3">アンケートの入力内容3</prop>
+            <!-- 査定申込入力 -->
+            <prop key="assessment.input.buyHousingType">売却物件種別</prop>
+            <prop key="assessment.input.layoutCd1">間取り（マンション）</prop>
+            <prop key="assessment.input.layoutCd2">間取り（戸建）</prop>
+            <prop key="assessment.input.personalArea">専有面積</prop>
+            <prop key="assessment.input.buildAge1">築年数（マンション）</prop>
+            <prop key="assessment.input.buildAge2">築年数（戸建）</prop>
+            <prop key="assessment.input.landArea2">土地面積（戸建）</prop>
+            <prop key="assessment.input.landArea3">土地面積（土地）</prop>
+            <prop key="assessment.input.landAreaCrs2">土地面積単位（戸建）</prop>
+            <prop key="assessment.input.landAreaCrs3">土地面積単位（土地）</prop>
+            <prop key="assessment.input.buildingArea">建物面積</prop>
+            <prop key="assessment.input.buildingAreaCrs">建物面積単位</prop>
+            <prop key="assessment.input.zip">ご売却物件所在地・郵便番号</prop>
+            <prop key="assessment.input.prefCd">ご売却物件所在地・都道府県</prop>
+            <prop key="assessment.input.address">ご売却物件所在地・市区町村番地</prop>
+            <prop key="assessment.input.addressOther">ご売却物件所在地・建物名</prop>
+            <prop key="assessment.input.presentCd">現況</prop>
+            <prop key="assessment.input.buyTimeCd">ご売却予定の時期</prop>
+            <prop key="assessment.input.replacementFlg">買い替えの有無</prop>
+            <prop key="assessment.input.requestText">ご要望・ご質問</prop>
+            <prop key="assessment.input.lname">お名前（姓）</prop>
+            <prop key="assessment.input.fname">お名前（名）</prop>
+            <prop key="assessment.input.lnameKana">お名前（フリガナ）（姓）</prop>
+            <prop key="assessment.input.fnameKana">お名前（フリガナ）（名）</prop>
+            <prop key="assessment.input.email">メールアドレス</prop>
+            <prop key="assessment.input.tel">電話番号</prop>
+            <prop key="assessment.input.fax">FAX番号</prop>
+            <prop key="assessment.input.contactType">ご希望の連絡方法</prop>
+            <prop key="assessment.input.contactTime">連絡可能な時間帯</prop>
+            <prop key="assessment.input.userZip">お客様情報・郵便番号</prop>
+            <prop key="assessment.input.userPrefCd">お客様情報・都道府県</prop>
+            <prop key="assessment.input.userAddress">お客様情報・市区町村番地</prop>
+            <prop key="assessment.input.userAddressOther">お客様情報・建物名</prop>
+            <prop key="assessment.input.ansCd">アンケート回答</prop>
+            <prop key="assessment.input.etcAnswer1">アンケートの入力内容1</prop>
+            <prop key="assessment.input.etcAnswer2">アンケートの入力内容2</prop>
+            <prop key="assessment.input.etcAnswer3">アンケートの入力内容3</prop>
+            <prop key="passwordRemind.input.valMail">メールアドレス</prop>
+
+            <!-- ログイン画面 -->
+            <prop key="loginID">メールアドレス</prop>
+            <prop key="password">パスワード</prop>
+
+          </props>
+        </entry>
+
+        <entry key="errorCustom">
+          <props>
+          </props>
+        </entry>
+      </map>
+    </property>
+  </bean>
+</beans>

@@ -1,0 +1,286 @@
+@charset "shift_jis";
+/* Trans 2015/03/16 add-start */
+
+/* 編集画面ボタン表示用 */
+.flexBlockB06 {
+    margin-top: 15px;
+    width: 100%;
+}
+
+/* 一覧画面ボタン表示用 */
+.flexBlockB07 {
+    width: 100%;
+}
+
+/* 編集画面ボタン表示用 */
+.flexBlockB06Inner {
+    width: 750px;
+    margin: 0 auto;
+}
+
+/* 一覧画面ボタン表示用 */
+.flexBlockB07Inner {
+    width: 450px;
+    margin: 0 auto;
+}
+
+
+/* ボタン：40px, テーブル用 left */
+.btnBlockC11 {
+    width: 40px;
+    margin: 0 auto;
+    padding-top: 6px;
+    background: #fff url(/admin_rsc/cmn/imgs/bt_005_wrap_01.gif) top left no-repeat;
+    float:left;
+    padding-right: 10px;
+}
+
+/* ボタン：40px, テーブル用 right */
+.btnBlockC12 {
+    width: 40px;
+    margin: 0 auto;
+    padding-top: 6px;
+    background: #fff url(/admin_rsc/cmn/imgs/bt_005_wrap_01.gif) top left no-repeat;
+    float:right;
+    padding-right: 10px;
+}
+
+/* ボタン：87px, left */
+.btnBlockC13 {
+    width: 87px;
+    margin: 0 auto;
+    padding-top: 6px;
+    background: #fff url(/admin_rsc/cmn/imgs/bt_003_wrap_01.gif) top left no-repeat;
+    float: left;
+    padding-right: 10px;
+}
+
+/* ボタン：87px, right */
+.btnBlockC14 {
+    width: 87px;
+    margin: 0 auto;
+    padding-top: 6px;
+    background: #fff url(/admin_rsc/cmn/imgs/bt_003_wrap_01.gif) top left no-repeat;
+    float: right;
+    padding-right: 10px;
+}
+
+/* ボタン：200px, テーブル用 left */
+.btnBlockC15 {
+    width: 200px;
+    margin: 0 auto;
+    padding-top: 6px;
+    background: #fff url(/admin_rsc/cmn/imgs/bt_006_wrap_01.gif) top left no-repeat;
+    float:left;
+    padding-right: 10px;
+}
+
+/* ボタン：200px, テーブル用 right */
+.btnBlockC16 {
+    width: 200px;
+    margin: 0 auto;
+    padding-top: 6px;
+    background: #fff url(/admin_rsc/cmn/imgs/bt_006_wrap_01.gif) top left no-repeat;
+    float:right;
+    padding-right: 10px;
+}
+
+/* ボタン：150px, テーブル用 left */
+.btnBlockC17 {
+    width: 150px;
+    margin: 0 auto;
+    padding-top: 6px;
+    background: #fff url(/admin_rsc/cmn/imgs/bt_007_wrap_01.gif) top left no-repeat;
+    float:left;
+    padding-right: 10px;
+}
+
+/* ボタン：150px, テーブル用 right */
+.btnBlockC18 {
+    width: 150px;
+    margin: 0 auto;
+    padding-top: 6px;
+    background: #fff url(/admin_rsc/cmn/imgs/bt_007_wrap_01.gif) top left no-repeat;
+    float:right;
+    padding-right: 10px;
+}
+
+
+.btnBlockC11Inner,
+.btnBlockC12Inner {
+    padding-bottom: 6px;
+    background: #fff url(/admin_rsc/cmn/imgs/bt_005_wrap_03.gif) bottom left no-repeat;
+}
+
+.btnBlockC13Inner,
+.btnBlockC14Inner {
+    padding-bottom: 6px;
+    background: #fff url(/admin_rsc/cmn/imgs/bt_003_wrap_03.gif) bottom left no-repeat;
+}
+
+.btnBlockC15Inner,
+.btnBlockC16Inner {
+    padding-bottom: 6px;
+    background: #fff url(/admin_rsc/cmn/imgs/bt_006_wrap_03.gif) bottom left no-repeat;
+}
+
+.btnBlockC17Inner,
+.btnBlockC18Inner {
+    padding-bottom: 6px;
+    background: #fff url(/admin_rsc/cmn/imgs/bt_007_wrap_03.gif) bottom left no-repeat;
+}
+
+
+.btnBlockC11Inner2,
+.btnBlockC12Inner2 {
+    background: #fff url(/admin_rsc/cmn/imgs/bt_005_wrap_02.gif) top left repeat-y;
+}
+
+.btnBlockC13Inner2,
+.btnBlockC14Inner2 {
+    background: #fff url(/admin_rsc/cmn/imgs/bt_003_wrap_02.gif) top left repeat-y;
+}
+
+.btnBlockC15Inner2,
+.btnBlockC16Inner2 {
+    background: #fff url(/admin_rsc/cmn/imgs/bt_006_wrap_02.gif) top left repeat-y;
+}
+
+.btnBlockC17Inner2,
+.btnBlockC18Inner2 {
+    background: #fff url(/admin_rsc/cmn/imgs/bt_007_wrap_02.gif) top left repeat-y;
+}
+
+.btnBlockC11Inner2 a,
+.btnBlockC12Inner2 a,
+.btnBlockC13Inner2 a,
+.btnBlockC14Inner2 a,
+.btnBlockC15Inner2 a,
+.btnBlockC16Inner2 a,
+.btnBlockC17Inner2 a,
+.btnBlockC18Inner2 a{
+    font-weight: normal;
+    text-align: center;
+    _height: 5px;
+    display: block;
+    padding-top: 1px;
+}
+
+.btnBlockC11Inner2 a span,
+.btnBlockC12Inner2 a span,
+.btnBlockC13Inner2 a span,
+.btnBlockC14Inner2 a span,
+.btnBlockC15Inner2 a span,
+.btnBlockC16Inner2 a span,
+.btnBlockC17Inner2 a span,
+.btnBlockC18Inner2 a span{
+    padding: 0px 0px 0px 0px;
+    background: none;
+}
+
+.btnBlockC11 a:link,
+.btnBlockC11 a:visited,
+.btnBlockC11 a:hover,
+.btnBlockC12 a:link,
+.btnBlockC12 a:visited,
+.btnBlockC12 a:hover,
+.btnBlockC13 a:link,
+.btnBlockC13 a:visited,
+.btnBlockC13 a:hover,
+.btnBlockC14 a:link,
+.btnBlockC14 a:visited,
+.btnBlockC14 a:hover,
+.btnBlockC15 a:link,
+.btnBlockC15 a:visited,
+.btnBlockC15 a:hover,
+.btnBlockC16 a:link,
+.btnBlockC16 a:visited,
+.btnBlockC16 a:hover,
+.btnBlockC17 a:link,
+.btnBlockC17 a:visited,
+.btnBlockC17 a:hover,
+.btnBlockC18 a:link,
+.btnBlockC18 a:visited,
+.btnBlockC18 a:hover{
+    color: #000;
+    text-decoration: none;
+}
+
+/* テーブルの87pxボタンのスタイル */
+.tblNormalBtn{
+    font-size:11px;
+    font-weight: normal;
+    text-align: center;
+    height: 16px;
+    display: block;
+    padding-top: 1px;
+}
+
+/* テーブルの40pxボタンのスタイル */
+.tblSmallBtn{
+    font-size:12px;
+    font-weight: normal;
+    text-align: center;
+    _height: 5px;
+    display: block;
+    padding-top: 1px;
+}
+
+/* 完了画面のフォントサイズ */
+.compFont{
+    font-family:MS Pゴシック;
+    font-size: 28px;
+}
+
+table.tableA5 {
+    border-width: 0 1px 1px 0;
+    border-style: solid;
+    border-color: #cecece;
+}
+table.tableA5 th {
+    width: 200px;
+    text-align: left;
+    padding: 10px;
+    border-width: 1px 0 0 1px;
+    border-style: solid;
+    border-color: #cecece;
+    font-weight: normal;
+}
+
+table.tableA5 td {
+    padding: 10px;
+    border-width: 1px 0 0 1px;
+    border-style: solid;
+    border-color: #cecece;
+    font-weight: normal;
+}
+
+.inputStyle{
+    float:left;
+}
+.inputStyle1{
+    padding-top:8px;
+}
+.inputStyle2{
+    margin-right:8px;
+}
+
+.flowStyle{
+    height:508px;
+    overflow-y:scroll;
+}
+
+.flowStyle1{
+    height:408px;
+    overflow-y:scroll;
+}
+
+/* IMEの禁止 */
+.ime-disabled{
+    ime-mode:disabled;
+}
+
+img.pdfIcon {
+    text:expression(src=url(/admin_rsc/cmn/imgs/pdf_icon.gif));
+}
+/* Trans 2015/03/16 add-end */

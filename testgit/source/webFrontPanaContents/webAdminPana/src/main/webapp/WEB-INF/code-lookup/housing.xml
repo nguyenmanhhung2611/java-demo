@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+	<!-- 物件情報定数管理 -->
+	<bean class="jp.co.transcosmos.dm3.lookup.CodeLookupList">
+		<property name="codeLookupManager">
+			<ref bean="codeLookupManager" />
+		</property>
+		<property name="lookups">
+			<map>
+                <entry key="reformPlanCategories">
+                    <list>
+                        <value>R00:いい品質</value>
+                        <value>R00.R01:大理石の床</value>
+                        <value>R00.R02:ヒノキの風呂</value>
+                        <value>R10:いい住まい</value>
+                        <value>R10.R11:広いキッチン</value>
+                        <value>R10.R12:広いお風呂</value>
+                        <value>R20:いい生き方</value>
+                        <value>R20.R21:カルチャー</value>
+                        <value>R20.R22:ヘルス</value>
+                        <value>R20.R23:スポーツ</value>
+                        <value>R20.R24:ホビー</value>
+                        
+                    </list>
+                </entry>
+				<!-- ステータスCD -->
+				<entry key="statusCd">
+					<list>
+						<value>001:登録</value>
+						<value>002:対応中</value>
+						<value>003:完了</value>
+						<value>004:商談待</value>
+						<value>005:商談中</value>
+						<value>006:売却済</value>
+						<value>007:失注</value>
+						<value>008:VIP</value>
+					</list>
+				</entry>
+				<!-- 非公開フラグ -->
+				<entry key="hiddenFlg">
+					<list>
+						<value>1:非公開</value>
+						<value>0:公開</value>
+					</list>
+				</entry>
+				<!-- 単位種類 -->
+				<entry key="unit">
+					<props>
+						<prop key="01">不明</prop>
+						<prop key="02">ヶ月</prop>
+						<prop key="03">円</prop>
+						<prop key="04">％</prop>
+					</props>
+				</entry>
+				<!-- 敷引礼金区分 -->
+				<entry key="deposit">
+					<props>
+						<prop key="01">敷引金</prop>
+						<prop key="02">礼金</prop>
+						<prop key="03">契約一時金</prop>
+						<prop key="04">退去引金</prop>
+					</props>
+				</entry>
+				<!-- 間取り -->
+				<entry key="layoutCd">
+					<props>
+						<prop key="001">ワンルーム</prop>
+						<prop key="002">1LDK(K・DK)</prop>
+						<prop key="003">2LDK(K・DK)</prop>
+						<prop key="004">3LDK(K・DK)</prop>
+						<prop key="005">4LDK(K・DK)</prop>
+						<prop key="006">5LDK(K・DK)以上</prop>
+					</props>
+				</entry>
+				<!-- 駐車場の状況 -->
+				<entry key="parkingSituation">
+					<props>
+						<prop key="01">無し</prop>
+						<prop key="02">有り（敷地内）</prop>
+						<prop key="03">付</prop>
+						<prop key="04">近隣駐車場</prop>
+					</props>
+				</entry>
+				<!-- 方角種類 -->
+				<entry key="direction">
+					<list>
+						<value>01:東</value>
+						<value>02:西</value>
+						<value>03:南</value>
+						<value>04:北</value>
+						<value>05:北東</value>
+						<value>06:北西</value>
+						<value>07:南東</value>
+						<value>08:南西</value>
+						<value>09:東（角部屋）</value>
+						<value>10:西（角部屋）</value>
+						<value>11:南（角部屋）</value>
+						<value>12:北（角部屋）</value>
+						<value>13:北東（角部屋）</value>
+						<value>14:北西（角部屋）</value>
+						<value>15:南東（角部屋）</value>
+						<value>16:南西（角部屋）</value>
+					</list>
+				</entry>
+
+				<!-- 用途地域 -->
+				<entry key="usedAreaCd">
+					<list>
+						<value>000:無指定</value>
+						<value>001:第一種低層住居専用地域</value>
+						<value>002:第二種低層住居専用地域</value>
+						<value>003:第一種中高層住居専用地域</value>
+						<value>004:第二種中高層住居専用地域</value>
+						<value>005:第一種住居地域</value>
+						<value>006:第二種住居地域</value>
+						<value>007:準住居地域</value>
+						<value>008:近隣商業地域</value>
+						<value>009:商業地域</value>
+						<value>010:準工業地域</value>
+						<value>011:工業地域</value>
+					</list>
+				</entry>
+				<!-- 取引形態区分 -->
+				<entry key="transactTypeDiv">
+					<list>
+						<value>001:仲介</value>
+						<value>002:代理</value>
+						<value>003:売主</value>
+					</list>
+				</entry>
+				<!-- 入居可能時期フラグ -->
+				<entry key="moveinTiming">
+					<props>
+						<prop key="01">即時</prop>
+						<prop key="02">相談</prop>
+						<prop key="03">期日指定</prop>
+					</props>
+				</entry>
+				<!-- 損保認定ランク -->
+				<entry key="insurLank">
+					<props>
+						<prop key="001">PAH</prop>
+						<prop key="002">厳選</prop>
+						<prop key="003">おすすめ</prop>
+						<prop key="004">一般</prop>
+					</props>
+				</entry>
+				<!-- 土地権利 -->
+				<entry key="landRight">
+					<list>
+						<value>001:所有権</value>
+						<value>002:賃借権</value>
+						<value>003:定期借地権</value>
+						<value>004:指定なし</value>
+					</list>
+				</entry>
+				<!-- 規模 -->
+				<entry key="scaleDataValue">
+					<list>
+						<value>001:30戸以上</value>
+						<value>002:50戸以上</value>
+						<value>003:100戸以上</value>
+						<value>004:大規模マンション（100戸以上）</value>
+						<value>005:タワーマンション（20階建て以上）</value>
+						<value>006:低層低層マンション（3階建て以下）</value>
+						<value>007:低層マンション（3階建て以下）</value>
+						<value>008:マンション</value>
+						<value>009:店舗・事務所</value>
+						<value>010:指定なし</value>
+					</list>
+				</entry>
+				<!-- 瑕疵保険 -->
+				<entry key="insurExist">
+					<list>
+						<value>0:なし</value>
+						<value>1:加入可</value>
+						<value>2:リフォーム後加入可</value>
+					</list>
+				</entry>
+				<!-- 画像タイプ -->
+				<entry key="ImageType">
+					<list>
+						<value>00:間取</value>
+						<value>02:動画</value>
+						<value>01:外観</value>
+						<value>03:内観</value>
+						<value>04:周辺</value>
+						<value>99:その他</value>
+					</list>
+				</entry>
+				<!-- 閲覧権限 -->
+				<entry key="ImageInfoRoleId">
+					<list>
+						<value>1:全員可</value>
+						<value>2:会員のみ</value>
+					</list>
+				</entry>
+				<!-- 物件種類CD buildingにて定義されている -->
+
+				<!-- 住宅診断実施有無 Admin側用 下記定義同時変更要 -->
+				<entry key="housingInspection">
+					<list>
+						<value>01:有</value>
+						<value>02:無</value>
+					</list>
+				</entry>
+
+				<!-- 住宅診断実施有無 Front側用 上記定義同時変更要 -->
+				<entry key="housingInspectionFront">
+					<list>
+						<value>01:実施済</value>
+						<value>02:未実施</value>
+					</list>
+				</entry>
+
+				<!-- 住宅診断結果 -->
+				<entry key="inspectionResult">
+					<list>
+						<value>1:5</value>
+						<value>2:4</value>
+						<value>3:3</value>
+						<value>4:2</value>
+						<value>5:1</value>
+					</list>
+				</entry>
+				<!-- 住宅診断レベル -->
+				<entry key="inspectionLabel">
+					<list>
+						<value>1:S</value>
+						<value>2:A</value>
+						<value>3:B</value>
+						<value>4:C</value>
+					</list>
+				</entry>
+				<!-- 住宅診断戸建 -->
+				<entry key="inspectionTrustHouse">
+					<list>
+						<value>1:屋根</value>
+						<value>2:外装</value>
+						<value>3:バルコニー</value>
+						<value>4:小屋裏</value>
+						<value>5:内装</value>
+						<value>6:基礎</value>
+						<value>7:床下</value>
+						<value>8:給排水管</value>
+					</list>
+				</entry>
+				<!-- 住宅診断戸建 診断結果（説明） -->
+				<entry key="inspectionTrustHouseExplain">
+					<list>
+						<value>1:葺き材、防水層、水切り金物等</value>
+						<value>2:外装材、建具、シーリング材等</value>
+						<value>3:支持部材、防水層、水切り金具等</value>
+						<value>4:小屋組、換気ダクト等</value>
+						<value>5:壁、柱、床、天井等</value>
+						<value>6:コンクリート基礎面等</value>
+						<value>7:土台、床組等</value>
+						<value>8:給排水管、給水メーター等</value>
+					</list>
+				</entry>
+				<!-- 住宅診断 マンション -->
+				<entry key="inspectionTrustMansion">
+					<list>
+						<value>1:壁</value>
+						<value>2:床</value>
+						<value>3:天井</value>
+						<value>4:サッシ・ドア</value>
+						<value>5:給排水設備</value>
+						<value>6:換気設備</value>
+						<value>7:床下・天井裏</value>
+						<value>8:バルコニー・ポーチ</value>
+					</list>
+				</entry>
+				<!-- 住宅診断 マンション 診断結果（説明） -->
+				<entry key="inspectionTrustMansionExplain">
+					<list>
+						<value>1:壁、柱及び梁の表面等（住戸内）</value>
+						<value>2:床の表面等（住戸内）</value>
+						<value>3:天井の表面等（住戸内）</value>
+						<value>4:サッシ・網戸・扉等（住戸内）</value>
+						<value>5:給水器具、排水管等（住戸内）</value>
+						<value>6:換気扇、ダクト等（住戸内）</value>
+						<value>7:点検口から見える範囲</value>
+						<value>8:専用使用権がある部分</value>
+					</list>
+				</entry>
+				<!-- 物件一覧更新日時条件 -->
+				<entry key="housingListUpdDate">
+					<list>
+						<value>01:指定無し</value>
+						<value>02:7日以内</value>
+						<value>03:7日以上14日以内</value>
+						<value>04:15日以上</value>
+					</list>
+				</entry>
+				<!-- おすすめポイント -->
+				<entry key="recommend_point_icon">
+					<list>
+						<value>014:住宅診断済</value>
+						<value>015:新築保証承継可</value>
+						<value>016:瑕疵保険可</value>
+						<value>017:リフォーム保険可</value>
+						<value>018:SumStock</value>
+						<value>019:一体型ローン可</value>
+					</list>
+				</entry>
+				<!-- おすすめポイント PC用ICON -->
+				<entry key="recommend_point_icon_img_SPdisplayNone">
+					<list>
+						<value>014:buy_icon_04.png</value>
+						<value>015:buy_icon_05.png</value>
+						<value>016:buy_icon_06.png</value>
+						<value>017:buy_icon_32.png</value>
+						<value>018:buy_icon_07.png</value>
+						<value>019:buy_icon_08.png</value>
+					</list>
+				</entry>
+				<!-- おすすめポイント SP用ICON -->
+				<entry key="recommend_point_icon_img_SPdisplayBlock">
+					<list>
+						<value>014:sp_buy_icon_01.png</value>
+						<value>015:sp_buy_icon_02.png</value>
+						<value>016:sp_buy_icon_03.png</value>
+						<value>017:sp_buy_icon_11.png</value>
+						<value>018:sp_buy_icon_04.png</value>
+						<value>019:sp_buy_icon_05.png</value>
+					</list>
+				</entry>
+				<!-- おすすめポイント 静的HTML名 -->
+				<entry key="recommend_point_html">
+					<list>
+						<value>014:buy01.html</value>
+						<value>015:buy02.html</value>
+						<value>016:buy03.html</value>
+						<value>017:buy04.html</value>
+						<value>018:buy05.html</value>
+						<value>019:buy06.html</value>
+					</list>
+				</entry>
+				<!-- 再検索の都道府県CD -->
+				<entry key="researchPrefCd">
+					<list>
+						<value>11:埼玉県</value>
+						<value>12:千葉県</value>
+						<value>13:東京都</value>
+						<value>14:神奈川県</value>
+						<value>21:岐阜県</value>
+						<value>22:静岡</value>
+						<value>23:愛知県</value>
+						<value>24:三重県</value>
+						<value>26:京都府</value>
+						<value>27:大阪府</value>
+						<value>28:兵庫県</value>
+						<value>29:奈良県</value>
+					</list>
+				</entry>
+			</map>
+		</property>
+	</bean>
+</beans>

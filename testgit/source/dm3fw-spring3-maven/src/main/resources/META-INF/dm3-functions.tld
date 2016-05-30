@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+    version="2.0">
+  <tlib-version>1.2</tlib-version>
+  <short-name>dm3functions</short-name>
+  <uri>http://dm3.transcosmos.co.jp/tags/functions</uri>
+  <function>
+    <description>
+      URL encodes a string
+    </description>
+    <name>encodeURLToken</name>
+    <function-class>jp.co.transcosmos.dm3.utils.ServletUtils</function-class>
+    <function-signature>String encodeURLToken(java.lang.String, java.lang.String)</function-signature>
+    <example>
+      &lt;c:out value="${dm3functions:encodeURLToken(text, encoding)}"/&gt;
+    </example>
+  </function>
+
+  <function>
+    <description>
+      CR Code change to br tag
+    </description>
+    <name>crToHtmlTag</name>
+    <function-class>jp.co.transcosmos.dm3.utils.ServletUtils</function-class>
+    <function-signature>String crToHtmlTag(java.lang.String)</function-signature>
+    <example>
+      ${dm3functions:crToHtmlTag(text)}
+    </example>
+  </function>
+
+  <function>
+    <description>
+      String Relace
+    </description>
+    <name>replace</name>
+    <function-class>jp.co.transcosmos.dm3.utils.ServletUtils</function-class>
+    <function-signature>String replace(java.lang.String, java.lang.String, java.lang.String)</function-signature>
+    <example>
+      ${dm3functions:replace(targetText, replaceFromText, replaceToText)}
+    </example>
+  </function>
+
+  <function>
+    <description>
+      Add prefix
+    </description>
+    <name>addPrefix</name>
+    <function-class>jp.co.transcosmos.dm3.utils.StringUtils</function-class>
+    <function-signature>String addPrefix(java.lang.Object, java.lang.String)</function-signature>
+    <example>
+      &lt;c:out value="${dm3functions:addPrefix(target, prefix)}"/&gt;
+    </example>
+  </function>
+
+  <function>
+    <description>
+      Add suffix
+    </description>
+    <name>addSuffix</name>
+    <function-class>jp.co.transcosmos.dm3.utils.StringUtils</function-class>
+    <function-signature>String addSuffix(java.lang.Object, java.lang.String)</function-signature>
+    <example>
+      &lt;c:out value="${dm3functions:addSuffix(target, suffix)}"/&gt;
+    </example>
+  </function>
+
+</taglib>

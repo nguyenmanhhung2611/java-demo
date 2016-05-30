@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+                           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+
+  <bean id="divisionInitCommand" class="jp.co.transcosmos.dm3.webFront.inquiryDivision.command.InquiryDivisionInitCommand"  scope="prototype">
+  </bean>
+
+  <!-- マイページログイン処理 -->
+<!--
+  <bean id="divisionCommand" class="jp.co.transcosmos.dm3.webFront.inquiryDivision.command.InquiryDivisionCommand"  scope="prototype">
+    <property name="authentication" ref="mypageAuth"/>
+    <property name="loginForm">
+      <bean class="jp.co.transcosmos.dm3.login.form.v3.AutoLoginForm" scope="prototype"/>
+    </property>
+  </bean>
+-->
+
+  <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMappingList">
+    <property name="commandURLMapper" ref="commandURLMapper"/>
+    <property name="mappings">
+      <list>
+
+        <!-- ログイン画面 （Panasonic 版用ログインページを設定）-->
+        <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+          <property name="urlPattern" value="/buy/inquiry/division/"/>
+          <property name="defaultCommandName" value="divisionInitCommand"/>
+          <!-- <property name="defaultViewName" value="/WEB-INF/jsp/front/inquiryDivision/inquiryDivision.jsp"/> -->
+          <!-- ログイン画面へ遷移しなくて、直接redirect.jspへ遷移する（#5438対応）-->
+          <property name="defaultViewName" value="/WEB-INF/jsp/front/inquiryDivision/inquiryDivisionRedirect.jsp"/>
+        </bean>
+
+        <!-- ログイン処理  （Panasonic 版用ログインページを設定）-->
+<!--
+        <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+          <property name="urlPattern" value="/buy/inquiry/division/check/"/>
+          <property name="defaultCommandName" value="divisionCommand"/>
+          <property name="defaultViewName" value="/WEB-INF/jsp/front/inquiryDivision/inquiryDivision.jsp"/>
+          <property name="namedViews">
+            <props>
+              <prop key="success">/WEB-INF/jsp/front/inquiryDivision/inquiryDivisionRedirect.jsp</prop>
+            </props>
+          </property>
+        </bean>
+-->
+      </list>
+    </property>
+  </bean>
+
+</beans>

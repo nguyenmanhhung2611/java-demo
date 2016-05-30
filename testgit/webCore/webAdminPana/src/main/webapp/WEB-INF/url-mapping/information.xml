@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+                           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+
+  <!-- お知らせの検索・一覧画面 -->
+  <bean id="informationListCommand" class="jp.co.transcosmos.dm3.webAdmin.information.command.PanaInformationListCommand" scope="prototype">
+    <property name="informationManager" ref="informationManager"/>
+    <property name="authLogging" ref="authLogging"/>
+    <property name="rowsPerPage" value="50"/>
+    <property name="visibleNavigationPageCount" value="10"/>
+    <property name="mode" value="search" />
+  </bean>
+
+  <!-- お知らせ情報新規登録入力画面 -->
+  <bean id="informationAddInputCommand" class="jp.co.transcosmos.dm3.adminCore.information.command.InformationInputCommand" scope="prototype">
+    <property name="mode" value="insert"/>
+  </bean>
+
+  <!-- コピーして新規作成画面 -->
+  <bean id="informationAddCopyCommand" class="jp.co.transcosmos.dm3.webAdmin.information.command.InformationCopyCommand" scope="prototype">
+    <property name="informationManager" ref="informationManager"/>
+  </bean>
+
+  <!-- お知らせ情報新規登録入力確認画面 -->
+  <bean id="informationAddConfirmCommand" class="jp.co.transcosmos.dm3.adminCore.information.command.InformationConfirmCommand" scope="prototype">
+    <property name="mode" value="insert"/>
+    <property name="memberInfoDAO" ref="memberInfoDAO" />
+  </bean>
+
+  <!-- お知らせ情報新規登録完了画面 -->
+  <bean id="informationAddCompCommand" class="jp.co.transcosmos.dm3.webAdmin.information.command.PanaInformationCompCommand" scope="prototype">
+    <property name="informationManager" ref="informationManager"/>
+    <property name="mode" value="insert"/>
+    <property name="useUserIdValidation" value="false"/>
+    <property name="sendInformationTemplate" ref="sendInformationTemplate"/>
+  </bean>
+
+  <!-- お知らせ情報変更入力画面 -->
+  <bean id="informationUpdInputCommand" class="jp.co.transcosmos.dm3.adminCore.information.command.InformationInputCommand" scope="prototype">
+    <property name="informationManager" ref="informationManager"/>
+    <property name="mode" value="update"/>
+  </bean>
+  <!-- お知らせ情報変更入力確認画面 -->
+  <bean id="informationUpdConfirmCommand" class="jp.co.transcosmos.dm3.adminCore.information.command.InformationConfirmCommand" scope="prototype">
+    <property name="mode" value="update"/>
+    <property name="memberInfoDAO" ref="memberInfoDAO" />
+  </bean>
+
+  <!-- お知らせ情報変更登録完了画面 -->
+  <bean id="informationUpdCompCommand" class="jp.co.transcosmos.dm3.webAdmin.information.command.PanaInformationCompCommand" scope="prototype">
+    <property name="informationManager" ref="informationManager"/>
+    <property name="mode" value="update"/>
+    <property name="sendInformationTemplate" ref="sendInformationTemplate"/>
+  </bean>
+
+
+  <!-- お知らせ情報削除画面 -->
+  <bean id="informationDelCompCommand" class="jp.co.transcosmos.dm3.webAdmin.information.command.PanaInformationListCommand" scope="prototype">
+    <property name="informationManager" ref="informationManager"/>
+    <property name="authLogging" ref="authLogging"/>
+    <property name="rowsPerPage" value="50"/>
+    <property name="visibleNavigationPageCount" value="10"/>
+    <property name="mode" value="delete"/>
+  </bean>
+
+
+  <!-- CSV 出力 -->
+  <bean id="informationCsvCommand" class="jp.co.transcosmos.dm3.webAdmin.information.command.PanaCsvCommand" scope="prototype">
+    <property name="informationManager" ref="informationManager"/>
+    <property name="authLogging" ref="adminLogging"/>
+    <property name="mode" value="csv" />
+  </bean>
+
+    <!-- CSV 出力設定 -->
+  <bean id="informationCsvConverter" class="jp.co.transcosmos.dm3.webAdmin.information.PanaCsvConverter">
+    <property name="codeLookupManager" ref="codeLookupManager"/>
+    <property name="adminLoginInfoDAO" ref="adminLoginInfoDAO"/>
+  </bean>
+
+  <bean id="informationCsvConfig" class="jp.co.transcosmos.dm3.csv.CsvConfig">
+    <property name="fileName" value="oshirase_###yyyyMMdd###" />
+    <property name="headerColumns">
+      <list>
+        <value>お知らせ番号</value>
+        <value>登録日時</value>
+        <value>新規登録者</value>
+        <value>種別</value>
+        <value>対象会員</value>
+        <value>メール送信</value>
+        <value>タイトル</value>
+        <value>お知らせ内容</value>
+        <value>リンク</value>
+        <value>表示期間（FROM)</value>
+        <value>表示期間（TO）</value>
+        <value>最終更新日</value>
+        <value>最終更新者</value>
+      </list>
+    </property>
+    <property name="dbColumns">
+      <list>
+        <value>information.informationNo</value>
+        <value>information.insDate</value>
+        <value>information.insUserId</value>
+        <value>information.informationType</value>
+        <value>memberInfo.memberLname</value>
+        <value>information.sendFlg</value>
+        <value>information.title</value>
+        <value>information.informationMsg</value>
+        <value>information.url</value>
+        <value>information.startDate</value>
+        <value>information.endDate</value>
+        <value>information.updDate</value>
+        <value>information.updUserId</value>
+      </list>
+    </property>
+    <property name="csvValueConverter" ref="informationCsvConverter"/>
+    <property name="useBOM" value="true"/>
+  </bean>
+
+  <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMappingList">
+    <property name="commandURLMapper" ref="commandURLMapper"/>
+    <property name="mappings">
+      <list>
+        <!-- お知らせの検索・一覧画面 -->
+        <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+          <property name="urlPattern" value="/top/information/list/"/>
+          <property name="namedCommands">
+            <props>
+              <prop key="list">informationListCommand</prop>
+            </props>
+          </property>
+          <property name="defaultViewName" value="/WEB-INF/jsp/admin/information/InformationList.jsp"/>
+        </bean>
+
+        <!-- お知らせ情報新規入力画面 -->
+        <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+          <property name="urlPattern" value="/top/information/new/input/" />
+          <property name="defaultCommandName" value="informationAddInputCommand"/>
+          <property name="defaultViewName" value="/WEB-INF/jsp/admin/information/InformationAddInput.jsp"/>
+        </bean>
+
+        <!-- コピーして新規作成画面 -->
+        <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+          <property name="urlPattern" value="/top/information/new/copy/" />
+          <property name="defaultCommandName" value="informationAddCopyCommand"/>
+          <property name="defaultViewName" value="/WEB-INF/jsp/admin/information/InformationAddInput.jsp"/>
+        </bean>
+
+        <!-- お知らせ情報変更入力画面 -->
+        <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+          <property name="urlPattern" value="/top/information/update/input/" />
+          <property name="defaultCommandName" value="informationUpdInputCommand"/>
+          <property name="defaultViewName" value="/WEB-INF/jsp/admin/information/InformationUpdInput.jsp"/>
+        </bean>
+
+        <!-- お知らせ情報新規入力確認画面 -->
+        <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+          <property name="urlPattern" value="/top/information/new/confirm/" />
+          <property name="defaultCommandName" value="informationAddConfirmCommand"/>
+          <property name="defaultViewName" value="/WEB-INF/jsp/admin/information/InformationAddConfirm.jsp"/>
+          <property name="namedViews">
+            <props>
+              <prop key="input">/WEB-INF/jsp/admin/information/InformationAddInput.jsp</prop>
+            </props>
+          </property>
+        </bean>
+
+        <!-- お知らせ情報変更入力確認画面 -->
+        <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+          <property name="urlPattern" value="/top/information/update/confirm/" />
+          <property name="defaultCommandName" value="informationUpdConfirmCommand"/>
+          <property name="defaultViewName" value="/WEB-INF/jsp/admin/information/InformationUpdConfirm.jsp"/>
+          <property name="namedViews">
+            <props>
+              <prop key="input">/WEB-INF/jsp/admin/information/InformationUpdInput.jsp</prop>
+            </props>
+          </property>
+        </bean>
+
+        <!-- お知らせ詳細画面 -->
+        <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+          <property name="urlPattern" value="/top/information/detail/"/>
+          <property name="defaultCommandName" value="informationUpdInputCommand"/>
+          <property name="defaultViewName" value="/WEB-INF/jsp/admin/information/InformationUpdInput.jsp"/>
+        </bean>
+
+
+        <!-- お知らせ情報新規登録完了画面 -->
+        <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+          <property name="urlPattern" value="/top/information/new/result/" />
+          <property name="defaultCommandName" value="informationAddCompCommand"/>
+          <property name="defaultViewName" value="/WEB-INF/jsp/admin/information/InformationCompRedirect.jsp"/>
+          <property name="namedViews">
+            <props>
+              <prop key="input">/WEB-INF/jsp/admin/information/InformationAddInput.jsp</prop>
+              <prop key="comp">/WEB-INF/jsp/admin/information/InformationComp.jsp</prop>
+            </props>
+          </property>
+        </bean>
+
+        <!-- お知らせ情報変更登録完了画面 -->
+        <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+          <property name="urlPattern" value="/top/information/update/result/" />
+          <property name="defaultCommandName" value="informationUpdCompCommand"/>
+          <property name="defaultViewName" value="/WEB-INF/jsp/admin/information/InformationCompRedirect.jsp"/>
+          <property name="namedViews">
+            <props>
+              <prop key="input">/WEB-INF/jsp/admin/information/InformationUpdInput.jsp</prop>
+              <prop key="comp">/WEB-INF/jsp/admin/information/InformationComp.jsp</prop>
+            </props>
+          </property>
+        </bean>
+
+        <!-- お知らせ情報削除完了画面 -->
+        <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+          <property name="urlPattern" value="/top/information/delConfirm/" />
+          <property name="defaultCommandName" value="informationDelCompCommand"/>
+          <property name="defaultViewName" value="/WEB-INF/jsp/admin/information/InformationListDeleteCompRedirect.jsp"/>
+        </bean>
+
+        <!-- CSV 出力 -->
+        <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+          <property name="urlPattern" value="/top/information/csv/"/>
+          <property name="defaultCommandName" value="informationCsvCommand"/>
+          <property name="defaultViewName" value="/WEB-INF/jsp/admin/information/InformationList.jsp"/>
+          <property name="namedViews">
+            <props>
+              <prop key="success">csvh:informationCsvConfig</prop>
+            </props>
+          </property>
+        </bean>
+
+      </list>
+    </property>
+  </bean>
+</beans>

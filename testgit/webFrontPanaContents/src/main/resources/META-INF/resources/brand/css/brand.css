@@ -1,0 +1,211 @@
+@charset "UTF-8";
+
+/*====================================================================
+ contents
+====================================================================*/
+/*lumpMix*/
+.lumpMix .lumpL {
+	float: left;
+	margin: 0 30px 5px 0;
+}
+.lumpMix .lumpR {
+	float: right;
+	margin: 0 0 5px 30px;
+}
+.lumpMix .lumpEnd { overflow:hidden; zoom:1;}
+
+.lumpMix:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+.lumpMix {
+	zoom: 1;
+}
+
+
+
+/* index.html
+--------------------------------------------------------------------*/
+.brand .titleBlock {
+	padding: 10px 0;
+	text-align: center;
+		
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-o-box-sizing:border-box;
+	-ms-box-sizing:border-box;
+}
+.brand .titleBlock h1 {
+	font-size: 130%;
+	font-weight: bold;
+}
+
+.brand .section01 h2 {
+	margin-bottom: 10px;
+	font-size: 130%;
+	font-weight: bold;
+	text-align: center;
+}
+
+.brand .section01 .borderBlock01 {
+	background: #ffffff;
+	border: 1px solid #cccccc;
+	padding: 30px;
+	margin-bottom: 25px;
+}
+.brand .section01 .borderBlock01.blockBg01 {
+	background: #ffffff url(/brand/img/index_bg_01.gif) 387px 19px no-repeat;
+}
+.brand .section01 .borderBlock01 .titleBlock {
+	padding: 0 5px 26px;
+	text-align: left;
+}
+.brand .section01 .borderBlock01 .titleBlock .title {
+	margin-bottom: 3px;
+	font-size: 213%;
+	font-weight: bold;
+}
+.brand .section01 .borderBlock01 .blockInner {
+	background: #f4f3f1;
+	padding: 20px 25px;
+	font-size: 113%;
+}
+
+.brand .section01 .borderBlock02 {
+	background: url(/brand/img/index_bg_03.gif) bottom left repeat-x;
+	padding-bottom: 2px;
+	margin-bottom: 35px;
+}
+.brand .section01 .borderBlock02 .blockInner {
+	background: #ffffff url(/brand/img/index_bg_03.gif) top left repeat-x;
+	padding: 32px 25px 30px;
+}
+.brand .section01 .borderBlock02 .blockInner .lumpL {
+	margin: 0 25px 5px 0;
+}
+.brand .section01 .borderBlock02 .blockInner .lumpR {
+	margin: 0 0 5px 25px;
+}
+.brand .section01 .borderBlock02 .blockInner h3 {
+	font-weight: bold;
+	display: table;
+	margin-bottom: 20px;
+}
+.brand .section01 .borderBlock02 .blockInner h3 .number {
+	display: table-cell;
+	width: 40px;
+	height: 46px;
+	background: url(/brand/img/index_bg_02.png) left top no-repeat;
+	padding-top: 10px;
+	color: #ffffff;
+	font-size: 184%;
+	text-align: center;
+	
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-o-box-sizing:border-box;
+	-ms-box-sizing:border-box;
+}
+.brand .section01 .borderBlock02 .blockInner h3 .text {
+	display: table-cell;
+	padding-left: 10px;
+	font-size: 173%;
+}
+.brand .section01 .borderBlock02 .blockInner h3 .text span {
+	color: #f5a900;
+}
+.brand .section01 .borderBlock02 .blockInner p {
+	font-size: 113%;
+}
+
+.brand .section01 .borderBlock03 {
+	background: #ffffff;
+	border: 1px solid #cccccc;
+	padding: 20px 20px 10px;
+	margin-bottom: 25px;
+}
+
+.brand .section01 .officeList {
+	margin-bottom: 44px;
+}
+.brand .section01 .officeList h3 {
+	background: #e5e3de;
+	padding: 10px 25px;
+	font-size: 148%;
+	font-weight: bold;
+}
+.brand .section01 .officeList .listInner {
+	background: #ffffff;
+	padding: 20px 25px;
+}
+.brand .section01 .officeList .listInner dl {
+	border-top: 2px solid #e5e3de;
+	padding-top: 15px;
+	margin-top: 15px;
+
+}
+.brand .section01 .officeList .listInner dl:first-child {
+	border-top: none;
+	padding-top: 0;
+	margin-top: 0;
+}
+.brand .section01 .officeList .listInner dt {
+	margin-bottom: 5px;
+	font-size: 130%;
+	font-weight: bold;
+}
+.brand .section01 .officeList .listInner dt span {
+	display: inline-block;
+	margin-right: 5px;
+	color: #f8c34d;
+}
+.brand .section01 .officeList .listInner dd {
+	font-size: 113%;
+}
+
+.brand .section01 .contactBlock {
+	display: table;
+	width: 100%;
+}
+.brand .section01 .contactBlock dt,
+.brand .section01 .contactBlock dd {
+	display: table-cell;
+	vertical-align: middle;
+	
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-o-box-sizing:border-box;
+	-ms-box-sizing:border-box;
+}
+.brand .section01 .contactBlock dt {
+	background: #e8e1d0;
+	width: 27%;
+	padding: 20px 5px 20px 20px;
+}
+.brand .section01 .contactBlock dt p {
+	padding-left: 20px;
+}
+.brand .section01 .contactBlock dt p:first-child {
+	background: url(/brand/img/index_icon_02.png) left top no-repeat;
+	font-size: 130%;
+	font-weight: bold;
+}
+.brand .section01 .contactBlock dd {
+	background: #f1ebdb;
+	width: 73%;
+	padding: 20px;
+}
+.brand .section01 .contactBlock dd .tel {
+	margin-bottom: 5px;
+	font-size: 173%;
+	font-weight: bold;
+}
+.brand .section01 .contactBlock dd .hours {
+	color: #3b3b3b;
+}

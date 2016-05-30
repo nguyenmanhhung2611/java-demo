@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+                           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+
+	<!-- おすすめポイント編集入力 -->
+	<bean id="recommendPointInputCommand"
+		class="jp.co.transcosmos.dm3.webAdmin.recommendPoint.command.RecommendPointInputCommand"
+		scope="prototype">
+		<property name="panaHousingManager" ref="panaHousingManager" />
+	</bean>
+
+	<!-- おすすめポイント編集更新完了 -->
+	<bean id="recommendPointCompCommand"
+		class="jp.co.transcosmos.dm3.webAdmin.recommendPoint.command.RecommendPointCompCommand"
+		scope="prototype">
+		<property name="panaHousingManager" ref="panaHousingManager" />
+	</bean>
+
+	<!-- おすすめポイント編集入力確認 -->
+	<bean id="recommendPointConfirmCommand"
+		class="jp.co.transcosmos.dm3.webAdmin.recommendPoint.command.RecommendPointConfirmCommand"
+		scope="prototype">
+	</bean>
+
+	<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMappingList">
+		<property name="commandURLMapper" ref="commandURLMapper" />
+		<property name="mappings">
+			<list>
+				<!-- おすすめポイント編集入力画面 -->
+				<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+					<property name="urlPattern" value="/top/housing/recopoint/input/" />
+					<property name="defaultCommandName" value="recommendPointInputCommand" />
+					<property name="defaultViewName"
+						value="/WEB-INF/jsp/admin/recommendPoint/RecommendPointUpdInput.jsp" />
+				</bean>
+
+				<!-- おすすめポイント編集入力確認画面 -->
+				<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+					<property name="urlPattern" value="/top/housing/recopoint/confirm/" />
+					<property name="defaultCommandName" value="recommendPointConfirmCommand" />
+					<property name="defaultViewName"
+						value="/WEB-INF/jsp/admin/recommendPoint/RecommendPointUpdConfirm.jsp" />
+					<property name="namedViews">
+						<props>
+							<prop key="input">/WEB-INF/jsp/admin/recommendPoint/RecommendPointUpdInput.jsp
+							</prop>
+						</props>
+					</property>
+				</bean>
+
+				<!-- おすすめポイント編集更新完了画面 -->
+				<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+					<property name="urlPattern" value="/top/housing/recopoint/result/" />
+					<property name="defaultCommandName" value="recommendPointCompCommand" />
+					<property name="defaultViewName"
+						value="/WEB-INF/jsp/admin/recommendPoint/RecommendPointCompRedirect.jsp" />
+					<property name="namedViews">
+						<props>
+							<prop key="input">/WEB-INF/jsp/admin/recommendPoint/RecommendPointUpdInput.jsp
+							</prop>
+							<prop key="comp">/WEB-INF/jsp/admin/recommendPoint/RecommendPointComp.jsp
+							</prop>
+						</props>
+					</property>
+				</bean>
+
+			</list>
+		</property>
+	</bean>
+</beans>

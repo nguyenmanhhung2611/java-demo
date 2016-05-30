@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+                           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+
+  <!-- 駅マスタメンテナンス用 Model -->
+  <bean id="statonMasterManage" class="jp.co.transcosmos.dm3.core.model.csvMaster.StationMasterManageImpl">
+    <property name="valueObjectFactory" ref="valueObjectFactory"/>
+    <property name="rrMstDAO" ref="rrMstDAO" />
+    <property name="routeMstDAO" ref="routeMstDAO" />
+    <property name="stationMstDAO" ref="stationMstDAO" />
+    <property name="stationRouteInfoDAO" ref="stationRouteInfoDAO" />
+    <property name="unregistRouteMstDAO" ref="unregistRouteMstDAO" />
+    <property name="prefMstDAO" ref="prefMstDAO" />
+    <property name="stationSortOrderUpdateDAO" ref="stationSortOrderUpdateDAO" />
+    <property name="codeLookupManager" ref="codeLookupManager" />
+    <property name="formFactory" ref="csvUploadFormFactory" />
+  </bean>
+
+  <!-- 住所マスタメンテナンス用 Model -->
+  <bean id="addressMasterManage" class="jp.co.transcosmos.dm3.core.model.csvMaster.AddressMasterManageImpl">
+    <property name="valueObjectFactory" ref="valueObjectFactory"/>
+    <property name="prefMstDAO" ref="prefMstDAO" />
+    <property name="addressMstDAO" ref="addressMstDAO" />
+    <property name="zipMstDAO" ref="zipMstDAO" />
+    <property name="formFactory" ref="csvUploadFormFactory" />
+    <property name="commonParameters" ref="commonParameters" />
+    <property name="codeLookupManager" ref="codeLookupManager" />
+  </bean>
+
+
+
+  <!-- 駅マスタCSV アップロード画面 -->
+  <bean id="stationUploadCommand" class="jp.co.transcosmos.dm3.adminCore.masterManage.command.MasterCsvUploadCommand" scope="prototype">
+    <property name="csvMasterManage" ref="statonMasterManage" />
+  </bean>
+
+  <!-- 住所マスタCSV アップロード画面 -->
+  <bean id="addressUploadCommand" class="jp.co.transcosmos.dm3.adminCore.masterManage.command.MasterCsvUploadCommand" scope="prototype">
+    <property name="csvMasterManage" ref="addressMasterManage" />
+  </bean>
+
+
+  <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMappingList">
+    <property name="commandURLMapper" ref="commandURLMapper"/>
+    <property name="mappings">
+      <list>
+        <!-- 駅情報 CSV アップロード画面（URL を Panasonic 用に変更） -->
+        <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+          <property name="urlPattern" value="/top/station/upload/"/>
+          <property name="namedCommands">
+            <props>
+              <prop key="upload">stationUploadCommand</prop>
+            </props>
+          </property>
+          <property name="defaultViewName" value="/WEB-INF/jsp/admin/master/AdmStationUpload.jsp"/>
+          <property name="namedViews">
+            <props>
+              <prop key="success">redirect:###!webroot###/top/station/result/</prop>
+            </props>
+          </property>
+        </bean>
+
+        <!-- 駅情報 CSV アップロード完了（URL を Panasonic 用に変更） -->
+        <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+          <property name="urlPattern" value="/top/station/result/"/>
+          <property name="defaultViewName" value="/WEB-INF/jsp/admin/master/AdmStationComp.jsp"/>
+        </bean>
+
+        <!-- 住所情報 CSV アップロード画面（URL を Panasonic 用に変更） -->
+        <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+          <property name="urlPattern" value="/top/address/upload/"/>
+          <property name="namedCommands">
+            <props>
+              <prop key="upload">addressUploadCommand</prop>
+            </props>
+          </property>
+          <property name="defaultViewName" value="/WEB-INF/jsp/admin/master/AdmAddressUpload.jsp"/>
+          <property name="namedViews">
+            <props>
+              <prop key="success">redirect:###!webroot###/top/address/result/</prop>
+            </props>
+          </property>
+        </bean>
+
+        <!-- 住所情報 CSV アップロード完了（URL を Panasonic 用に変更） -->
+        <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+          <property name="urlPattern" value="/top/address/result/"/>
+          <property name="defaultViewName" value="/WEB-INF/jsp/admin/master/AdmAddressComp.jsp"/>
+        </bean>
+
+      </list>
+	</property>
+  </bean>
+</beans>

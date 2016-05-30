@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+                           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+
+  <!-- 物件検索・一覧画面の初期化 -->
+  <bean id="inquiryListInitCommand" class="jp.co.transcosmos.dm3.webAdmin.inquiryList.command.InquiryListInitCommand" scope="prototype">
+  </bean>
+
+  <!-- 問合せの検索・一覧画面 -->
+  <bean id="inquiryListCommand" class="jp.co.transcosmos.dm3.webAdmin.inquiryList.command.InquiryListCommand" scope="prototype">
+    <property name="panaInquiryManager" ref="panaInquiryManager"/>
+    <property name="authLogging" ref="authLogging"/>
+    <property name="rowsPerPage" value="50"/>
+    <property name="visibleNavigationPageCount" value="10"/>
+    <property name="mode" value="search" />
+  </bean>
+
+  <!-- 問合削除・一覧画面 -->
+  <bean id="inquiryConfirmCommand" class="jp.co.transcosmos.dm3.webAdmin.inquiryList.command.InquiryListCommand" scope="prototype">
+    <property name="panaInquiryManager" ref="panaInquiryManager"/>
+    <property name="authLogging" ref="authLogging"/>
+    <property name="rowsPerPage" value="50"/>
+    <property name="visibleNavigationPageCount" value="10"/>
+    <property name="mode" value="delete" />
+  </bean>
+
+  <!-- CSV 出力 -->
+  <bean id="inquiryCsvCommand" class="jp.co.transcosmos.dm3.webAdmin.inquiryList.command.InquiryListCommand" scope="prototype">
+    <property name="panaInquiryManager" ref="panaInquiryManager"/>
+    <property name="authLogging" ref="adminLogging"/>
+    <property name="rowsPerPage" value="50"/>
+    <property name="visibleNavigationPageCount" value="10"/>
+    <property name="mode" value="csv" />
+  </bean>
+
+  <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMappingList">
+    <property name="commandURLMapper" ref="commandURLMapper"/>
+    <property name="mappings">
+      <list>
+        <!-- 物件問合せの検索・一覧画面 -->
+        <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+          <property name="urlPattern" value="/top/inquiry/list/"/>
+          <property name="defaultCommandName" value="inquiryListInitCommand"/>
+          <property name="namedCommands">
+            <props>
+              <prop key="list">inquiryListCommand</prop>
+            </props>
+          </property>
+          <property name="defaultViewName" value="/WEB-INF/jsp/admin/inquiryList/inquiryList.jsp"/>
+        </bean>
+
+        <!-- 問合せの削除・一覧画面 -->
+        <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+          <property name="urlPattern" value="/top/inquiry/delete/"/>
+          <property name="defaultCommandName" value="inquiryConfirmCommand"/>
+          <property name="defaultViewName" value="/WEB-INF/jsp/admin/inquiryList/inquiryListDeleteCompRedirect.jsp"/>
+        </bean>
+
+        <!-- CSV 出力 -->
+        <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+          <property name="urlPattern" value="/top/inquiry/csv/"/>
+          <property name="defaultCommandName" value="inquiryCsvCommand"/>
+          <property name="namedViews">
+            <props>
+              <!-- <prop key="success">csvh:inquiryCsvConfig</prop> -->
+              <prop key="success">/WEB-INF/jsp/admin/inquiryList/inquiryList.jsp</prop>
+            </props>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+</beans>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+                           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+
+	<!-- リフォーム情報入力画面へ戻る -->
+	<bean id="reformInfoBackCommand"
+		class="jp.co.transcosmos.dm3.webAdmin.reformPlan.command.ReformInfoInputCommand"
+		scope="prototype">
+		<property name="reformManager" ref="reformManager" />
+		<property name="panaHousingManager" ref="panaHousingManager"/>
+		<property name="commonParameters" ref="commonParameters"/>
+		<property name="fileUtil" ref="fileUtil"/>
+	</bean>
+
+	<!-- リフォーム情報入力画面 -->
+	<bean id="reformInfoAddInitCommand"
+		class="jp.co.transcosmos.dm3.webAdmin.reformPlan.command.ReformInfoInputCommand"
+		scope="prototype">
+		<property name="reformManager" ref="reformManager" />
+		<property name="panaHousingManager" ref="panaHousingManager"/>
+		<property name="commonParameters" ref="commonParameters"/>
+		<property name="fileUtil" ref="fileUtil"/>
+	</bean>
+
+	<!-- リフォーム情報確認画面 -->
+	<bean id="reformInfoAddConfirmCommand"
+		class="jp.co.transcosmos.dm3.webAdmin.reformPlan.command.ReformInfoConfirmCommand"
+		scope="prototype">
+        <property name="reformManager" ref="reformManager" />
+		<property name="commonParameters" ref="commonParameters"/>
+		<property name="fileUtil" ref="fileUtil"/>
+	</bean>
+
+	<!-- リフォーム情報完了 -->
+	<bean id="reformAddCompCommand"
+		class="jp.co.transcosmos.dm3.webAdmin.reformPlan.command.ReformInfoCompCommand"
+		scope="prototype">
+        <property name="reformManager" ref="reformManager" />
+		<property name="codeLookupManager" ref="codeLookupManager" />
+		<property name="commonParameters" ref="commonParameters"/>
+		<property name="fileUtil" ref="fileUtil"/>
+	</bean>
+
+	<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMappingList">
+		<property name="commandURLMapper" ref="commandURLMapper" />
+		<property name="mappings">
+			<list>
+				<!-- リフォーム情報入力画面 -->
+				<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+					<property name="urlPattern" value="/top/housing/reform/input/" />
+					<property name="defaultCommandName" value="reformInfoAddInitCommand" />
+					<property name="defaultViewName"
+						value="/WEB-INF/jsp/admin/reformPlan/ReformPlanAddInput.jsp" />
+					<property name="namedViews">
+						<props>
+							<prop key="input">/WEB-INF/jsp/admin/reformPlan/ReformPlanAddInput.jsp
+							</prop>
+						</props>
+					</property>
+				</bean>
+
+				<!-- リフォーム情報入力画面へ戻る -->
+				<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+					<property name="urlPattern" value="/top/housing/reform/back/" />
+					<property name="defaultCommandName" value="reformInfoBackCommand" />
+					<property name="defaultViewName"
+						value="/WEB-INF/jsp/admin/reformPlan/ReformPlanAddInput.jsp" />
+				</bean>
+
+				<!-- リフォーム情報確認画面 -->
+				<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+					<property name="urlPattern" value="/top/housing/reform/confirm/" />
+					<property name="defaultCommandName" value="reformInfoAddConfirmCommand" />
+					<property name="defaultViewName"
+						value="/WEB-INF/jsp/admin/reformPlan/ReformPlanAddConfirm.jsp" />
+					<property name="namedViews">
+						<props>
+							<prop key="input">/WEB-INF/jsp/admin/reformPlan/ReformPlanAddInput.jsp
+							</prop>
+						</props>
+					</property>
+				</bean>
+
+				<!-- リフォーム情報完了 -->
+				<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+					<property name="urlPattern" value="/top/housing/reform/result/" />
+					<property name="defaultCommandName" value="reformAddCompCommand" />
+					<property name="defaultViewName"
+						value="/WEB-INF/jsp/admin/reformPlan/ReformPlanCompRedirect.jsp" />
+					<property name="namedViews">
+						<props>
+							<prop key="input">/WEB-INF/jsp/admin/reformPlan/ReformPlanAddInput.jsp</prop>
+							<prop key="comp">/WEB-INF/jsp/admin/reformPlan/ReformPlanComp.jsp</prop>
+						</props>
+					</property>
+				</bean>
+			</list>
+		</property>
+	</bean>
+</beans>

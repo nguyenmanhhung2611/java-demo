@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+                           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+
+
+	<!-- 地域情報新規変更入力画面 -->
+	<bean id="buildingLandmarkUpdInputCommand"
+		class="jp.co.transcosmos.dm3.webAdmin.housingLandmark.command.HousingLandmarkInputCommand"
+		scope="prototype">
+		<property name="mode" value="update" />
+		<property name="buildingManager" ref="buildingManager" />
+		<property name="panaHousingManager" ref="panaHousingManager" />
+	</bean>
+	<!-- 地域情報変更確認画面 -->
+	<bean id="buildingLandmarkUpdConfirmCommand"
+		class="jp.co.transcosmos.dm3.adminCore.building.command.BuildingLandmarkConfirmCommand"
+		scope="prototype">
+		<property name="mode" value="update" />
+	</bean>
+	<!-- 地域情報変更完了画面 -->
+	<bean id="buildingLandmarkUpdCompCommand"
+		class="jp.co.transcosmos.dm3.webAdmin.housingLandmark.command.HousingLandmarkCompCommand"
+		scope="prototype">
+		<property name="panaHousingManager" ref="panaHousingManager" />
+		<property name="buildingManager" ref="buildingManager" />
+		<property name="mode" value="update" />
+	</bean>
+
+	<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMappingList">
+		<property name="commandURLMapper" ref="commandURLMapper" />
+		<property name="mappings">
+			<list>
+				<!-- 地域情報変更入力画面 -->
+				<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+					<property name="urlPattern" value="/top/housing/landmark/input/" />
+					<property name="defaultCommandName" value="buildingLandmarkUpdInputCommand" />
+					<property name="defaultViewName"
+						value="/WEB-INF/jsp/admin/region/RegionAddInput.jsp" />
+				</bean>
+				<!-- 地域情報変更入力確認画面 -->
+				<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+					<property name="urlPattern" value="/top/housing/landmark/confirm/" />
+					<property name="defaultCommandName" value="buildingLandmarkUpdConfirmCommand" />
+					<property name="defaultViewName"
+						value="/WEB-INF/jsp/admin/region/RegionAddConfirm.jsp" />
+					<property name="namedViews">
+						<props>
+							<prop key="input">/WEB-INF/jsp/admin/region/RegionAddInput.jsp
+							</prop>
+						</props>
+					</property>
+				</bean>
+				<!-- 地域情報変更完了画面 -->
+				<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+					<property name="urlPattern" value="/top/housing/landmark/result/" />
+					<property name="defaultCommandName" value="buildingLandmarkUpdCompCommand" />
+					<property name="defaultViewName"
+						value="/WEB-INF/jsp/admin/region/RegionCompRedirect.jsp" />
+					<property name="namedViews">
+						<props>
+							<prop key="input">/WEB-INF/jsp/admin/region/RegionAddInput.jsp
+							</prop>
+							<prop key="comp">/WEB-INF/jsp/admin/region/RegionComp.jsp
+							</prop>
+						</props>
+					</property>
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+</beans>

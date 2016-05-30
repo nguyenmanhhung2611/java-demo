@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+	<!-- リフォーム詳細情報編集画面 -->
+	<bean id="reformDtlInputCommand"
+		class="jp.co.transcosmos.dm3.webAdmin.reformDtl.command.ReformDtlInputCommand"
+		scope="prototype">
+		<property name="fileUtil" ref="fileUtil"/>
+        <property name="commonParameters" ref="commonParameters"/>
+		<property name="reformManager" ref="reformManager" />
+	</bean>
+
+	<!-- リフォーム詳細アップロード -->
+	<bean id="reformDtlInsertCommand"
+		class="jp.co.transcosmos.dm3.webAdmin.reformDtl.command.ReformDtlConfirmCommand"
+		scope="prototype">
+		<property name="fileUtil" ref="fileUtil"/>
+        <property name="commonParameters" ref="commonParameters"/>
+        <property name="reformManager" ref="reformManager" />
+	</bean>
+
+	<!-- リフォーム詳細アップロード編集確認 -->
+	<bean id="reformDtlCompCommand"
+		class="jp.co.transcosmos.dm3.webAdmin.reformDtl.command.ReformDtlCompCommand"
+		scope="prototype">
+		<property name="reformManager" ref="reformManager" />
+	</bean>
+
+	<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMappingList">
+		<property name="commandURLMapper" ref="commandURLMapper" />
+		<property name="mappings">
+			<list>
+				<!-- リフォーム詳細情報編集画面 -->
+				<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+					<property name="urlPattern" value="/top/housing/reform/detail/input/" />
+					<property name="defaultCommandName" value="reformDtlInputCommand" />
+					<property name="defaultViewName"
+						value="/WEB-INF/jsp/admin/reformDtl/ReformDtlAddInput.jsp" />
+				</bean>
+
+				<!-- リフォーム詳細情報編集新規入力確認画面 -->
+				<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+					<property name="urlPattern" value="/top/housing/reform/detail/confirm/" />
+					<property name="defaultCommandName" value="reformDtlInsertCommand" />
+					<property name="defaultViewName"
+						value="/WEB-INF/jsp/admin/reformDtl/ReformDtlAddConfirm.jsp" />
+					<property name="namedViews">
+						<props>
+							<prop key="validationError">/WEB-INF/jsp/admin/reformDtl/ReformDtlAddInput.jsp
+							</prop>
+						</props>
+					</property>
+				</bean>
+
+				<!-- リフォーム詳細アップロード編集確認 -->
+				<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+					<property name="urlPattern" value="/top/housing/reform/detail/result/" />
+					<property name="defaultCommandName" value="reformDtlCompCommand" />
+					<property name="defaultViewName"
+						value="/WEB-INF/jsp/admin/reformDtl/ReformDtlCompRedirect.jsp" />
+					<property name="namedViews">
+						<props>
+							<prop key="validationError">/WEB-INF/jsp/admin/reformDtl/ReformDtlAddInput.jsp
+							</prop>
+							<prop key="comp">/WEB-INF/jsp/admin/reformDtl/ReformDtlComp.jsp
+							</prop>
+						</props>
+					</property>
+				</bean>
+			</list>
+		</property>
+	</bean>
+</beans>

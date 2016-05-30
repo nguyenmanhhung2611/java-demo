@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:tx="http://www.springframework.org/schema/tx"
+        xmlns:aop="http://www.springframework.org/schema/aop"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+                            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+                            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+
+  <bean class="jp.co.transcosmos.dm3.lookup.CodeLookupList">
+    <property name="codeLookupManager"><ref bean="codeLookupManager"/></property>
+    <property name="lookups">
+      <map>
+        <entry key="errorTemplates">
+          <list>
+            <value>nullOrEmpty:エラー：[#fieldName]は必須項目です。[#fieldName]を入力してください。</value>
+            <value>minLength:エラー：[#fieldName]が短すぎます。[#extraInfo]文字以上にしてください。</value>
+            <value>maxLength:エラー：[#fieldName]が長すぎます。[#extraInfo]文字以内にしてください。</value>
+            <value>length:エラー：[#fieldName]は、[#extraInfo]文字にしてください。</value>
+            <value>numericOnly:エラー：[#fieldName]は半角数字で入力してください。</value>
+            <value>telephone:エラー：[#fieldName]は半角数字とハイフンのみで入力してください。</value>
+            <value>notExistsInDB:エラー：[#fieldName]は存在しません。</value>
+          </list>
+        </entry>
+        <entry key="errorLabels">
+          <list>
+<!-- ここは、使用するアプリケーション毎に適切な値を設定してください。
+            <value>field.blogEntry.author:作者名</value>
+            <value>field.blogEntry.title:タイトル</value>
+-->
+          </list>
+        </entry>
+        <entry key="errorCustom">
+          <list>
+<!-- ここは、使用するアプリケーション毎に適切な値を設定してください。
+              <value>myError_field.blogEntry.author:エラー(作者名)</value>
+-->
+          </list>
+        </entry>
+      </map>
+    </property>
+  </bean>
+</beans>

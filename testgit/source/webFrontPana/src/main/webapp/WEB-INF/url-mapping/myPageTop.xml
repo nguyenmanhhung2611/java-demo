@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+                           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+
+	<!-- マイページトップ画面 -->
+	<bean id="MypageTopCommand"
+		class="jp.co.transcosmos.dm3.webFront.myPageTop.command.MyPageTopCommand"
+		scope="prototype">
+		<property name="commonParameters" ref="commonParameters" />
+		<property name="codeLookupManager" ref="codeLookupManager" />
+		<property name="recentlyInfoManage" ref="recentlyInfoManage" />
+		<property name="informationManager" ref="informationManager" />
+		<property name="panaFavoriteManager" ref="panaFavoriteManager" />
+		<property name="housingRequestManage" ref="housingRequestManage" />
+		<property name="panamCommonManager" ref="panamCommonManager" />
+		<property name="mypageUserManager" ref="mypageUserManager" />
+		<property name="partSrchMstDAO" ref="partSrchMstDAO" />
+		<property name="housingImageInfoDAO" ref="housingImageInfoDAO" />
+		<property name="fileUtil" ref="fileUtil" />
+	</bean>
+
+	<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMappingList">
+		<property name="commandURLMapper" ref="commandURLMapper" />
+		<property name="mappings">
+			<list>
+
+				<!-- マイページトップ画面 -->
+				<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+					<property name="urlPattern" value="/mypage/" />
+					<property name="defaultCommandName" value="MypageTopCommand" />
+					<property name="defaultViewName" value="/WEB-INF/jsp/front/mypageTop/myPageTop.jsp" />
+				</bean>
+
+				<!-- マイページトップ画面（ログイン前） -->
+				<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+					<property name="urlPattern" value="/mypage_service/" />
+					<property name="defaultCommandName" value="MypageTopCommand" />
+					<property name="defaultViewName" value="/WEB-INF/jsp/front/mypageTop/myPageNoLogin.jsp" />
+					<property name="namedViews">
+						<props>
+							<prop key="success">redirect:###!webroot###/mypage/</prop>
+						</props>
+					</property>
+				</bean>
+
+			</list>
+		</property>
+	</bean>
+</beans>

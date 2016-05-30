@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mail PUBLIC "-//TC-DM3//DTD MAIL//EN" "mail.dtd">
+
+
+<mail>
+    <from email="dummy@localhost" name="demo Site" />
+
+    <subject><![CDATA[$!{error.toString()}]]></subject>
+
+    <!-- Text body -->
+    <body><![CDATA[
+ErrorId: $!{errorId}
+Date: $!{now}
+Destination host: $!{localhost}
+
+Client address: $!{request.getRemoteHost()} (IP: $!{request.getRemoteAddr()})
+Method: $!{request.getMethod()}
+Requested URL: $!{request.getAttribute("javax.servlet.error.request_uri")}
+Querystring: $!{request.getQueryString()}
+Referrer: $!{request.getHeader("Referer")}
+User-Agent: $!{request.getHeader("User-agent")}
+RequestID: $!{request.getHeader("UNIQUE_ID")}
+Session: ID: $!{request.getSession().getId()}, lastAccessedTime=$!{request.getSession().getLastAccessedTime()}, isNew=$!{request.getSession().isNew()}
+
+Stacktrace: 
+$!{stacktrace}
+
+Parameters:
+#foreach($paramName in $!request.getParameterNames())
+    $!{paramName} = $!{request.getParameter($paramName)}
+#end]]></body>
+
+</mail>

@@ -1,0 +1,463 @@
+@charset "UTF-8";
+
+/*====================================================================
+ contents
+====================================================================*/
+/* sell top
+--------------------------------------------------------------------*/
+#footer {
+	margin: 0;
+}
+
+
+/*btn*/
+.btnOrange01:hover,
+.btnBlack01:hover {
+	opacity:0.7;
+	-ms-filter: "alpha(opacity=70)";
+}
+.btnOrange01 a,
+.btnBlack01 a {
+	text-decoration: none;
+	cursor: pointer;
+}
+
+
+.sectionInner {
+	margin: 0 auto;
+	width: 980px;
+	text-align: left;
+}
+.section01 {
+	margin-top: 15px;
+	min-width: 980px;
+}
+.section01 .sectionInner {
+	margin: 0 auto;
+	width: 980px;
+	text-align: left;
+}
+.section02 {
+	background: #565656;
+	min-width: 980px;
+}
+.section03 {
+	background: #ffffff;
+	min-width: 980px;
+}
+.section02 .sectionInner,
+.section03 .sectionInner {
+	padding: 40px 32px;
+	
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-o-box-sizing:border-box;
+	-ms-box-sizing:border-box;
+}
+
+
+.section01 .sellTitle {
+	background: url(/sell/img/index_h1_02.jpg) left top no-repeat;
+	height: 102px;
+	padding: 18px 0 0 30px;
+	margin-bottom: 30px;
+	
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-o-box-sizing:border-box;
+	-ms-box-sizing:border-box;
+}
+.section01 .sellTitle h1 {
+	background: url(/sell/img/index_h1_01.png) left center no-repeat;
+	padding: 18px 0 18px 85px;
+	font-size: 213%;
+	font-weight: bold;
+}
+.section01 .column3Block01 {
+	margin: 0 32px 40px;
+}
+.section01 .column3Block01 .columnInner {
+	float: left;
+	background: #ffffff;
+	width: 285px;
+	border-bottom: 2px solid #dedede;
+	margin-left: 30px;
+}
+.section01 .column3Block01 .columnInner a {
+	display: block;
+	color: #2b2b2b;
+	text-decoration: none;
+}
+.section01 .column3Block01 .columnInner a:hover {
+	opacity:0.7;
+	-ms-filter: "alpha(opacity=70)";
+}
+.section01 .column3Block01 .columnInner:first-child {
+	margin-left: 0;
+}
+.section01 .column3Block01 .columnInner .textBlock {
+	padding: 20px 0 15px;
+	text-align: center;
+}
+.section01 .column3Block01 .columnInner .textBlock h2 {
+	font-size: 148%;
+	font-weight: bold;
+}
+.section01 .column3Block01 .columnInner .textBlock p {
+	font-size: 113%;
+	margin-top: 15px
+}
+
+
+.section02 .contactBlock {
+	display: table;
+	width: 100%;
+}
+.section02 .contactBlock .text {
+	display: table-cell;
+	width: 55%;
+	background: url(/sell/img/index_arr_01.png) right center no-repeat;
+	padding-right: 35px;
+	color: #ffffff;
+	font-size: 173%;
+	font-weight: bold;
+	
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-o-box-sizing:border-box;
+	-ms-box-sizing:border-box;
+}
+.section02 .contactBlock .btn {
+	display: table-cell;
+	width: 45%;
+	text-align: right;
+}
+.section02 .btnOrange01 {
+	display: inline-block;
+	background: #ff6c00;
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+}
+.section02 .btnOrange01 a {
+	display: block;
+	background: url(/common/img/cmn_arrow_06.png) 20px center no-repeat;
+	padding: 8px 90px;
+	color: #ffffff;
+	font-size: 148%;
+	font-weight: bold;
+	text-align: center;
+}
+
+
+.section03 .titleBlock {
+	margin-bottom: 25px;
+}
+.section03 .titleBlock .text {
+	float: left;
+}
+.section03 .titleBlock .text h2 {
+	margin-bottom: 5px;
+	font-size: 173%;
+	font-weight: bold;
+}
+.section03 .titleBlock .text p {
+	font-size: 113%;
+}
+.section03 .btnBlack01 {
+	float: right;
+	display: inline-block;
+	background: #2b2b2b;
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	margin-top: 15px;
+}
+.section03 .btnBlack01 a {
+	display: block;
+	background: url(/common/img/cmn_arrow_06.png) 12px center no-repeat;
+	padding: 7px 25px 7px 35px;
+	color: #ffffff;
+	font-size: 113%;
+	font-weight: bold;
+}
+.section03 .flowBlock li {
+	float: left;
+	background: url(/sell/img/index_bg_01.png) right center no-repeat;
+	padding: 0 10px 0 0;
+	margin: 0 0 0 10px;
+	text-align: center;
+}
+.section03 .flowBlock li:first-child {
+	margin: 0;
+}
+.section03 .flowBlock li.last-child {
+	background: none;
+	padding: 0;
+}
+.section03 .flowBlock li div {
+	background: #f2eddb url(/sell/img/index_bg_02.png) left center no-repeat;
+	width: 136px;
+	padding: 20px 10px;
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-o-box-sizing:border-box;
+	-ms-box-sizing:border-box;
+}
+.section03 .flowBlock li .number {
+	background: #ffffff;
+	width: 40px;
+	height: 40px;
+	border-radius: 20px;
+	-webkit-border-radius: 20px;
+	-moz-border-radius: 20px;
+	padding-top: 7px;
+	margin: 0 auto 10px;
+	color: #e09216;
+	font-size: 173%;
+	font-weight: bold;
+	
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-o-box-sizing:border-box;
+	-ms-box-sizing:border-box;
+}
+.section03 .flowBlock li .title {
+	font-size: 113%;
+	padding: 0 0 45px 0;
+}
+.section03 .flowBlock li .step01 .title {
+	background: url(/sell/img/index_icon_01.png) center bottom no-repeat;
+}
+.section03 .flowBlock li .step02 .title {
+	background: url(/sell/img/index_icon_02.png) center bottom no-repeat;
+}
+.section03 .flowBlock li .step03 .title {
+	background: url(/sell/img/index_icon_03.png) center bottom no-repeat;
+}
+.section03 .flowBlock li .step04 .title {
+	background: url(/sell/img/index_icon_04.png) center bottom no-repeat;
+}
+.section03 .flowBlock li .step05 .title {
+	background: url(/sell/img/index_icon_05.png) center bottom no-repeat;
+}
+.section03 .flowBlock li .step06 .title {
+	background: url(/sell/img/index_icon_06.png) center bottom no-repeat;
+}
+
+
+
+@media only screen and (max-width: 736px) and (-webkit-min-device-pixel-ratio: 1.5) {
+/*====================================================================
+ contents
+====================================================================*/
+	.sectionInner {
+		margin: 0;
+		width: 100%;
+		text-align: left;
+	}
+	.section01 {
+		min-width: 320px;
+		padding: 10px 3% 15px;
+		margin: 0;
+		
+		box-sizing:border-box;
+		-moz-box-sizing:border-box;
+		-webkit-box-sizing:border-box;
+		-o-box-sizing:border-box;
+		-ms-box-sizing:border-box;
+	}
+	.section01 .sectionInner {
+		margin: 0;
+		width: 100%;
+		text-align: left;
+	}
+	.section02,
+	.section03 {
+		min-width: 320px;
+	}
+	.section02 .sectionInner,
+	.section03 .sectionInner {
+		padding: 15px 3%;
+		
+		box-sizing:border-box;
+		-moz-box-sizing:border-box;
+		-webkit-box-sizing:border-box;
+		-o-box-sizing:border-box;
+		-ms-box-sizing:border-box;
+	}
+	
+	
+	.section01 .sellTitle {
+		background: #f7f8fa url(/sell/img/sp_index_h1_02.jpg) right top no-repeat;
+		background-size: 300px 86px;
+		height: 86px;
+		padding: 10px 0 0 10px;
+		margin: 0;
+		
+		box-sizing:border-box;
+		-moz-box-sizing:border-box;
+		-webkit-box-sizing:border-box;
+		-o-box-sizing:border-box;
+		-ms-box-sizing:border-box;
+	}
+	.section01 .sellTitle h1 {
+		background: url(/sell/img/sp_index_h1_01.png) left center no-repeat;
+		background-size: 57px 63px;
+		padding: 18px 0 18px 72px;
+		font-size: 213%;
+		text-shadow: 2px 2px 0 #ffffff;
+	}
+	.section01 .column3Block01 {
+		margin: 0;
+	}
+	.section01 .column3Block01 .columnInner {
+		float: none;
+		width: 100%;
+		border: 1px solid #dedede;
+		border-bottom: 2px solid #dedede;
+		margin: 10px 0 0;
+		
+		box-sizing:border-box;
+		-moz-box-sizing:border-box;
+		-webkit-box-sizing:border-box;
+		-o-box-sizing:border-box;
+		-ms-box-sizing:border-box;
+	}
+	.section01 .column3Block01 .columnInner:last-child {
+		border: 4px solid #fec955;
+	}
+	.section01 .column3Block01 .columnInner .textBlock {
+		padding: 15px 20px;
+	}
+	.section01 .column3Block01 .columnInner .textBlock h2 {
+		font-size: 130%;
+	}
+	.section01 .column3Block01 .columnInner .textBlock p {
+		margin-top: 10px
+	}
+	.section01 .column3Block01 .columnInner .img {
+		display: none;
+	}
+	
+	
+	.section02 .contactBlock {
+		display: block;
+	}
+	.section02 .contactBlock .text {
+		display: block;
+		width: 100%;
+		background: none;
+		padding-right: 0;
+		margin-bottom: 10px;
+		font-size: 130%;
+		text-align: center;
+	}
+	.section02 .contactBlock .btn {
+		display: block;
+		width: 100%;
+	}
+	.section02 .btnOrange01 {
+		display: block;
+	}
+	.section02 .btnOrange01 a {
+		display: block;
+		background: url(/common/img/cmn_arrow_06.png) 15px center no-repeat;
+		padding: 8px 20px 6px 20px;
+		color: #ffffff;
+		font-size: 130%;
+		font-weight: bold;
+	}
+	
+	
+	.section03 .titleBlock {
+		margin-bottom: 20px;
+	}
+	.section03 .titleBlock .text {
+		float: none;
+		margin-bottom: 10px;
+	}
+	.section03 .titleBlock .text h2 {
+		margin-bottom: 5px;
+		font-size: 130%;
+	}
+	.section03 .btnBlack01 {
+		float: none;
+		display: block;
+		background: #2b2b2b;
+		border-radius: 4px;
+		-webkit-border-radius: 4px;
+		-moz-border-radius: 4px;
+		margin-top: 15px;
+	}
+	.section03 .btnBlack01 a {
+		display: block;
+		text-align: center;
+	}
+	.section03 .flowBlock li {
+		float: none;
+		background: url(/sell/img/sp_index_bg_01.png) center bottom no-repeat;
+		background-size: 13px 9px;
+		padding: 0 0 9px 0;
+		margin: 10px 0 0 0;
+		text-align: left;
+	}
+	.section03 .flowBlock li div {
+		background: #f2eddb url(/sell/img/sp_index_bg_02.png) center top no-repeat;
+		background-size: 13px 9px;
+		width: 100%;
+		padding: 15px 15px 10px;
+	}
+	.section03 .flowBlock li .number {
+		float: left;
+		width: 30px;
+		height: 30px;
+		border-radius: 15px;
+		-webkit-border-radius: 15px;
+		-moz-border-radius: 15px;
+		padding-top: 2px;
+		margin: 0 10px 0 0;
+		font-size: 173%;
+		text-align: center;
+	}
+	.section03 .flowBlock li .title {
+		float: left;
+		width: 85%;
+		font-size: 113%;
+		padding: 8px 0;
+	}
+	.section03 .flowBlock li .step01 .title {
+		background: url(/sell/img/sp_index_icon_01.png) right center no-repeat;
+		background-size: 65px 31px;
+	}
+	.section03 .flowBlock li .step02 .title {
+		background: url(/sell/img/sp_index_icon_02.png) right center no-repeat;
+		background-size: 73px 31px;
+	}
+	.section03 .flowBlock li .step03 .title {
+		background: url(/sell/img/sp_index_icon_03.png) right center no-repeat;
+		background-size: 67px 31px;
+		padding: 8px 0 0;
+	}
+	.section03 .flowBlock li .step04 .title {
+		background: url(/sell/img/sp_index_icon_04.png) right center no-repeat;
+		background-size: 71px 31px;
+	}
+	.section03 .flowBlock li .step05 .title {
+		background: url(/sell/img/sp_index_icon_05.png) right center no-repeat;
+		background-size: 58px 31px;
+	}
+	.section03 .flowBlock li .step06 .title {
+		background: url(/sell/img/sp_index_icon_06.png) right center no-repeat;
+		background-size: 62px 31px;
+	}
+}

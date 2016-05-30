@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+                           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+
+	<!-- 物件閲覧（新規登録時）Command -->
+	<bean id="housingStatusAddInputCommand"
+		class="jp.co.transcosmos.dm3.webAdmin.housingStatus.command.HousingStatusAddCommand"
+		scope="prototype">
+	</bean>
+
+	<!-- 物件ステータス確認Command -->
+	<bean id="housingStatusConfirmCommand"
+		class="jp.co.transcosmos.dm3.webAdmin.housingStatus.command.HousingStatusConfirmCommand"
+		scope="prototype">
+		<property name="panaHousingManager" ref="panaHousingManager"/>
+		<property name="commonParameters" ref="commonParameters"/>
+		<property name="mypageUserManager" ref="mypageUserManager"/>
+		<property name="reformManager" ref="reformManager"/>
+		<property name="codeLookupManager" ref="codeLookupManager"/>
+		<property name="fileUtil" ref="fileUtil"/>
+	</bean>
+
+	<!-- 物件ステータス新規Command -->
+	<bean id="housingStatusAddCompCommand"
+		class="jp.co.transcosmos.dm3.webAdmin.housingStatus.command.HousingStatusCompCommand"
+		scope="prototype">
+		<property name="panaHousingManager" ref="panaHousingManager"/>
+		<property name="commonParameters" ref="commonParameters"/>
+		<property name="mypageUserManager" ref="mypageUserManager"/>
+		<property name="reformManager" ref="reformManager"/>
+		<property name="codeLookupManager" ref="codeLookupManager"/>
+		<property name="buildingManager" ref="buildingManager" />
+		<property name="fileUtil" ref="fileUtil"/>
+		<property name="mode" value="insert" />
+	</bean>
+
+	<!-- 物件ステータス編集Command -->
+	<bean id="housingStatusUpdCompCommand"
+		class="jp.co.transcosmos.dm3.webAdmin.housingStatus.command.HousingStatusCompCommand"
+		scope="prototype">
+		<property name="panaHousingManager" ref="panaHousingManager"/>
+		<property name="commonParameters" ref="commonParameters"/>
+		<property name="mypageUserManager" ref="mypageUserManager"/>
+		<property name="reformManager" ref="reformManager"/>
+		<property name="codeLookupManager" ref="codeLookupManager"/>
+		<property name="buildingManager" ref="buildingManager" />
+		<property name="fileUtil" ref="fileUtil"/>
+		<property name="mode" value="update" />
+	</bean>
+
+	<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMappingList">
+		<property name="commandURLMapper" ref="commandURLMapper" />
+		<property name="mappings">
+			<list>
+				<!-- 物件閲覧（新規登録時）画面 -->
+				<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+					<property name="urlPattern" value="/top/housing/detail/" />
+					<property name="defaultCommandName" value="housingStatusAddInputCommand" />
+					<property name="defaultViewName"
+						value="/WEB-INF/jsp/admin/housingStatus/HousingStatusAddInput.jsp" />
+				</bean>
+				<!-- 物件ステータス変更確認画面 -->
+				<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+					<property name="urlPattern" value="/top/housing/status/confirm/" />
+					<property name="defaultCommandName" value="housingStatusConfirmCommand" />
+					<property name="defaultViewName"
+						value="/WEB-INF/jsp/admin/housingStatus/HousingStatusConfirm.jsp" />
+					<property name="namedViews">
+						<props>
+							<prop key="insErr">/WEB-INF/jsp/admin/housingStatus/HousingStatusAddInput.jsp
+							</prop>
+							<prop key="updErr">/WEB-INF/jsp/admin/housingBrowse/BrowseUpdInput.jsp
+							</prop>
+						</props>
+					</property>
+				</bean>
+				<!-- 物件ステータス編集完了画面 -->
+				<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+					<property name="urlPattern" value="/top/housing/status/result/" />
+					<property name="defaultCommandName" value="housingStatusAddCompCommand" />
+					<property name="namedCommands">
+						<props>
+							<prop key="insert">housingStatusAddCompCommand</prop>
+							<prop key="update">housingStatusUpdCompCommand</prop>
+						</props>
+					</property>
+					<property name="defaultViewName"
+						value="/WEB-INF/jsp/admin/housingStatus/HousingStatusCompRedirect.jsp" />
+                    <property name="namedViews">
+                        <props>
+							<prop key="insErr">/WEB-INF/jsp/admin/housingStatus/HousingStatusAddInput.jsp
+							</prop>
+							<prop key="updErr">/WEB-INF/jsp/admin/housingBrowse/BrowseUpdInput.jsp
+							</prop>
+                            <prop key="comp">/WEB-INF/jsp/admin/housingStatus/HousingStatusComp.jsp
+                            </prop>
+                        </props>
+                    </property>
+				</bean>
+			</list>
+		</property>
+	</bean>
+</beans>

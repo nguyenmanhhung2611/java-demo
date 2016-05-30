@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+	<bean id="inputHousingInfoCommand"
+		class="jp.co.transcosmos.dm3.webAdmin.housingInfo.command.HousingInfoInputCommand"
+		scope="prototype">
+		<property name="panaHousingManager" ref="panaHousingManager"/>
+		<property name="panamCommonManager" ref="panamCommonManager"/>
+	</bean>
+
+	<bean id="editHousingInfoCommand"
+		class="jp.co.transcosmos.dm3.webAdmin.housingInfo.command.HousingInfoValidateCommand"
+		scope="prototype">
+		<property name="panaHousingManager" ref="panaHousingManager"/>
+		<property name="panamCommonManager" ref="panamCommonManager"/>
+	</bean>
+
+	<bean id="updateHousingInfoCommand"
+		class="jp.co.transcosmos.dm3.webAdmin.housingInfo.command.HousingInfoUpdateCommand"
+		scope="prototype">
+		<property name="panaHousingManager" ref="panaHousingManager"/>
+		<property name="panamCommonManager" ref="panamCommonManager"/>
+		<property name="buildingManager" ref="buildingManager" />
+	</bean>
+
+	<!-- 市区町村プルダウンリスト取得 -->
+	<bean id="addressMstListCommand"
+		class="jp.co.transcosmos.dm3.webAdmin.housingInfo.command.AddressMstListCommand"
+		scope="prototype">
+		<property name="panamCommonManager" ref="panamCommonManager"/>
+	</bean>
+
+	<!-- 駅プルダウンリスト取得 -->
+	<bean id="stationMstListCommand"
+		class="jp.co.transcosmos.dm3.webAdmin.housingInfo.command.StationMstListCommand"
+		scope="prototype">
+		<property name="panamCommonManager" ref="panamCommonManager"/>
+	</bean>
+
+	<!-- 路線プルダウンリスト取得 -->
+	<bean id="routeMstListCommand"
+		class="jp.co.transcosmos.dm3.webAdmin.housingInfo.command.RouteMstListCommand"
+		scope="prototype">
+		<property name="panamCommonManager" ref="panamCommonManager"/>
+	</bean>
+
+	<!-- 坪計算 -->
+	<bean id="panaCalcUtilCommand"
+		class="jp.co.transcosmos.dm3.webAdmin.housingInfo.command.PanaCalcUtilCommand"
+		scope="prototype">
+	</bean>
+
+	<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMappingList">
+		<property name="commandURLMapper" ref="commandURLMapper" />
+		<property name="mappings">
+			<list>
+				<!-- 市区町村プルダウンリスト取得 -->
+				<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+					<property name="urlPattern" value="/top/housing/info/addressMstList/" />
+					<property name="defaultCommandName" value="addressMstListCommand" />
+					<property name="defaultViewName" value="json" />
+				</bean>
+
+				<!-- 駅プルダウンリスト取得 -->
+				<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+					<property name="urlPattern" value="/top/housing/info/stationMstList/" />
+					<property name="defaultCommandName" value="stationMstListCommand" />
+					<property name="defaultViewName" value="json" />
+				</bean>
+
+				<!-- 路線プルダウンリスト取得 -->
+				<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+					<property name="urlPattern" value="/top/housing/info/routeMstList/" />
+					<property name="defaultCommandName" value="routeMstListCommand" />
+					<property name="defaultViewName" value="json" />
+				</bean>
+
+				<!-- 坪計算 -->
+				<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+					<property name="urlPattern" value="/top/housing/info/panaCalcUtil/" />
+					<property name="defaultCommandName" value="panaCalcUtilCommand" />
+					<property name="defaultViewName" value="json" />
+				</bean>
+
+				<!-- 情報編集画面 -->
+				<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+					<property name="urlPattern" value="/top/housing/info/input/" />
+					<property name="defaultCommandName" value="inputHousingInfoCommand" />
+					<property name="defaultViewName"
+						value="/WEB-INF/jsp/admin/housingInfo/housingInfoUpdInput.jsp" />
+				</bean>
+
+				<!-- 入力確認画面 -->
+				<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+					<property name="urlPattern" value="/top/housing/info/confirm/" />
+					<property name="defaultCommandName" value="editHousingInfoCommand" />
+					<property name="defaultViewName"
+						value="/WEB-INF/jsp/admin/housingInfo/housingInfoUpdConfirm.jsp" />
+					<property name="namedViews">
+						<props>
+							<prop key="validationError">/WEB-INF/jsp/admin/housingInfo/housingInfoUpdInput.jsp
+							</prop>
+						</props>
+					</property>
+				</bean>
+
+				<!-- 編集確認 -->
+				<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+					<property name="urlPattern" value="/top/housing/info/result/" />
+					<property name="defaultCommandName" value="updateHousingInfoCommand" />
+					<property name="defaultViewName"
+						value="/WEB-INF/jsp/admin/housingInfo/housingInfoCompRedirect.jsp" />
+					<property name="namedViews">
+						<props>
+							<prop key="validationError">/WEB-INF/jsp/admin/housingInfo/housingInfoUpdInput.jsp
+							</prop>
+							<prop key="comp">/WEB-INF/jsp/admin/housingInfo/housingInfoComp.jsp
+							</prop>
+						</props>
+					</property>
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+</beans>

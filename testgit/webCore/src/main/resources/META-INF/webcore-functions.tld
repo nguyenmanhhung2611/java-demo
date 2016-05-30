@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+    version="2.0">
+  <tlib-version>1.2</tlib-version>
+  <short-name>webcore</short-name>
+  <uri>http://dm3.transcosmos.co.jp/tags/core/functions</uri>
+
+  <function>
+    <description>
+      DisplayAdapter Executer
+    </description>
+    <name>display</name>
+    <function-class>jp.co.transcosmos.dm3.core.displayAdapter.Executer</function-class>
+    <function-signature>Object getValue(jp.co.transcosmos.dm3.core.displayAdapter.DisplayAdapter, java.lang.Object, java.lang.String)</function-signature>
+    <example>
+      &lt;c:out value="${webcore:display(adapter, vo, fieldName)}"/>
+    </example>
+  </function>
+</taglib>

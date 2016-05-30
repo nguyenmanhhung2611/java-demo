@@ -1,0 +1,136 @@
+@charset "UTF-8";
+
+/*====================================================================
+ contents
+====================================================================*/
+/* index.html
+--------------------------------------------------------------------*/
+.sale .titleBlock {
+	background: #ffffff url(/sell/flow/img/index_h1_01.jpg) right top no-repeat;
+	border: 1px solid #cccccc;
+	height: 140px;
+	padding: 40px;
+	margin-bottom: 30px;
+		
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-o-box-sizing:border-box;
+	-ms-box-sizing:border-box;
+}
+.sale .titleBlock h1 {
+	font-size: 213%;
+	font-weight: bold;
+	margin-bottom: 5px;
+}
+.sale .titleBlock p {
+	font-size: 106%;
+}
+
+.sale .section01 h2 {
+	margin-bottom: 20px;
+	font-size: 184%;
+	font-weight: bold;
+}
+
+.sale .section01 .flowBlock h3 {
+	background: #e8b60b;
+	padding: 10px 15px;
+	margin-bottom: 20px;
+	color: #ffffff;
+	font-size: 130%;
+	font-weight: bold;
+}
+.sale .section01 .flowBlock .flowInner {
+	background: url(/sell/flow/img/index_bg_04.png) center bottom no-repeat;
+	padding-bottom: 64px;
+}
+.sale .section01 .flowBlock .flowInner .flowBox01 {
+	position: relative;
+	background: #ffffff;
+	border: 1px solid #f8c825;
+	padding: 20px;
+	margin-bottom: 20px;
+}
+.sale .section01 .flowBlock .flowInner .flowBox01.end {
+	background: #f0d781;
+	border: 1px solid #f0d781;
+	margin-bottom: 0;
+}
+.sale .section01 .flowBlock .flowInner .flowBox01 .arrow01 {
+	position: absolute;
+	display: block;
+	background: url(/sell/flow/img/index_bg_02.png) left top no-repeat;
+	width: 32px;
+	height: 16px;
+	top: -1px;
+	left: 442px;
+}
+.sale .section01 .flowBlock .flowInner .flowBox01.end .arrow01 {
+	background: url(/sell/flow/img/index_bg_03.png) left top no-repeat;
+}
+.sale .section01 .flowBlock .flowInner .flowBox01 .arrow02 {
+	position: absolute;
+	display: block;
+	background: url(/sell/flow/img/index_bg_01.png) left top no-repeat;
+	width: 32px;
+	height: 13px;
+	bottom: -13px;
+	left: 442px;
+}
+.sale .section01 .flowBlock .flowInner .flowBox01 dl {
+	padding-right: 130px;
+}
+.sale .section01 .flowBlock .flowInner .flowBox01 .step01 {
+	background: url(/sell/flow/img/index_icon_01.png) 97% center no-repeat;
+}
+.sale .section01 .flowBlock .flowInner .flowBox01 .step02 {
+	background: url(/sell/flow/img/index_icon_02.png) 97% center no-repeat;
+}
+.sale .section01 .flowBlock .flowInner .flowBox01 .step03 {
+	background: url(/sell/flow/img/index_icon_03.png) 97% center no-repeat;
+}
+.sale .section01 .flowBlock .flowInner .flowBox01 .step04 {
+	background: url(/sell/flow/img/index_icon_04.png) 97% center no-repeat;
+}
+.sale .section01 .flowBlock .flowInner .flowBox01 .step05 {
+	background: url(/sell/flow/img/index_icon_05.png) 97% center no-repeat;
+}
+.sale .section01 .flowBlock .flowInner .flowBox01 .step06 {
+	background: url(/sell/flow/img/index_icon_06.png) 97% center no-repeat;
+}
+.sale .section01 .flowBlock .flowInner .flowBox01 dt {
+	margin-bottom: 10px;
+	font-weight: bold;
+}
+.sale .section01 .flowBlock .flowInner .flowBox01 dt .number {
+	float: left;
+	background: #e8b60b;
+	width: 24px;
+	height: 24px;
+	padding-top: 3px;
+	border-radius: 12px;
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	color: #ffffff;
+	font-size: 113%;
+	text-align: center;
+	
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
+	-o-box-sizing:border-box;
+	-ms-box-sizing:border-box;
+}
+.sale .section01 .flowBlock .flowInner .flowBox01.end dt .number {
+	background: #ffffff;
+	color: #e8b60b;
+}
+.sale .section01 .flowBlock .flowInner .flowBox01 dt .text {
+	float: left;
+	margin: 2px 0 0 8px;
+	font-size: 148%;
+}
+.sale .section01 .flowBlock .flowInner .flowBox01 dd {
+	font-size: 113%;
+}

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mail PUBLIC "-//TC-DM3//DTD MAIL//EN" "mail.dtd">
+
+<mail>
+    <from email="${commonParameters.fromEmail}" name="${commonParameters.fromEmailName}" />
+    <recipients>
+        <to email="${inputForm.getInquiryHeaderForm().email}" name="" />
+        <bcc email="${commonParameters.bccEmail}" />
+    </recipients>
+    <replyTo email="${commonParameters.replyToEmail}" />
+    <errorTo email="${commonParameters.errorToEmail}"/>
+
+    <subject>査定のお申し込み内容の控え[$!{inquiryId}]</subject>
+
+    <!-- Text body -->
+    <body>
+<![CDATA[
+
+$!{commonParameters.panasonicReSmail}より、査定のお申し込みをいただいたお客様
+に自動送信されています。
+
+＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+査定のお申し込み控え
+＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+
+$!{commonParameters.panasonicReSmail}をご利用いただきありがとうございます。
+
+査定のお申し込みをいただきありがとうございました。
+本メールは、お客様の控えとして保管してください。
+
+────────────────────────────────
+
+■お問い合わせ番号
+$!{inquiryId}
+
+※ご売却物件所在地やお名前等の個人情報は、個人情報保護のため本
+メールには記載しておりません。
+
+────────────────────────────────
+
+※本メールにお心当たりのないお客様は、お手数ですが下記までご連絡
+ください。
+※本メールは送信専用メールアドレスから配信されています。
+ご返信いただいてもお答えできませんのでご了承ください。
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+$!{commonParameters.panasonicReSmailAffairs}
+問い合わせ先ナビダイヤル：$!{commonParameters.reSmailTel}
+（受付時間　$!{commonParameters.reSmailUktskJkn}）
+----------------------------------------------------------------
+$!{commonParameters.panasonicReSmail}
+$!{commonParameters.reSmailUrl}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+]]>
+    </body>
+
+</mail>

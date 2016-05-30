@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+                           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+
+  <!-- お知らせの検索・一覧画面 -->
+   <bean id="newsListCommand" class="jp.co.transcosmos.dm3.webAdmin.news.command.PanaNewsListCommand" 
+  		scope="prototype">
+    <property name="newsManager" ref="newsManager"/>
+    <property name="authLogging" ref="authLogging"/>
+    <property name="rowsPerPage" value="10"/>
+    <property name="visibleNavigationPageCount" value="5"/>
+    <property name="mode" value="search" />
+  </bean>
+  
+  <bean id="newsAddInputCommand" class="jp.co.transcosmos.dm3.adminCore.news.command.NewsInputCommand" scope="prototype">
+    <property name="mode" value="insert"/>
+  </bean>
+  
+  <bean id="newsAddConfirmCommand" class="jp.co.transcosmos.dm3.adminCore.news.command.NewsConfirmCommand" scope="prototype">
+    <property name="mode" value="insert"/>
+    <property name="memberInfoDAO" ref="memberInfoDAO" />
+  </bean>
+  
+  <!-- お知らせ情報新規登録完了画面 -->
+  <bean id="newsAddCompCommand" class="jp.co.transcosmos.dm3.webAdmin.news.command.PanaNewsCompCommand" scope="prototype">
+    <property name="newsManager" ref="newsManager"/>
+    <property name="mode" value="insert"/>
+    <property name="useUserIdValidation" value="false"/>
+  </bean>
+  
+  <!-- お知らせ情報変更入力画面 -->
+  <bean id="newsUpdInputCommand" class="jp.co.transcosmos.dm3.adminCore.news.command.NewsInputCommand" scope="prototype">
+    <property name="newsManager" ref="newsManager"/>
+    <property name="mode" value="update"/>
+  </bean>
+  <!-- お知らせ情報変更入力確認画面 -->
+  <bean id="newsUpdConfirmCommand" class="jp.co.transcosmos.dm3.adminCore.news.command.NewsConfirmCommand" scope="prototype">
+    <property name="mode" value="update"/>
+  </bean>
+
+  <!-- お知らせ情報変更登録完了画面 -->
+  <bean id="newsUpdCompCommand" class="jp.co.transcosmos.dm3.webAdmin.news.command.PanaNewsCompCommand" scope="prototype">
+    <property name="newsManager" ref="newsManager"/>
+    <property name="mode" value="update"/>
+  </bean>
+  
+  
+  <bean id="newsDelCompCommand" class="jp.co.transcosmos.dm3.webAdmin.news.command.PanaNewsListCommand" scope="prototype">
+    <property name="newsManager" ref="newsManager"/>
+    <property name="authLogging" ref="authLogging"/>
+    <property name="rowsPerPage" value="10"/>
+    <property name="visibleNavigationPageCount" value="10"/>
+    <property name="mode" value="delete"/>
+  </bean>
+  
+  <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMappingList">
+    <property name="commandURLMapper" ref="commandURLMapper"/>
+    <property name="mappings">
+      <list>
+	        <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+	          <property name="urlPattern" value="/top/news/list/"/>
+	          <property name="namedCommands">
+	            <props>
+	              <prop key="list">newsListCommand</prop>
+	            </props>
+	          </property>
+	          <property name="defaultViewName" value="/WEB-INF/jsp/admin/news/NewsInit.jsp"/>
+	        </bean>
+	        
+	        <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+	          <property name="urlPattern" value="/top/news/new/input/" />
+	          <property name="defaultCommandName" value="newsAddInputCommand"/>
+	          <property name="defaultViewName" value="/WEB-INF/jsp/admin/news/NewsAddInput.jsp"/>
+	        </bean>
+	        
+	        <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+	          <property name="urlPattern" value="/top/news/new/confirm/" />
+	          <property name="defaultCommandName" value="newsAddConfirmCommand"/>
+	          <property name="defaultViewName" value="/WEB-INF/jsp/admin/news/NewsAddConfirm.jsp"/>
+	          <property name="namedViews">
+	            <props>
+	              <prop key="input">/WEB-INF/jsp/admin/news/NewsAddInput.jsp</prop>
+	            </props>
+	          </property>
+	        </bean>
+	        
+	        <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+	          <property name="urlPattern" value="/top/news/new/result/" />
+	          <property name="defaultCommandName" value="newsAddCompCommand"/>
+	          <property name="defaultViewName" value="/WEB-INF/jsp/admin/news/NewsCompRedirect.jsp"/>
+	          <property name="namedViews">
+	            <props>
+	              <prop key="input">/WEB-INF/jsp/admin/news/NewsAddInput.jsp</prop>
+	              <prop key="comp">/WEB-INF/jsp/admin/news/NewsComp.jsp</prop>
+	            </props>
+	          </property>
+	        </bean>
+	        
+	        <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+	          <property name="urlPattern" value="/top/news/update/input/" />
+	          <property name="defaultCommandName" value="newsUpdInputCommand"/>
+	          <property name="defaultViewName" value="/WEB-INF/jsp/admin/news/NewsUpdInput.jsp"/>
+	        </bean>
+	        
+	       <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+	         <property name="urlPattern" value="/top/news/update/confirm/" />
+	         <property name="defaultCommandName" value="newsUpdConfirmCommand"/>
+	         <property name="defaultViewName" value="/WEB-INF/jsp/admin/news/NewsUpdConfirm.jsp"/>
+	         <property name="namedViews">
+	           <props>
+	             <prop key="input">/WEB-INF/jsp/admin/news/NewsUpdInput.jsp</prop>
+	             <prop key="comp">/WEB-INF/jsp/admin/news/NewsComp.jsp</prop>
+	           </props>
+	         </property>
+	       </bean>
+	       
+	       <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+	          <property name="urlPattern" value="/top/news/update/result/" />
+	          <property name="defaultCommandName" value="newsUpdCompCommand"/>
+	          <property name="defaultViewName" value="/WEB-INF/jsp/admin/news/NewsCompRedirect.jsp"/>
+	          <property name="namedViews">
+	            <props>
+	              <prop key="input">/WEB-INF/jsp/admin/news/NewsUpdInput.jsp</prop>
+	              <prop key="comp">/WEB-INF/jsp/admin/news/NewsComp.jsp</prop>
+	            </props>
+	          </property>
+	        </bean>
+	        
+	        <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+	          <property name="urlPattern" value="/top/news/delConfirm/" />
+	          <property name="defaultCommandName" value="newsDelCompCommand"/>
+	          <property name="defaultViewName" value="/WEB-INF/jsp/admin/news/NewsListDeleteCompRedirect.jsp"/>
+	        </bean>
+	        
+  		</list>
+    </property>
+  </bean>
+</beans>
+
+

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+	<bean id="initHousingInspectionCommand"
+		class="jp.co.transcosmos.dm3.webAdmin.housinginspection.command.HousingInspectionInitCommand"
+		scope="prototype">
+		<property name="fileUtil" ref="fileUtil"/>
+		<property name="panaHousingManager" ref="panaHousingManager"/>
+		<property name="commonParameters" ref="commonParameters"/>
+	</bean>
+
+	<bean id="editHousingInspectionCommand"
+		class="jp.co.transcosmos.dm3.webAdmin.housinginspection.command.HousingInspectionValidateCommand"
+		scope="prototype">
+		<property name="fileUtil" ref="fileUtil"/>
+		<property name="commonParameters" ref="commonParameters"/>
+		<property name="panaHousingManager" ref="panaHousingManager"/>
+	</bean>
+
+	<bean id="updateHousingInspectionCommand"
+		class="jp.co.transcosmos.dm3.webAdmin.housinginspection.command.HousingInspectionUpdateCommand"
+		scope="prototype">
+		<property name="commonParameters" ref="commonParameters"/>
+		<property name="panaHousingManager" ref="panaHousingManager"/>
+	</bean>
+
+	<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMappingList">
+		<property name="commandURLMapper" ref="commandURLMapper" />
+		<property name="mappings">
+			<list>
+				<!-- 情報編集画面 -->
+				<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+					<property name="urlPattern" value="/top/housing/inspection/input/" />
+					<property name="defaultCommandName" value="initHousingInspectionCommand" />
+					<property name="defaultViewName"
+						value="/WEB-INF/jsp/admin/housinginspection/housinginspection.jsp" />
+				</bean>
+
+				<!-- 入力確認画面 -->
+				<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+					<property name="urlPattern" value="/top/housing/inspection/confirm/" />
+					<property name="defaultCommandName" value="editHousingInspectionCommand" />
+					<property name="defaultViewName"
+						value="/WEB-INF/jsp/admin/housinginspection/housinginspectionconfirm.jsp" />
+					<property name="namedViews">
+						<props>
+							<prop key="validationError">/WEB-INF/jsp/admin/housinginspection/housinginspection.jsp
+							</prop>
+						</props>
+					</property>
+				</bean>
+
+				<!-- 編集確認 -->
+				<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+					<property name="urlPattern" value="/top/housing/inspection/result/" />
+					<property name="defaultCommandName" value="updateHousingInspectionCommand" />
+					<property name="defaultViewName"
+						value="/WEB-INF/jsp/admin/housinginspection/housinginspectionCompRedirect.jsp" />
+					<property name="namedViews">
+						<props>
+							<prop key="validationError">/WEB-INF/jsp/admin/housinginspection/housinginspection.jsp
+							</prop>
+							<prop key="comp">/WEB-INF/jsp/admin/housinginspection/housinginspectionover.jsp
+							</prop>
+						</props>
+					</property>
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+</beans>
