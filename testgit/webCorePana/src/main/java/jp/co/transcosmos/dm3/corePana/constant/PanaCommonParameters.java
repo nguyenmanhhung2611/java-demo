@@ -31,6 +31,9 @@ import jp.co.transcosmos.dm3.core.constant.CommonParameters;
  */
 public class PanaCommonParameters extends CommonParameters {
 
+    /** Yahoo Code for your Conversion Page **/
+    private String yahooCodeSrc="//b91.yahoo.co.jp/pagead/conversion/1000277438/imp.gif";
+
 	/** Janet URL */
 	private String janetUrl = "https://action.j-a-net.jp//";
 	
@@ -715,6 +718,20 @@ public class PanaCommonParameters extends CommonParameters {
 		this.commonResourceRootUrl = commonResourceRootUrl;
 	}
 	/**
+     * Get yahoo code source
+     * @return
+     */
+    public String getYahooCodeSrc() {
+        return yahooCodeSrc;
+    }
+    /**
+     * Set yahoo code source
+     * @param yahooCodeSrc
+     */
+    public void setYahooCodeSrc(String yahooCodeSrc) {
+        this.yahooCodeSrc = yahooCodeSrc;
+    }
+    /**
 	 * Get janet URL
      * @return the janetUrl
      */

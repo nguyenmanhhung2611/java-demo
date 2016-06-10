@@ -16,10 +16,7 @@ import jp.co.transcosmos.dm3.lookup.CodeLookupManager;
  *
  * 担当者       修正日      修正内容
  * ------------ ----------- -----------------------------------------------------
- * I.Shu		2015.02.05	新規作成
- *
- * 注意事項
- * Factory のインスタンスを直接生成しない事。　必ずgetInstance() で取得する事。
+ *@author hiennt
  *
  * </pre>
  */
@@ -85,7 +82,7 @@ public class NewsFormFactory {
 	
 	/**
 	 * お知らせの検索結果、および検索条件を格納する InformationSearchForm のインスタンスを生成する。<br/>
-	 * InformationSearchForm には、リクエストパラメータに該当する値を設定する。<br/>
+	 * NewsSearchForm には、リクエストパラメータに該当する値を設定する。<br/>
 	 * <br/>
 	 * @param request HTTP リクエスト
 	 * @return リクエストパラメータを設定した InformationSearchForm インスタンス 
@@ -99,9 +96,9 @@ public class NewsFormFactory {
 	
 	
 	/**
-	 * お知らせ更新時の入力値を格納する空の InformationForm のインスタンスを生成する。<br/>
+	 * お知らせ更新時の入力値を格納する空の NewsForm のインスタンスを生成する。<br/>
 	 * <br/>
-	 * @return 空の InformationForm のインスタンス
+	 * @return 空の NewsForm のインスタンス
 	 */
 	public NewsForm createInformationForm(){
 		return new NewsForm(this.lengthUtils, this.codeLookupManager);
@@ -109,10 +106,10 @@ public class NewsFormFactory {
 
 	
 	/**
-	 * お知らせ更新時の入力値を格納する空の InformationForm のインスタンスを生成する。<br/>
+	 * お知らせ更新時の入力値を格納する空の NewsForm のインスタンスを生成する。<br/>
 	 * <br/>
 	 * @param request HTTP リクエスト
-	 * @return リクエストパラメータを設定した InformationForm のインスタンス
+	 * @return リクエストパラメータを設定した NewsForm のインスタンス
 	 */
 	public NewsForm createInformationForm(HttpServletRequest request){
 		NewsForm form = createInformationForm();

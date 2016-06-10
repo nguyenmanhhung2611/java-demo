@@ -11,20 +11,24 @@
 		</property>
 		<property name="lookups">
 			<map>
+                <!-- reform categories -->
                 <entry key="reformPlanCategories">
                     <list>
                         <value>R00:いい品質</value>
-                        <value>R00.R01:大理石の床</value>
-                        <value>R00.R02:ヒノキの風呂</value>
                         <value>R10:いい住まい</value>
-                        <value>R10.R11:広いキッチン</value>
-                        <value>R10.R12:広いお風呂</value>
                         <value>R20:いい生き方</value>
-                        <value>R20.R21:カルチャー</value>
-                        <value>R20.R22:ヘルス</value>
-                        <value>R20.R23:スポーツ</value>
-                        <value>R20.R24:ホビー</value>
+                        <value>R20_R21:カルチャー</value>
+                        <value>R20_R22:ヘルス</value>
+                        <value>R20_R23:スポーツ</value>
+                        <value>R20_R24:ホビー</value>
                         
+                    </list>
+                </entry>
+                <entry key="iconPlanCategories">
+                    <list>
+                        <value>R00:iconPlan01</value>
+                        <value>R10:iconPlan02</value>
+                        <value>R20:iconPlan03</value>
                     </list>
                 </entry>
 				<!-- ステータスCD -->
@@ -185,7 +189,6 @@
 				<entry key="ImageType">
 					<list>
 						<value>00:間取</value>
-						<value>02:動画</value>
 						<value>01:外観</value>
 						<value>03:内観</value>
 						<value>04:周辺</value>

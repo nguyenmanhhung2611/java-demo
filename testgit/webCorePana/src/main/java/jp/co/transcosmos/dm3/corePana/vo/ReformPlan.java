@@ -11,6 +11,7 @@ import java.util.Date;
  * íSìñé“        èCê≥ì˙        èCê≥ì‡óe
  * ------------ ----------- -----------------------------------------------------
  * Trans        2015.03.10     êVãKçÏê¨
+ * Thi Tran     2015.12.18     Update to add categories to reform plan
  * </pre>
  * <p>
  * íçà”éñçÄ<br/>
@@ -54,13 +55,10 @@ public class ReformPlan {
     private Date updDate;
     /** ç≈èIçXêVé“ */
     private String updUserId;
-    
-//    /** Reform type*/
-//    private String type;
-    
-    /** Category 1 of reform plan**/
+
+    /** Category 1 of reform plan **/
     private String planCategory1;
-    
+
     /** Category 2 of reform_plan **/
     private String planCategory2;
 
@@ -378,7 +376,8 @@ public class ReformPlan {
     }
 
     /**
-     * @param planCategory1 the planCategory1 to set
+     * @param planCategory1
+     *            the planCategory1 to set
      */
     public void setPlanCategory1(String planCategory1) {
         this.planCategory1 = planCategory1;
@@ -392,24 +391,10 @@ public class ReformPlan {
     }
 
     /**
-     * @param planCategory2 the planCategory2 to set
+     * @param planCategory2
+     *            the planCategory2 to set
      */
     public void setPlanCategory2(String planCategory2) {
         this.planCategory2 = planCategory2;
     }
-
-//    /**
-//     * @return the type
-//     */
-//    public String getType() {
-//        return type;
-//    }
-//
-//    /**
-//     * @param type the type to set
-//     */
-//    public void setType(String type) {
-//        this.type = type;
-//    }
-    
 }

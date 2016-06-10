@@ -21,6 +21,7 @@
 						</c:if>
 
 						<p class="caption"><c:out value="${outPutForm.getBeforePathComment()[0]}"/></p>
+						<p class="start-stop"><a href="#" class="play">スライドショーで見る</a></p>
 						<p class="arrNext"><a href="#">next</a></p>
 						<p class="arrPrev"><a href="#">prev</a></p>
 					</div>
@@ -70,6 +71,7 @@
 						</c:if>
 
 						<p class="caption"><c:out value="${outPutForm.getAfterPathComment()[0]}"/></p>
+						<p class="start-stop"><a href="#" class="play">スライドショーで見る</a></p>
 						<p class="arrNext"><a href="#">next</a></p>
 						<p class="arrPrev"><a href="#">prev</a></p>
 					</div>

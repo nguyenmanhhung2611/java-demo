@@ -14,11 +14,11 @@
 	<link rel="stylesheet" href="/cmn/css/import.css" type="text/css" media="screen,print" />
 
 	<script type="text/javascript">
-	<!--
-    function gotoNext() {
+
+	function gotoNext() {
     	document.inputform.submit();
     }
-    // -->
+   
     </script>
 	<title><c:out value="${commonParameters.adminPageTitle}"/></title>
 </head>

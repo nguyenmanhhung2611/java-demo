@@ -20,7 +20,7 @@
   </context-param>
   <context-param>
     <param-name>contextConfigLocation</param-name>
-    <param-value>/WEB-INF/applicationContext.xml</param-value>
+    <param-value>/WEB-INF/applicationContext_local.xml /WEB-INF/contexts/</param-value>
   </context-param>
 
 
@@ -83,7 +83,32 @@
       <param-value>/error/*,/imgs/*,/health_chk/</param-value>
     </init-param>
   </filter>
-
+<filter>
+    <filter-name>ssi</filter-name>
+    <filter-class>
+      org.apache.catalina.ssi.SSIFilter
+    </filter-class>
+    <init-param>
+      <param-name>contentType</param-name>
+      <param-value>text/html(;.*)?</param-value>
+    </init-param>
+    <init-param>
+      <param-name>debug</param-name>
+      <param-value>1</param-value>
+    </init-param>
+    <init-param>
+      <param-name>expires</param-name>
+      <param-value>666</param-value>
+    </init-param>
+    <init-param>
+      <param-name>isVirtualWebappRelative</param-name>
+      <param-value>1</param-value>
+    </init-param>
+    </filter>
+        <filter-mapping>
+    <filter-name>ssi</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
   <filter-mapping>
     <filter-name>EncodeFilter</filter-name>
     <url-pattern>/*</url-pattern>
@@ -130,7 +155,7 @@
     </init-param>
     <init-param>
       <param-name>contextConfigLocation</param-name>
-      <param-value>/WEB-INF/url-mapping /WEB-INF/code-lookup /WEB-INF/spring-servlet.xml</param-value>
+      <param-value>/WEB-INF/url-mapping /WEB-INF/code-lookup /WEB-INF/spring-servlet_local.xml</param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>
   </servlet>
@@ -178,10 +203,20 @@
     <servlet-name>spring</servlet-name>
     <url-pattern>/modal/*</url-pattern>
   </servlet-mapping>
+  
+    <servlet-mapping>
+    <servlet-name>spring</servlet-name>
+    <url-pattern>/seminar/*</url-pattern>
+  </servlet-mapping>
 
   <servlet-mapping>
     <servlet-name>spring</servlet-name>
     <url-pattern>/inquiry/*</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>spring</servlet-name>
+    <url-pattern>/event/*</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>
@@ -206,12 +241,12 @@
 
 
   <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-    <welcome-file>index.htm</welcome-file>
-    <welcome-file>index.jsp</welcome-file>
-    <welcome-file>default.html</welcome-file>
-    <welcome-file>default.htm</welcome-file>
-    <welcome-file>default.jsp</welcome-file>
+  	<welcome-file>index.html</welcome-file>
+  	<welcome-file>index.htm</welcome-file>
+  	<welcome-file>index.jsp</welcome-file>
+  	<welcome-file>default.html</welcome-file>
+  	<welcome-file>default.htm</welcome-file>
+  	<welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
 
 

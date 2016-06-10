@@ -15,14 +15,9 @@
   <bean id="commandDelegatingController" class="jp.co.transcosmos.dm3.servlet.CommandDelegatingController">
     <property name="commandURLMapper"><ref bean="commandURLMapper"/></property>
   </bean>
-  <bean id="defaultServletHttpRequestHandler" 
-    class="org.springframework.web.servlet.resource.DefaultServletHttpRequestHandler" />
-	
   <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
     <property name="mappings">
-      <props>
-		<prop key="/**/*.*">defaultServletHttpRequestHandler</prop>
-		<prop key="/*">commandDelegatingController</prop></props>
+      <props><prop key="/*">commandDelegatingController</prop></props>
     </property>
     <property name="interceptors" ref="rollbackOnExceptionInterceptor"/>
   </bean>

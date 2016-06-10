@@ -8,9 +8,6 @@
 <script src="<c:out value='${commonParameters.resourceRootUrl}'/>cmn/js/jquery-1.11.2.js"></script>
 <script src="<c:out value='${commonParameters.resourceRootUrl}'/>cmn/js/jquery.fancybox.pack.js"></script>
 <link rel="stylesheet" href="<c:out value='${commonParameters.resourceRootUrl}'/>cmn/css/jquery.fancybox.css" type="text/css" media="screen,print" />
-<script>
-   
-</script>
 <!--flexBlockA01 -->
 <div class="flexBlockA01">
        	<input type="hidden" name="sysHousingCd" value="<c:out value="${inputForm.sysHousingCd}"/>" />
@@ -23,7 +20,7 @@
 		<input type="hidden" name="imgFlg" value="<c:out value="${inputForm.imgFlg}"/>" />
        	<input type="hidden" name="displayHousingName" value="<c:out value="${inputForm.displayHousingName}"/>" />
 		<c:import url="/WEB-INF/jsp/admin/include/housingList/searchParams.jsh" />
-        
+
 		<br>
 		<table width="100%" border="1" cellspacing="0" cellpadding="0" class="tableA1">
 			<tr>
@@ -47,7 +44,7 @@
 			</tr>
 			<tr>
 				<th class="head_tr" width="20%">リフォームプラン名<font color="red">※</font><p style="font-size: 85%">（50文字）</p></th>
-				<td colspan="3" width="80%"><input type="text" name="planName" value="<c:out value="${inputForm.planName}"/>" size="45" maxlength="50" class="input2">&nbsp;</td>
+				<td colspan="3" width="80%"><input type="text" name="planName" value="<c:out value="${inputForm.planName}"/>" size="45" maxlength="50" class="input2 width569">&nbsp;</td>
 			</tr>
 			<tr>
 				<th class="head_tr" width="20%">価格<font color="red">※</font></th>
@@ -57,13 +54,13 @@
 			</tr>
 			<tr>
 				<th class="head_tr" width="20%">セールスポイント<br>（コンセプト）<p style="font-size: 85%">（200文字）</p></th>
-				<td colspan="3" width="80%"><textarea cols="50" rows="3" name="salesPoint" ><c:out value="${inputForm.salesPoint}"/></textarea></td>
+				<td colspan="3" width="80%"><textarea cols="50" rows="3" name="salesPoint" class="width572"><c:out value="${inputForm.salesPoint}"/></textarea></td>
 			</tr>
 			<tr>
 				<th class="head_tr" width="20%">備考<p style="font-size: 85%">（100文字）</p></th>
-				<td colspan="3" width="80%"><textarea cols="50" rows="2" name="note" ><c:out value="${inputForm.note}"/></textarea></td>
+				<td colspan="3" width="80%"><textarea cols="50" rows="2" name="note" class="width572"><c:out value="${inputForm.note}"/></textarea></td>
 			</tr>
-			<tr>
+            <tr>
                 <th class="head_tr" width="20%">カテゴリ1</th>
                 <td width="30%">
                     <select id="category1" style="width: 95%;" name="planCategory1">

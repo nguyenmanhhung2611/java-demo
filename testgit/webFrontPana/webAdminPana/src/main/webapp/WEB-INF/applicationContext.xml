@@ -1379,7 +1379,7 @@
         <value>800</value>
       </list>
     </property>
-    <property name="commonResourceRootUrl" value="/webFrontPana/" />
+    <property name="ResourceRootUrl" value="/webFrontPana/" />
     <property name="adminPwdUseMarks" value="${admin.usePwdMarks}" />
     <property name="adminPwdMastMarks" value="${admin.usePwdMarks}" />
 

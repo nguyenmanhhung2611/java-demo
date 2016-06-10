@@ -24,6 +24,7 @@
 
   <!-- 共通設定情報管理クラス -->
   <bean id="commonParameters" class="jp.co.transcosmos.dm3.corePana.constant.PanaCommonParameters">
+    <property name="yahooCodeSrc" value="//b91.yahoo.co.jp/pagead/conversion/1000277438/imp.gif"/>
     <property name="janetUrl" value="https://action.j-a-net.jp//"/>
     <property name="janetMemberSid" value="404221"/>
     <property name="janetAssessmentSid" value="404222"/>

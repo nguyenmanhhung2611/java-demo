@@ -272,7 +272,8 @@
 									<c:param name="targetLabel" value="inquiryGeneral.input.tel" />
 									</c:import>
 									<div><input type="text" name="tel" class="inputType04 <c:if test="${dm3hasError}">error</c:if>" id="tel01" placeholder="例：1234567890" value="<c:out value="${inputForm.inquiryHeaderForm.tel}"/>" maxlength="11"></div>
-									<div class="mt05">※半角数字、ハイフンなしで市外局番から入力してください。</div>
+									<div class="mt05">※半角数字、ハイフンなしで市外局番から入力してください。<br>
+									※携帯電話・PHSの番号でもご登録いただけます。</div>
 								</td>
 							</tr>
 							<tr>

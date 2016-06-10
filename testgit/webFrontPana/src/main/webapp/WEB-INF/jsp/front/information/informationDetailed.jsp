@@ -24,7 +24,14 @@
 <script src="<c:out value='${commonParameters.resourceRootUrl}'/>common/js/jquery.fancybox.pack.js"></script>
 <script src="<c:out value='${commonParameters.resourceRootUrl}'/>common/js/jquery.tooltipster.min.js"></script>
 <script src="<c:out value='${commonParameters.resourceRootUrl}'/>common/js/html5.js"></script>
-
+<script src="<c:out value='${commonParameters.resourceRootUrl}'/>common/js/jquery.heightLine.js"></script>
+<script type="text/javascript">
+<!--
+$(function(){
+	$(".bnrBlock>.columnBlock>.blockInner>a>dl").heightLine({minWidth: 640});
+});
+-->
+</script>
 <!--[if lte IE 9]><script src="<c:out value='${commonParameters.resourceRootUrl}'/>common/js/html5.js"></script>
 <![endif]-->
 <!--[if lt IE 9]><![endif]-->

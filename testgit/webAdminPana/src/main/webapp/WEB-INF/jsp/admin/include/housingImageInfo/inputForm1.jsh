@@ -45,7 +45,7 @@
 			    	<input type="text" name="addSortOrder" value="<c:out value="${housingImageInfoForm.addSortOrder[status.index]}"/>" size="3" maxlength="3" class="input2 ime-disabled" style="width: 100%; ">
 			    </td>
 				<td>
-			        <input type="file" name="addFilePath" size="4"/>
+			        <input type="file" name="addFilePath" size="1"/>
 			    </td>
 			    <td>
 					<select id="addImageType<c:out value="${status.index}"/>" name="addImageType" style="width: 100%; " onchange="addonch('<c:out value="${status.index}"/>')">

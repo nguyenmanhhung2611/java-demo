@@ -18,6 +18,10 @@
 					<p class="text">物件のご購入、売却査定についてなど、まずはお気軽にお問い合わせください。</p>
 					<p class="btnBlack01"><a href="<c:out value='${commonParameters.resourceRootUrl}'/>inquiry/">まずはご相談</a></p>
 				</div>
+				<div class="inquiryCounter">
+					<p class="title">Social</p>
+					<p class="btnBlack01"><a href="<c:out value='${pageContext.request.contextPath}'/>/mypage/social/listnews/">Social</a></p>
+				</div>
 
 			</div>
 <!-- /=== sideBlock === -->

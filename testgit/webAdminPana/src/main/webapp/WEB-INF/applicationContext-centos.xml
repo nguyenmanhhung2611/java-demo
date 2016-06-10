@@ -1173,6 +1173,11 @@
     <property name="reformManager" ref="reformManagerTarget" />
     <property name="thumbnailCreator" ref="thumbnailCreator" />
     <property name="commonParameters" ref="commonParameters" />
+    <property name="partCreateors">
+      <list>
+        <ref bean="panaReformPartCreator" />
+      </list>
+    </property>
   </bean>
   <bean id="reformManagerTarget" class="jp.co.transcosmos.dm3.corePana.model.reform.ReformManageImpl">
     <property name="reformPlanDAO" ref="reformPlanDAO" />
@@ -1262,6 +1267,26 @@
     <property name="imageToPart">
       <map>
         <entry key="10" value="I10"/>
+      </map>
+    </property>
+  </bean>
+
+  <bean id="panaReformPartCreator" class="jp.co.transcosmos.dm3.corePana.model.partCreator.PanaReformPartCreator">
+    <property name="housingPartInfoDAO" ref="housingPartInfoDAO" />
+    <property name="valueObjectFactory" ref="valueObjectFactory" />
+    <property name="categoryToPart">
+      <map>
+        <entry key="R00" value="R00"/>
+        <entry key="R01" value="R01"/>
+        <entry key="R02" value="R02"/>
+        <entry key="R10" value="R10"/>
+        <entry key="R11" value="R11"/>
+        <entry key="R12" value="R12"/>
+        <entry key="R20" value="R20"/>
+        <entry key="R21" value="R21"/>
+        <entry key="R22" value="R22"/>
+        <entry key="R23" value="R23"/>
+        <entry key="R24" value="R24"/>
       </map>
     </property>
   </bean>

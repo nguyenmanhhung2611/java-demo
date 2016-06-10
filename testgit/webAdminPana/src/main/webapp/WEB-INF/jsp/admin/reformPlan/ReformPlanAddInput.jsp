@@ -52,35 +52,34 @@
 		var frm = document.forms[0];
 		frm.chartValue[index].value = chartValue;
 	}
-	
-	function changeCategory(category1, categories){
-		var frm = document.forms[0];
-		var category2 = frm.planCategory2;
-		category2.options.length = 0;
-		var emptyOption = document.createElement("option");
-		category2.appendChild(emptyOption);
-		
-		for (var i = 0; i < categories.length; i++) {
-			if(categories[i].id == category1){
-				var categories2Data = categories[i].children;
-				for(var j = 0; j < categories2Data.length; j++){
-				    var option = document.createElement("option");
-				    option.value = categories2Data[j].id;
-				    option.text = categories2Data[j].name;
-				    category2.appendChild(option);
-				}
-				break;
-			}
-		}
-	}
-	
-	$(document).ready(function() {
-		   var categories = <c:out value="${inputForm.superCategoriesAsJson}" escapeXml="false"/>;
-		   $('#category1').change(function(e){
-			   var category1 = $(e.target).val();
-			   changeCategory(category1, categories);
-		   });
-	});
+    function changeCategory(category1, categories){
+        var frm = document.forms[0];
+        var category2 = frm.planCategory2;
+        category2.options.length = 0;
+        var emptyOption = document.createElement("option");
+        category2.appendChild(emptyOption);
+        
+        for (var i = 0; i < categories.length; i++) {
+            if(categories[i].id == category1){
+                var categories2Data = categories[i].children;
+                for(var j = 0; j < categories2Data.length; j++){
+                    var option = document.createElement("option");
+                    option.value = categories2Data[j].id;
+                    option.text = categories2Data[j].name;
+                    category2.appendChild(option);
+                }
+                break;
+            }
+        }
+    }
+    
+    $(document).ready(function() {
+           var categories = <c:out value="${inputForm.superCategoriesAsJson}" escapeXml="false"/>;
+           $('#category1').change(function(e){
+               var category1 = $(e.target).val();
+               changeCategory(category1, categories);
+           });
+    });
 // -->
 </script>
 

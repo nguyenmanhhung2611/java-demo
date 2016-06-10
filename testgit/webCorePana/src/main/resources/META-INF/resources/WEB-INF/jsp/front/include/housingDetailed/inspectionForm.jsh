@@ -37,7 +37,7 @@
 							<thead>
 							<tr>
 								<th colspan="2">診断箇所</th>
-								<th class="w20per">確認<br class="SPdisplayBlock">結果</th>
+								<th class="w20per">確認<br class="SPdisplayBlock">範囲</th>
 							</tr>
 							</thead>
 							<tbody>

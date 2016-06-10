@@ -58,6 +58,7 @@
 <!-- / #contents --></div>
 
 <!--#include virtual="/common/ssi/simple-footer-S.html"-->
-
+<!-- Yahoo Code for your Conversion Page -->
+<img height="1" width="1" alt="" src="<c:out value='${commonParameters.yahooCodeSrc}'/>?value=0&label=dXaPCLDKvGMQze_kvQM&guid=ON&script=0"/>
 </body>
 </html>

@@ -32,6 +32,8 @@ import jp.co.transcosmos.dm3.validation.ValidationChain;
 import jp.co.transcosmos.dm3.validation.ValidationFailure;
 
 import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.util.StringUtils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -44,7 +46,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * 担当者      修正日     修正内容
  * ------------ ----------- -----------------------------------------------------
  * TRANS     2015.03.10  新規作成
- * Thi Tran	 2015.12.15  Update to add categories to reform plan
+ * Thi Tran     2015.12.18    Update to add categories to reform plan
  * </pre>
  * <p>
  * 注意事項<br/>
@@ -155,18 +157,19 @@ public class ReformInfoForm implements Validateable {
 
     /** イベントフラグ */
     private String command;
-    
-//    /** Reform type*/
-//    private String reformType;
 
-    /** Category 1 of reform plan*/
+    /** Category 1 of reform plan */
     private String planCategory1;
-    /** Category 2 of reform plan*/
+    /** Category 2 of reform plan */
     private String planCategory2;
-    
-    /** All reform categories which is configurated in code lookup**/
+
+    /** All reform categories which is configurated in code lookup **/
     private LinkedHashMap<String, ReformPlanCategory> reformPlanCategoryMap;
-	/**
+
+    // log
+    private static final Log log = LogFactory.getLog(ReformInfoForm.class);
+
+    /**
      * デフルトコンストラクター。<br/>
      * <br/>
      *
@@ -842,20 +845,6 @@ public class ReformInfoForm implements Validateable {
 	public void setImgSelFlg(String imgSelFlg) {
 		this.imgSelFlg = imgSelFlg;
 	}
-	
-//	/**
-//     * @return the reformType
-//     */
-//    public String getReformType() {
-//        return reformType;
-//    }
-//
-//    /**
-//     * @param reformType the reformType to set
-//     */
-//    public void setReformType(String reformType) {
-//        this.reformType = reformType;
-//    }
 
     /**
      * @return the planCategory1
@@ -865,7 +854,8 @@ public class ReformInfoForm implements Validateable {
     }
 
     /**
-     * @param planCategory1 the planCategory1 to set
+     * @param planCategory1
+     *            the planCategory1 to set
      */
     public void setPlanCategory1(String planCategory1) {
         this.planCategory1 = planCategory1;
@@ -879,7 +869,8 @@ public class ReformInfoForm implements Validateable {
     }
 
     /**
-     * @param planCategory2 the planCategory2 to set
+     * @param planCategory2
+     *            the planCategory2 to set
      */
     public void setPlanCategory2(String planCategory2) {
         this.planCategory2 = planCategory2;
@@ -1056,6 +1047,33 @@ public class ReformInfoForm implements Validateable {
             errors.add(vf);
         }
 
+        // validate for categories
+        if (!StringValidateUtil.isEmpty(this.planCategory1)) {
+
+            LinkedHashMap<String, ReformPlanCategory> categoryMap = getReformPlanCategoryMap();
+            ReformPlanCategory category1 = categoryMap.get(this.planCategory1);
+            if (null == category1 || !category1.isSuperCategory()) {
+                ValidationFailure vf = new ValidationFailure("category1Error",
+                        "第1カテゴリ", null, null);
+                errors.add(vf);
+            }
+
+            if (!StringValidateUtil.isEmpty(this.planCategory2)) {
+                ReformPlanCategory category2 = categoryMap
+                        .get(this.planCategory2);
+                if (null == category2 || category2.isSuperCategory()) {
+                    ValidationFailure vf = new ValidationFailure(
+                            "category2Error", "第2カテゴリ", null, null);
+                    errors.add(vf);
+                }
+            }
+        }else if(!StringValidateUtil.isEmpty(this.planCategory2)){
+            ValidationFailure vf = new ValidationFailure(
+                    "category2Error", "第2カテゴリ", null, null);
+            errors.add(vf);
+            
+        }
+
         return (startSize == errors.size());
     }
 
@@ -1119,8 +1137,8 @@ public class ReformInfoForm implements Validateable {
 
         // 更新担当者を設定
         reformPlan.setUpdUserId(editUserId);
-        
-//        reformPlan.setType(this.reformType);
+
+        // reformPlan.setType(this.reformType);
         reformPlan.setPlanCategory1(planCategory1);
         reformPlan.setPlanCategory2(planCategory2);
     }
@@ -1189,8 +1207,8 @@ public class ReformInfoForm implements Validateable {
         this.setWkImgFlg(IMGFLG_0);
         // 画像ファイル選択フラグ
         this.setImgSelFlg(IMGFLG_0);
-        
-//        this.setReformType("");
+
+        // this.setReformType("");
         this.setPlanCategory1("");
         this.setPlanCategory1("");
         // リフォーム・レーダーチャートリスト
@@ -1234,7 +1252,7 @@ public class ReformInfoForm implements Validateable {
                 this.setAfterMovieUrl(plan.getAfterMovieUrl());
                 // 閲覧権限
                 this.setRoleId(plan.getRoleId());
-//                this.setReformType(plan.getType());
+                // this.setReformType(plan.getType());
                 this.setPlanCategory1(plan.getPlanCategory1());
                 this.setPlanCategory2(plan.getPlanCategory2());
 
@@ -1306,8 +1324,6 @@ public class ReformInfoForm implements Validateable {
         this.setCommand("update");
         // 画像URL
         this.setImgFile1(this.getImgFile2());
-        
-        
     }
 
     /**
@@ -1520,11 +1536,13 @@ public class ReformInfoForm implements Validateable {
     }
 
     /**
-     * Convert reform categories from Map<String, String> in code lookup to LinkedHashMap<String, ReformPlanCategory>
+     * Convert reform categories from Map<String, String> in code lookup to
+     * LinkedHashMap<String, ReformPlanCategory>
+     * 
      * @return
      */
     protected LinkedHashMap<String, ReformPlanCategory> getReformPlanCategoryMap() {
-        if(reformPlanCategoryMap == null) {
+        if (reformPlanCategoryMap == null) {
             String code = "reformPlanCategories";
             // get code lookup "reformPlanCategories"
             Iterator<String> keys = codeLookupManager.getKeysByLookup(code);
@@ -1533,46 +1551,53 @@ public class ReformInfoForm implements Validateable {
                 String key = keys.next();
                 categories.put(key, codeLookupManager.lookupValue(code, key));
             }
-            
+
             // build category tree from this code lookup
-            reformPlanCategoryMap = buildCategoryTree(categories, ".", null, null);
+            reformPlanCategoryMap = buildCategoryTree(categories, "_", null,
+                    null);
         }
         return reformPlanCategoryMap;
     }
 
     /**
      * Get all parent categories and their children
+     * 
      * @return a list of reform category
      */
-    public List<ReformPlanCategory> getSupperCategories(){
+    public List<ReformPlanCategory> getSupperCategories() {
         return getSupperCategories(getReformPlanCategoryMap());
     }
 
     /**
      * Get parent categories from category tree
-     * @param tree LinkedHashMap of ReformPlanCategory
+     * 
+     * @param tree
+     *            LinkedHashMap of ReformPlanCategory
      * @return list of parent ReformPlanCategory
      */
-    protected List<ReformPlanCategory> getSupperCategories(LinkedHashMap<String, ReformPlanCategory> tree){
+    protected List<ReformPlanCategory> getSupperCategories(
+            LinkedHashMap<String, ReformPlanCategory> tree) {
         List<ReformPlanCategory> categories = new ArrayList<>();
-        for(ReformPlanCategory category : tree.values()) {
-        	// check category is parent
-            if(category.isSuperCategory()) {
+        for (ReformPlanCategory category : tree.values()) {
+            // check category is parent
+            if (category.isSuperCategory()) {
                 categories.add(category);
             }
         }
         return categories;
     }
-    
+
     /**
      * Build category tree from map of category
+     * 
      * @param categoryMap
      * @param delimeter
      * @param prefix
      * @param subfix
      * @return
      */
-    protected LinkedHashMap<String, ReformPlanCategory> buildCategoryTree(LinkedHashMap<String, String> categoryMap, String delimeter,
+    protected LinkedHashMap<String, ReformPlanCategory> buildCategoryTree(
+            LinkedHashMap<String, String> categoryMap, String delimeter,
             String prefix, String subfix) {
         LinkedHashMap<String, ReformPlanCategory> tree = new LinkedHashMap<>();
         for (Entry<String, String> category : categoryMap.entrySet()) {
@@ -1614,6 +1639,7 @@ public class ReformInfoForm implements Validateable {
 
     /**
      * Remove prefix from a given string
+     * 
      * @param value
      * @param prefix
      * @return
@@ -1628,6 +1654,7 @@ public class ReformInfoForm implements Validateable {
 
     /**
      * Remove subfix from a given string
+     * 
      * @param value
      * @param subfix
      * @return
@@ -1639,17 +1666,18 @@ public class ReformInfoForm implements Validateable {
             return value;
         }
     }
-    
+
     /**
      * Get all categories as json string
+     * 
      * @return null if can not parse to json string
      */
-    public String getSuperCategoriesAsJson(){
+    public String getSuperCategoriesAsJson() {
         ObjectMapper mapper = new ObjectMapper();
         try {
             return mapper.writeValueAsString(getSupperCategories());
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
         }
         return null;
     }

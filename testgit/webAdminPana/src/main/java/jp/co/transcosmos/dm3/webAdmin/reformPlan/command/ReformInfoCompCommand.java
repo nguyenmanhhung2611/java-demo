@@ -224,7 +224,7 @@ public class ReformInfoCompCommand implements Command {
         inputForm.copyToReformPlan(reformPlan, String.valueOf(loginUser.getUserId()));
         // リフォームプラン情報登録処理
         String sysReformCd = this.reformManager.addReformPlan(reformPlan, inputForm, (String)loginUser.getUserId());
-        
+
         // リフォーム・レーダーチャート情報登録処理
         inputForm.setSysReformCd(sysReformCd);
         if (PanaCommonConstant.HOUSING_KIND_CD_MANSION.equals(inputForm.getHousingKindCd()) ||

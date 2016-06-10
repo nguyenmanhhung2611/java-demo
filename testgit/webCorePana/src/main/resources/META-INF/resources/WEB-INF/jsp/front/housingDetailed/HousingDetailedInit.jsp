@@ -21,6 +21,7 @@
 <script type="text/javascript" src="<c:out value="${commonParameters.commonResourceRootUrl}"/>common/js/jquery.fancybox.pack.js"></script>
 <script type="text/javascript" src="<c:out value="${commonParameters.commonResourceRootUrl}"/>buy/js/buy.js"></script>
 <script type="text/javascript" src="<c:out value="${commonParameters.commonResourceRootUrl}"/>common/js/jquery.tooltipster.min.js"></script>
+<script type="text/javascript" src="<c:out value="${commonParameters.commonResourceRootUrl}"/>common/js/jquery.heightLine.js"></script>
 
 <script type="text/javascript">
 <!--
@@ -56,7 +57,7 @@ $.event.add(window, "load", function(){
 		$(".favadd").on('click',function(){
 				setTimeout(function(){
 				$.fancybox.close();
-				$("#personalInfo .favorite").text(getFavoriteCount());
+				$("[id^='personalInfo'] .favorite").text(getFavoriteCount());
 			}, 1500)
 		});
 
@@ -97,7 +98,7 @@ $.event.add(window, "load", function(){
 		$(".favadd").on('click',function(){
 				setTimeout(function(){
 				$.fancybox.close();
-				$("#personalInfo .favorite").text(getFavoriteCount());
+				$("[id^='personalInfo'] .favorite").text(getFavoriteCount());
 			}, 1500)
 		});
 
@@ -128,20 +129,6 @@ $(function(){
 -->
 </script>
 
-<script type="text/javascript">
-<!--
-function getFavoriteCount() {
-	var arrStr = document.cookie.split(";");
-	for (var i = 0; i < arrStr.length; i++) {
-		var temp = arrStr[i].split("=");
-		if ($.trim(temp[0]) == "favoriteCount") {
-			return unescape(temp[1]);
-		}
-	}
-}
--->
-</script>
-
 <script type="text/javascript" src="//maps.google.com/maps/api/js?sensor=true"></script>
 <script type="text/javascript">
 <!--
@@ -166,8 +153,16 @@ function initialize() {
 			$("#mapInner").text("登録されている住所情報から地図が表示できませんでした。");
 		}
 	});
-
 }
+-->
+</script>
+
+<script type="text/javascript">
+<!--
+$.event.add(window, "load", function(){
+        $(".section02>.tabPlanBlock>ul>li>a").heightLine();
+        $(".section04>.columnBlock>.blockInner>a").heightLine({minWidth: 640});
+});
 -->
 </script>
 
@@ -188,11 +183,10 @@ function linkToSubmit(sysHousingCd, flg) {
 -->
 </script>
 
+
 <!--[if lte IE 9]><script src="<c:out value="${commonParameters.commonResourceRootUrl}"/>common/js/html5.js" type="text/javascript"></script>
 	<![endif]-->
 <!--[if lt IE 9]><![endif]-->
-
-
 </head>
 
 <body>
@@ -217,6 +211,7 @@ function linkToSubmit(sysHousingCd, flg) {
 		</c:if>
 
 		<div class="section01">
+
 			<c:if test="${outPutForm.isTitleDisplayFlg() == 'true'}">
 				<c:import url="/WEB-INF/jsp/front/include/housingDetailed/titleForm.jsh" />
 			</c:if>
@@ -308,9 +303,18 @@ function linkToSubmit(sysHousingCd, flg) {
 		<div class="section02">
 			<c:choose>
 				<c:when test="${outPutForm.isRecommendReformPlanDisplayFlg() == 'true'}">
-				<div class="sectionTitle" id="anc01"><p>おすすめリフォームプラン例</p></div>
+                <div id="anc01" class="tabPlanBlock">
+                 <ul>
+                     <c:forEach var="varPlanNoHidden" items="${outPutForm.getPlanNoHidden()}" end="2">
 
-				<div class="sectionInner01">
+                      <li <c:if test="${outPutForm.reformCd == outPutForm.reformCdHidden[varPlanNoHidden]}">class="current"</c:if>>
+                          <a href="<c:if test="${outPutForm.isPreviewFlg() == 'false'}"><c:out value="${pageContext.request.contextPath}"/><c:out value="${outPutForm.getReformUrl()[varPlanNoHidden]}#anc01"/></c:if><c:if test="${outPutForm.isPreviewFlg() == 'true'}">javascript:void(0);</c:if>"><c:out value="${outPutForm.getPlanType()[varPlanNoHidden]}"/></a>
+                      </li>
+                     </c:forEach>
+                 </ul>
+                  </div>
+
+		    	<div class="sectionInner01">
 
 					<c:if test="${outPutForm.isRecommendReformPlanDisplayFlg() == 'true'}">
 						<c:import url="/WEB-INF/jsp/front/include/housingDetailed/recommendReformPlanForm.jsh" />
@@ -347,7 +351,22 @@ function linkToSubmit(sysHousingCd, flg) {
 							</c:forEach>
 						</ul>
 					</div>
-
+					<c:if test="${outPutForm.getInspectionExist() == 1 && outPutForm.isLoginDisplayFlg() == 'true'}">
+                        <div class="diagnosisInfo clearfix">
+                            <div class="title clearfix">
+                                <h2>住宅診断情報</h2>
+                                <p><a href="<c:out value="${commonParameters.commonResourceRootUrl}"/>buy/re2/detail/inspection.html" target="_blank">住宅診断とは</a></p>
+                            </div>
+                            <div class="nologinBlock">
+                                <p class="SPdisplayNone"><img src="<c:out value="${commonParameters.commonResourceRootUrl}"/>buy/img/buy_img_04.jpg" alt=""></p>
+                                <p class="SPdisplayBlock"><img src="<c:out value="${commonParameters.commonResourceRootUrl}"/>buy/img/buy_img_05.jpg" alt=""></p>
+                                <div class="btnArea">
+                                    <p class="text">会員登録をしていただくと、<br>住宅診断情報をご覧いただけます</p>
+                                    <p class="btnOrange02"><a href="<c:out value="${pageContext.request.contextPath}"/>/mypage/login/?redirect=<c:out value="${outPutForm.getCurrentUrl()}"/>">会員登録はこちら</a></p>
+                                </div>
+                            </div>
+                        </div>
+    				</c:if>
 					<c:if test="${outPutForm.isHousingInspectionDisplayFlg() == 'true'}">
 						<c:import url="/WEB-INF/jsp/front/include/housingDetailed/inspectionForm.jsh" />
 					</c:if>
@@ -356,6 +375,25 @@ function linkToSubmit(sysHousingCd, flg) {
 				</c:when>
 
 				<c:otherwise>
+					<c:if test="${outPutForm.getInspectionExist() == 1 && outPutForm.isLoginDisplayFlg() == 'true'}">
+                        <div class="sectionInner01">
+                            <div class="diagnosisInfo clearfix">
+                                <div class="title clearfix">
+                                    <h2>住宅診断情報</h2>
+                                    <p><a href="<c:out value="${commonParameters.commonResourceRootUrl}"/>buy/re2/detail/inspection.html" target="_blank">住宅診断とは</a></p>
+                                </div>
+                                <div class="nologinBlock">
+                                    <p class="SPdisplayNone"><img src="<c:out value="${commonParameters.commonResourceRootUrl}"/>buy/img/buy_img_04.jpg" alt=""></p>
+                                    <p class="SPdisplayBlock"><img src="<c:out value="${commonParameters.commonResourceRootUrl}"/>buy/img/buy_img_05.jpg" alt=""></p>
+                                    <div class="btnArea">
+                                        <p class="text">会員登録をしていただくと、<br>住宅診断情報をご覧いただけます</p>
+                                        <p class="btnOrange02"><a href="<c:out value="${pageContext.request.contextPath}"/>/mypage/login/?redirect=<c:out value="${outPutForm.getCurrentUrl()}"/>">会員登録はこちら</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+					</c:if>
+
 					<c:if test="${outPutForm.isHousingInspectionDisplayFlg() == 'true'}">
 						<div class="sectionInner02">
 							<c:import url="/WEB-INF/jsp/front/include/housingDetailed/inspectionForm.jsh" />

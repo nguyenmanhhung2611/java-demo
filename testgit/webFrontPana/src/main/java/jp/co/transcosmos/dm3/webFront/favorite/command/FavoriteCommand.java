@@ -126,6 +126,8 @@ public class FavoriteCommand implements Command {
 
 		// メッセージ
 		String messageId = null;
+		// 取得したデータをレンダリング層へ渡す
+		Map<String, String> map = new HashMap<String, String>();
 
 		// 会員かつ公開の場合
 		if (memberFlg && hiddenFlg) {
@@ -139,6 +141,7 @@ public class FavoriteCommand implements Command {
 			if ("0".equals(messageId)) {
 				// 登録成功、お気に入りの件数を保持するCookieの値 + 1
 				FavoriteCookieUtils.getInstance(request).setFavoriteCount(request, response, favoriteInfoCnt + 1);
+				map.put("messageId", messageId);
 			}
 
 		} else {
@@ -147,8 +150,6 @@ public class FavoriteCommand implements Command {
 			messageId = "3";
 		}
 
-		// 取得したデータをレンダリング層へ渡す
-		Map<String, String> map = new HashMap<String, String>();
 
 		map.put("alertMessage", getMessage(messageId));
 

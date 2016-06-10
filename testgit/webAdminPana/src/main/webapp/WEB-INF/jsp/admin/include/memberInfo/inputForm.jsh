@@ -96,7 +96,7 @@
 						</c:forEach>
 					</select>
 					</div>
-					<div class="inputStyle" style="padding-left:8px;"><input type="text" name="address" value="<c:out value="${inputForm.address}"/>" size="21" maxlength="50" class="input2"></div>
+					<div class="inputStyle" style="padding-left:8px;"><input type="text" name="address" value="<c:out value="${inputForm.address}"/>" size="18" maxlength="50" class="input2"></div>
 					<BR><BR>
 					<div class="inputStyle" style="padding-left:15px;">
 					<input type="text" name="addressOther" value="<c:out value="${inputForm.addressOther}"/>" size="43" maxlength="30" style="width: 540px;" class="input2">

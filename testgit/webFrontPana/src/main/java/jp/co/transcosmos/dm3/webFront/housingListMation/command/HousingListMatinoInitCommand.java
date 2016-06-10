@@ -502,7 +502,7 @@ public class HousingListMatinoInitCommand implements Command {
 
 		// リフォームプラン
 		List<List<ReformPlan>> reformPlanList = new ArrayList<List<ReformPlan>>();
-		
+
 		// 建物最寄り駅情報
 		List<List<BuildingStationInfo>> buildingStationInfoList = new ArrayList<List<BuildingStationInfo>>();
 
@@ -747,6 +747,7 @@ public class HousingListMatinoInitCommand implements Command {
 			} else {
 				reformPlanList.add(null);
 			}
+
 			// 「システム物件CD」により、物件画像情報の取得
 			Housing housingresults = this.panaHousingManager.searchHousingPk(
 					sysHousingCd, true);

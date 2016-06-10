@@ -14,25 +14,11 @@ import jp.co.transcosmos.dm3.validation.ValidationChain;
 import jp.co.transcosmos.dm3.validation.ValidationFailure;
 
 /**
- * <pre>
- * お知らせ情報の検索パラメータ、および、画面コントロールパラメータ受取り用フォーム
- * 検索条件となるリクエストパラメータの取得や、ＤＢ検索オブジェクトの生成を行う。
  * 
- * 担当者       修正日      修正内容
  * ------------ ----------- -----------------------------------------------------
- * I.Shu		2015.02.05	新規作成
- * H.Mizuno		2015.02.26	パッケージ移動、コンストラクターの隠蔽
- * 
- * 注意事項
- *
- * </pre>
+ * @author hiennt
  */
 public class NewsSearchForm extends PagingListForm<News> implements Validateable {
-	// command リクエストパラメータは、URL マッピングで定義されている、namedCommands の制御にも使用される。
-	// お知らせ情報の検索機能では、以下の値が設定される場合がある。
-	//
-	// list : お知らせ検索・一覧画面で実際に検索を行う場合に指定する。　（未指定の場合、検索画面を初期表示。）
-	// back : 入力確認画面から入力画面へ復帰した場合。　（指定された場合、パラメータの値を初期値として入力画面に表示する。）
 
 	private String keyNewsId;
 	private String keyNewsTitle;
@@ -72,18 +58,33 @@ public class NewsSearchForm extends PagingListForm<News> implements Validateable
 		this.newsId = newsId;
 	}
 
-	/** 検索画面の command パラメータ */
 	private String searchCommand;
-	/** お知らせ番号 （検索条件） */
-
-	/** レングスバリデーションで使用する文字列長を取得するユーティリティ */
+	
 	protected LengthValidationUtils lengthUtils;
+	
 
 	/**
-	 * デフォルトコンストラクター<br/>
-	 * Factory 以外からのインスタンス生成を制限する為、コンストラクターを隠蔽する。<br/>
+	 * 検索画面の commandを取得する。<br/>
 	 * <br/>
+	 * 
+	 * @param searchCommand
+	 *            検索画面の command
 	 */
+	public String getSearchCommand() {
+		return searchCommand;
+	}
+
+	/**
+	 * 検索画面の commandを設定する。<br/>
+	 * <br/>
+	 * 
+	 * @return 検索画面の command
+	 */
+	public void setSearchCommand(String searchCommand) {
+		this.searchCommand = searchCommand;
+	}
+
+
 	protected NewsSearchForm() {
 		super();
 	}
@@ -122,51 +123,25 @@ public class NewsSearchForm extends PagingListForm<News> implements Validateable
 	}
 
 	protected void validKeyNewsId(List<ValidationFailure> errors) {
-		// お知らせ番号入力チェック
 		ValidationChain validKeyNewsId = new ValidationChain("information.search.keyInformationNo", this.keyNewsId);
-		// 英数字チェック
+		
 		validKeyNewsId.addValidation(new AlphanumericOnlyValidation());
-		// 桁数チェック
-		validKeyNewsId.addValidation(new MaxLengthValidation(this.lengthUtils.getLength(
-				"information.search.keyInformationNo", 20)));
+		validKeyNewsId.addValidation(new MaxLengthValidation(this.lengthUtils.getLength("information.search.keyInformationNo", 20)));
 		validKeyNewsId.validate(errors);
 	}
 
 	protected void validKeyNewsTitle(List<ValidationFailure> errors) {
-		// タイトル入力チェック
 		ValidationChain valTitle = new ValidationChain("information.search.keyTitle", this.keyNewsTitle);
-		// 桁数チェック
+		
 		valTitle.addValidation(new MaxLengthValidation(this.lengthUtils.getLength("information.search.keyTitle", 50)));
 		valTitle.validate(errors);
 	}
 
 	protected void validKeyNewsContent(List<ValidationFailure> errors) {
-		// タイトル入力チェック
 		ValidationChain valContent = new ValidationChain("information.search.keyTitle", this.keyNewsContent);
-		// 桁数チェック
+
 		valContent.addValidation(new MaxLengthValidation(this.lengthUtils.getLength("information.search.keyTitle", 200)));
 		valContent.validate(errors);
-	}
-
-	/**
-	 * 検索画面の commandを取得する。<br/>
-	 * <br/>
-	 * 
-	 * @param searchCommand
-	 *            検索画面の command
-	 */
-	public String getSearchCommand() {
-		return searchCommand;
-	}
-
-	/**
-	 * 検索画面の commandを設定する。<br/>
-	 * <br/>
-	 * 
-	 * @return 検索画面の command
-	 */
-	public void setSearchCommand(String searchCommand) {
-		this.searchCommand = searchCommand;
 	}
 
 	/**
@@ -183,12 +158,6 @@ public class NewsSearchForm extends PagingListForm<News> implements Validateable
 	public DAOCriteria buildCriteria() {
 		DAOCriteria criteria = super.buildCriteria();
 
-		// お知らせ番号の検索条件生成
-		if (!StringValidateUtil.isEmpty(this.keyNewsId)) {
-			criteria.addWhereClause("newsId", "%" + this.keyNewsId + "%", DAOCriteria.LIKE_CASE_INSENSITIVE);
-		}
-
-		// タイトルの検索条件文生成
 		if (!StringValidateUtil.isEmpty(this.keyNewsTitle)) {
 			criteria.addWhereClause("newsTitle", "%" + this.keyNewsTitle + "%", DAOCriteria.LIKE_CASE_INSENSITIVE);
 		}
@@ -198,7 +167,6 @@ public class NewsSearchForm extends PagingListForm<News> implements Validateable
 		}
 
 		return criteria;
-
 	}
 
 }

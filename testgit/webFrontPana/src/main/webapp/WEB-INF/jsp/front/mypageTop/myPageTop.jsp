@@ -16,11 +16,19 @@
 <link href="<c:out value='${commonParameters.resourceRootUrl}'/>mypage/css/mypage.css" rel="stylesheet">
 <link href="<c:out value='${commonParameters.resourceRootUrl}'/>common/css/common.css" rel="stylesheet">
 <link href="<c:out value='${commonParameters.resourceRootUrl}'/>common/css/header_footer.css" rel="stylesheet">
+<link href="<c:out value="${commonParameters.resourceRootUrl}"/>common/css/jquery.fancybox.css" rel="stylesheet">
 
 <script src="<c:out value='${commonParameters.resourceRootUrl}'/>common/js/jquery.min.js"></script>
 <script src="<c:out value='${commonParameters.resourceRootUrl}'/>common/js/main.js"></script>
+<script src="<c:out value='${commonParameters.resourceRootUrl}'/>common/js/jquery.heightLine.js"></script>
+<script src="<c:out value='${commonParameters.resourceRootUrl}'/>common/js/jquery.fancybox.pack.js"></script>
+
 <script type="text/javascript">
 <!--
+$(function(){
+	$(".bnrBlock>.columnBlock>.blockInner>a>dl").heightLine({minWidth: 640});
+});
+
 function linkToSubmit(informationNo) {
 
 	var url = "<c:out value='${pageContext.request.contextPath}'/>/mypage/information/" + informationNo + "/";

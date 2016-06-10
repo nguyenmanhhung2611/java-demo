@@ -45,7 +45,7 @@ public class PanaCommonManageImpl implements PanaCommonManage {
 
 	/** 都道府県マスタ情報 **/
 	private DAO<PrefMst> prefMstDAO;
-
+	
 	/** 市区町村マスタ情報 **/
 	private DAO<AddressMst> addressMstDAO;
 
@@ -557,5 +557,5 @@ public class PanaCommonManageImpl implements PanaCommonManage {
 		paramDAOCriteria.addOrderByClause("sortOrder");
 		return this.equipMstDAO.selectByFilter(paramDAOCriteria);
 	}
-
+	
 }

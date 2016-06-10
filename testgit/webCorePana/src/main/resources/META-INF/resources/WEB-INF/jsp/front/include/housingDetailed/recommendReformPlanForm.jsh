@@ -26,9 +26,11 @@
 												<th><a href="<c:out value="${outPutForm.getReformPathName()[varReformNoHidden]}"/>" target="_blank"><c:out value="${outPutForm.getReformImgName()[varReformNoHidden]}"/></a></th>
 												<td><c:out value="${outPutForm.getReformPrice()[varReformNoHidden]}"/></td>
 											</c:if>
+										</tr>
+										<tr>
 											<c:if test="${!empty varReformNoHidden && !empty outPutForm.getReformPathName()[varReformNoHidden + 1]}">
-												<th><a href="<c:out value="${outPutForm.getReformPathName()[varReformNoHidden + 1]}"/>" target="_blank"><c:out value="${outPutForm.getReformImgName()[varReformNoHidden + 1]}"/></a></th>
-												<td><c:out value="${outPutForm.getReformPrice()[varReformNoHidden + 1]}"/></td>
+												<th class="even"><a href="<c:out value="${outPutForm.getReformPathName()[varReformNoHidden + 1]}"/>" target="_blank"><c:out value="${outPutForm.getReformImgName()[varReformNoHidden + 1]}"/></a></th>
+												<td class="even"><c:out value="${outPutForm.getReformPrice()[varReformNoHidden + 1]}"/></td>
 											</c:if>
 										</tr>
 									</c:forEach>

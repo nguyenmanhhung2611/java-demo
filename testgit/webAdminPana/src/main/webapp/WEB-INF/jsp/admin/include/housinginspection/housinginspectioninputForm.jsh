@@ -273,7 +273,10 @@
 	 *
 	 */
 	function clickInspectionTrustRadio(obj) {
-		obj.parentNode.parentNode.parentNode.parentNode.rows[0].cells[0].childNodes[0].value = obj.value;
+		var inputFields = $(obj).closest("td").find("input:hidden");
+		if(inputFields){
+			$(inputFields[0]).val(obj.value);
+		}
 	}
 
 

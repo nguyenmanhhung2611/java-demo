@@ -16,17 +16,17 @@
 		<input type="hidden" name="command" value="<c:out value="${inputForm.command}"/>">
 		<input type="hidden" name="newsId" value="<c:out value="${inputForm.newsId}"/>">
 		
-		<c:import url="/WEB-INF/admin/default_jsp/include/news/searchParams.jsh" />
+		<c:import url="/WEB-INF/jsp/admin/include/news/searchParams.jsh" />
 
 		<table width="100%" border="1" cellspacing="0" cellpadding="0" class="tableA1">
 			<tr>
 				<th class="head_tr" width="15%">Tiltle</th>
-				<td><input type="text" name="newsTitle" value="<c:out value="${inputForm.newsTitle}"/>" size="40" maxlength="50" class="input2 ime-disabled"></td>
+				<td colspan="3"><input type="text" name="newsTitle" value="<c:out value="${inputForm.newsTitle}"/>" size="40" maxlength="50" class="input2 ime-disabled"></td>
 			</tr>
 			
 			<tr>
 				<th class="head_tr" width="15%">Content</th>
-				<td><input type="text" name="newsContent" value="<c:out value="${inputForm.newsContent}"/>" size="40" maxlength="200" class="input2 ime-disabled"></td>
+				<td colspan="3"><input type="text" name="newsContent" value="<c:out value="${inputForm.newsContent}"/>" size="40" maxlength="200" class="input2 ime-disabled"></td>
 			</tr>
 		</table>
 	</form>

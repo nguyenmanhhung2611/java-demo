@@ -1,27 +1,14 @@
 package jp.co.transcosmos.dm3.core.model;
 
-import java.util.List;
-
 import jp.co.transcosmos.dm3.core.model.exception.NotFoundException;
 import jp.co.transcosmos.dm3.core.model.news.form.NewsForm;
 import jp.co.transcosmos.dm3.core.model.news.form.NewsSearchForm;
 import jp.co.transcosmos.dm3.core.vo.News;
-import jp.co.transcosmos.dm3.dao.JoinResult;
 
 /**
- * お知らせ情報を管理する Model クラス用インターフェース.
- * <p>
- * お知らせ情報を情報を操作する model クラスはこのインターフェースを実装する事。<br/>
- * <p>
- * <pre>
- * 担当者       修正日      修正内容
+ *
  * ------------ ----------- -----------------------------------------------------
- * H.Mizuno		2015.02.16	新規作成
- * </pre>
- * <p>
- * 注意事項<br/>
- * このクラスはシングルトンで DI コンテナに定義されるので、スレッドセーフである事。<br/>
- * 
+ * @author hiennt
  */
 public interface NewsManage {
 
@@ -37,10 +24,10 @@ public interface NewsManage {
 	 * 
 	 * @exception Exception 実装クラスによりスローされる任意の例外
 	 */
-	public String addInformation(NewsForm inputForm, String editUserId)
+	public String addNews(NewsForm inputForm, String editUserId)
 			throws Exception;
 
-
+	
 
 	/**
 	 * パラメータで渡された Form の情報でお知らせ情報を更新する。<br/>
@@ -55,7 +42,7 @@ public interface NewsManage {
 	 * @exception Exception 実装クラスによりスローされる任意の例外
 	 * @exception NotFoundException 更新対象が存在しない場合
 	 */
-	public void updateInformation(NewsForm inputForm, String editUserId)
+	public void updateNews(NewsForm inputForm, String editUserId)
 			throws Exception, NotFoundException;
 
 
@@ -102,7 +89,6 @@ public interface NewsManage {
 	 * 
 	 * @exception Exception 実装クラスによりスローされる任意の例外
 	 */
-	public News searchTopNewsPk(String newsId)
-			throws Exception;
+	public News searchTopNewsPk(String newsId) throws Exception;
 
 }

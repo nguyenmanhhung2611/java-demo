@@ -24,7 +24,7 @@
 
 <form method="post" name="inputForm" >
 	<input type="hidden" name="command" value="">
-	<c:import url="/WEB-INF/admin/default_jsp/include/news/searchParams.jsh" />
+	<c:import url="/WEB-INF/jsp/admin/include/news/searchParams.jsh" />
 	<input type="hidden" name="newsId" value="<c:out value="${inputForm.newsId}"/>">
 	<input type="hidden" name="newsTitle" value="<c:out value="${inputForm.newsTitle}"/>">
 	<input type="hidden" name="newsContent" value="<c:out value="${inputForm.newsContent}"/>">

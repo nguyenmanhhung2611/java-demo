@@ -225,7 +225,8 @@
 								<c:param name="targetLabel" value="member.input.tel" />
 								</c:import>
 								<div><input type="text" id="tel01" name="tel" class="inputType04 <c:if test="${dm3hasError}">error</c:if>" value="<c:out value="${inputForm.tel}"/>" size="14" maxlength="11" ></div>
-								<div class="mt05">※半角数字、ハイフンなしで市外局番から入力してください。</div>
+								<div class="mt05">※半角数字、ハイフンなしで市外局番から入力してください。<br>
+									※携帯電話・PHSの番号でもご登録いただけます。</div>
 							</td>
 						</tr>
 						<tr>

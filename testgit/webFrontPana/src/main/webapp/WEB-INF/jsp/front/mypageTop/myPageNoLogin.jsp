@@ -16,10 +16,13 @@
 <link rel="stylesheet" href="<c:out value='${commonParameters.resourceRootUrl}'/>common/css/common.css" type="text/css" media="screen,print" />
 <link rel="stylesheet" href="<c:out value='${commonParameters.resourceRootUrl}'/>common/css/header_footer.css" type="text/css" media="screen,print" />
 <link rel="stylesheet" href="<c:out value='${commonParameters.resourceRootUrl}'/>mypage/css/mypage.css" type="text/css" media="screen,print" />
+<link rel="stylesheet" href="<c:out value="${commonParameters.resourceRootUrl}"/>common/css/jquery.fancybox.css" rel="stylesheet">
 
 <script type="text/javascript" src="<c:out value='${commonParameters.resourceRootUrl}'/>common/js/jquery.min.js"></script>
 <script type="text/javascript" src="<c:out value='${commonParameters.resourceRootUrl}'/>common/js/main.js"></script>
 <script type="text/javascript" src="<c:out value='${commonParameters.resourceRootUrl}'/>common/js/jquery.heightLine.js"></script>
+<script type="text/javascript" src="<c:out value='${commonParameters.resourceRootUrl}'/>common/js/jquery.fancybox.pack.js"></script>
+
 <script type="text/javascript">
 <!--
 $(function(){
@@ -27,6 +30,7 @@ $(function(){
 	$("#block01>dl>dd").heightLine({minWidth: 640});
 	$("#block02>dl>dt>.title").heightLine({minWidth: 640});
 	$("#block02>dl>dd").heightLine({minWidth: 640});
+	$(".bnrBlock>.columnBlock>.blockInner>a>dl").heightLine({minWidth: 640});
 });
 
 function linkToHousingDetail(prefCd, sysHousingCd, housingKindCd) {

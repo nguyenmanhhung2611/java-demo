@@ -462,12 +462,16 @@ public class PanaHousingPreview extends PanaHousingDetailed {
 		StringBuilder sbTotalPrice1 = new StringBuilder();
 		StringBuilder sbTotalPrice2 = new StringBuilder();
 		StringBuilder sbReformCdHidden = new StringBuilder();
+		StringBuilder sbReformCategory = new StringBuilder();
 
 		// リフォームプラン情報
 		sbReformCdHidden.append(inputForm.getSysReformCd());
 
 		// プランタイプ「配列」
 		sbReformPlan.append(defaultString(inputForm.getPlanName()));
+		
+		// category 1 array
+		sbReformCategory.append(inputForm.getPlanCategory1());
 
 		// 総額１「配列」
 		if (!isEmpty(outPutForm.getPriceHidden()) || !isEmpty(inputForm.getPlanPrice())) {
@@ -500,6 +504,9 @@ public class PanaHousingPreview extends PanaHousingDetailed {
 					// 総額２「配列」
 					outPutForm.setTotalPrice2(setValue(i, outPutForm.getTotalPrice2(), sbTotalPrice2.toString()));
 					outPutForm.setTotalDtlPrice2(sbTotalPrice2.toString());
+					
+					// reform category 1
+					outPutForm.setReformCategory(setValue(i, outPutForm.getReformCategory(), sbReformCategory.toString()));
 				}
 			}
 
@@ -520,6 +527,8 @@ public class PanaHousingPreview extends PanaHousingDetailed {
 			// 総額２「配列」
 			outPutForm.setTotalPrice2(setValue(outPutForm.getTotalPrice2(), sbTotalPrice2.toString()));
 			outPutForm.setTotalDtlPrice2(sbTotalPrice2.toString());
+			
+			outPutForm.setReformCategory(setValue(outPutForm.getReformCategory(), sbReformCategory.toString()));
 
 		} else if (isEmpty(inputForm.getSysReformCd()) && isEmpty(outPutForm.getPlanNoHidden())) {
 
@@ -536,6 +545,9 @@ public class PanaHousingPreview extends PanaHousingDetailed {
 			// 総額２「配列」
 			outPutForm.setTotalPrice2(new String[] { sbTotalPrice2.toString() });
 			outPutForm.setTotalDtlPrice2(sbTotalPrice2.toString());
+			
+			// reform category 1
+			outPutForm.setReformCategory(new String[] { sbReformCategory.toString()});
 
 		}
 

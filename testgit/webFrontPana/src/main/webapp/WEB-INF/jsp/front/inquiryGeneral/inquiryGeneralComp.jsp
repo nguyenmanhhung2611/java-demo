@@ -53,12 +53,31 @@
 				<p class="f14 center spLeft">ご登録いただいたメールアドレスにメールを送信しましたのでご確認ください。<br>お問い合わせ内容を確認の上、担当者よりご連絡させていただきます。</p>
 			</div>
 			<div class="contentsInner01 spPb10">
-				<p class="center"><a href="<c:out value="${commonParameters.resourceRootUrl}"/>buy/#search" class="secondaryBtn">トップページへ</a></p>
+				<p class="center"><a href="/" class="secondaryBtn">トップページへ</a></p>
 			</div>
 		<!-- / .section01 --></div>
 	<!-- / #contentsInner --></div>
 <!-- / #contents --></div>
 
 <!--#include virtual="/common/ssi/simple-footer-S.html"-->
+<!-- Yahoo Code for your Conversion Page -->
+<c:choose>
+     <c:when test="${inputForm.inquiryHeaderForm.inquiryDtlType[0] == '001'}">
+        <img height="1" width="1" alt="" src="<c:out value='${commonParameters.yahooCodeSrc}'/>?value=0&label=No2YCMD6xWMQze_kvQM&guid=ON&script=0"/>
+     </c:when>
+     <c:when test="${inputForm.inquiryHeaderForm.inquiryDtlType[0] == '002'}">
+        <img height="1" width="1" alt="" src="<c:out value='${commonParameters.yahooCodeSrc}'/>?value=0&label=u9PNCI_ivGMQze_kvQM&guid=ON&script=0"/>
+     </c:when>
+     <c:when test="${inputForm.inquiryHeaderForm.inquiryDtlType[0] == '003'}">
+        <img height="1" width="1" alt="" src="<c:out value='${commonParameters.yahooCodeSrc}'/>?value=0&label=2nJcCO6mzmMQze_kvQM&guid=ON&script=0"/>
+     </c:when>
+     <c:when test="${inputForm.inquiryHeaderForm.inquiryDtlType[0] == '004'}">
+        <%-- 顧客要望によりお問い合わせフォームからのセミナー申し込みはカウントしない <img height="1" width="1" alt="" src="<c:out value='${commonParameters.yahooCodeSrc}'/>?value=0&label=_DkDCN-mzmMQze_kvQM&guid=ON&script=0"/> --%>
+     </c:when>
+     <c:when test="${inputForm.inquiryHeaderForm.inquiryDtlType[0] == '005'}">
+        <img height="1" width="1" alt="" src="<c:out value='${commonParameters.yahooCodeSrc}'/>?value=0&label=OnhLCOumzmMQze_kvQM&guid=ON&script=0"/>
+     </c:when>
+</c:choose>
+
 </body>
 </html>

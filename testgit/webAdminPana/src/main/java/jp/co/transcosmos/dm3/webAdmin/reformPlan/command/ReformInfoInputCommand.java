@@ -20,7 +20,6 @@ import jp.co.transcosmos.dm3.corePana.model.reform.form.ReformInfoForm;
 import jp.co.transcosmos.dm3.corePana.util.PanaFileUtil;
 import jp.co.transcosmos.dm3.corePana.vo.ReformDtl;
 import jp.co.transcosmos.dm3.corePana.vo.ReformImg;
-import jp.co.transcosmos.dm3.lookup.CodeLookupManager;
 import jp.co.transcosmos.dm3.utils.StringValidateUtil;
 
 import org.springframework.web.servlet.ModelAndView;
@@ -56,7 +55,7 @@ public class ReformInfoInputCommand implements Command {
 
     /** Panasonic用ファイル処理関連共通 */
     private PanaFileUtil fileUtil;
-    
+
     /**
      * リフォーム情報メンテナンスを行う Model　オブジェクトを設定する。<br/>
      * <br/>
@@ -132,7 +131,7 @@ public class ReformInfoInputCommand implements Command {
 
         // 各種処理を実行
         execute(model, form);
-        
+
         return new ModelAndView("success", model);
     }
 

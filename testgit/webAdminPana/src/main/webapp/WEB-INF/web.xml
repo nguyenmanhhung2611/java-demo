@@ -20,7 +20,9 @@
   </context-param>
   <context-param>
     <param-name>contextConfigLocation</param-name>
-    <param-value>/WEB-INF/applicationContext.xml</param-value>
+    <param-value>/WEB-INF/applicationContext_local.xml 
+    			/WEB-INF/contexts/
+    </param-value>
   </context-param>
 
 
@@ -99,7 +101,7 @@
     </init-param>
     <init-param>
       <param-name>contextConfigLocation</param-name>
-      <param-value>/WEB-INF/url-mapping /WEB-INF/code-lookup /WEB-INF/spring-servlet.xml</param-value>
+      <param-value>/WEB-INF/url-mapping /WEB-INF/code-lookup /WEB-INF/spring-servlet_local.xml</param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>
   </servlet>

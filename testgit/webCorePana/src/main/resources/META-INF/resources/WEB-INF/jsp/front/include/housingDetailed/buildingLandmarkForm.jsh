@@ -8,85 +8,24 @@
 					<table class="tableType1">
 						<tbody>
 							<tr>
-								<th><dm3lookup:lookup lookupName="buildingLandmark_landmarkType" lookupKey="001"/></th>
+								<th>周辺施設</th>
 								<td>
 									<c:forEach var="varLandmarkNoHidden" items="${outPutForm.getLandmarkNoHidden()}">
-										<c:if test="${outPutForm.getLandmarkType()[varLandmarkNoHidden] == '001'}">
-											<c:out value="${outPutForm.getLandmarkName()[varLandmarkNoHidden]}"/><br>
-											<c:out value="${outPutForm.getDistanceFromLandmark()[varLandmarkNoHidden]}"/>
-										</c:if>
+                                       <c:set var="landmarkType" value="${codeLookupManager.lookupValue('buildingLandmark_landmarkType', outPutForm.getLandmarkType()[varLandmarkNoHidden])}"/>
+                                       <c:if test="${!empty landmarkType && !empty outPutForm.getLandmarkName()[varLandmarkNoHidden]}">
+                                           <p>
+                                               <c:if test="${outPutForm.getLandmarkType()[varLandmarkNoHidden] !='008'}">
+                                                    <c:out value="${landmarkType}" /> 
+                                                </c:if>
+                                                <c:out value="${outPutForm.getLandmarkName()[varLandmarkNoHidden]}"/>
+                                                <c:if test="${!empty outPutForm.getDistanceFromLandmark()[varLandmarkNoHidden]}">：<c:out value="${outPutForm.getDistanceFromLandmark()[varLandmarkNoHidden]}"/>
+                                               </c:if>
+                                           </p>
+                                       </c:if>
 									</c:forEach>
-								</td>
-								<th><dm3lookup:lookup lookupName="buildingLandmark_landmarkType" lookupKey="006"/></th>
-								<td>
-									<c:forEach var="varLandmarkNoHidden" items="${outPutForm.getLandmarkNoHidden()}">
-										<c:if test="${outPutForm.getLandmarkType()[varLandmarkNoHidden] == '006'}">
-											<c:out value="${outPutForm.getLandmarkName()[varLandmarkNoHidden]}"/><br>
-											<c:out value="${outPutForm.getDistanceFromLandmark()[varLandmarkNoHidden]}"/>
-										</c:if>
-									</c:forEach>
-								</td>
+								</td>	
 							</tr>
-							<tr>
-								<th><dm3lookup:lookup lookupName="buildingLandmark_landmarkType" lookupKey="002"/></th>
-								<td>
-									<c:forEach var="varLandmarkNoHidden" items="${outPutForm.getLandmarkNoHidden()}">
-										<c:if test="${outPutForm.getLandmarkType()[varLandmarkNoHidden] == '002'}">
-											<c:out value="${outPutForm.getLandmarkName()[varLandmarkNoHidden]}"/><br>
-											<c:out value="${outPutForm.getDistanceFromLandmark()[varLandmarkNoHidden]}"/>
-										</c:if>
-									</c:forEach>
-								</td>
-								<th><dm3lookup:lookup lookupName="buildingLandmark_landmarkType" lookupKey="007"/></th>
-								<td>
-									<c:forEach var="varLandmarkNoHidden" items="${outPutForm.getLandmarkNoHidden()}">
-										<c:if test="${outPutForm.getLandmarkType()[varLandmarkNoHidden] == '007'}">
-											<c:out value="${outPutForm.getLandmarkName()[varLandmarkNoHidden]}"/><br>
-											<c:out value="${outPutForm.getDistanceFromLandmark()[varLandmarkNoHidden]}"/>
-										</c:if>
-									</c:forEach>
-								</td>
-							</tr>
-							<tr>
-								<th><dm3lookup:lookup lookupName="buildingLandmark_landmarkType" lookupKey="003"/></th>
-								<td>
-									<c:forEach var="varLandmarkNoHidden" items="${outPutForm.getLandmarkNoHidden()}">
-										<c:if test="${outPutForm.getLandmarkType()[varLandmarkNoHidden] == '003'}">
-											<c:out value="${outPutForm.getLandmarkName()[varLandmarkNoHidden]}"/><br>
-											<c:out value="${outPutForm.getDistanceFromLandmark()[varLandmarkNoHidden]}"/>
-										</c:if>
-									</c:forEach>
-								</td>
-								<th><dm3lookup:lookup lookupName="buildingLandmark_landmarkType" lookupKey="004"/></th>
-								<td>
-									<c:forEach var="varLandmarkNoHidden" items="${outPutForm.getLandmarkNoHidden()}">
-										<c:if test="${outPutForm.getLandmarkType()[varLandmarkNoHidden] == '004'}">
-											<c:out value="${outPutForm.getLandmarkName()[varLandmarkNoHidden]}"/><br>
-											<c:out value="${outPutForm.getDistanceFromLandmark()[varLandmarkNoHidden]}"/>
-										</c:if>
-									</c:forEach>
-								</td>
-							</tr>
-							<tr>
-								<th><dm3lookup:lookup lookupName="buildingLandmark_landmarkType" lookupKey="005"/></th>
-								<td>
-									<c:forEach var="varLandmarkNoHidden" items="${outPutForm.getLandmarkNoHidden()}">
-										<c:if test="${outPutForm.getLandmarkType()[varLandmarkNoHidden] == '005'}">
-											<c:out value="${outPutForm.getLandmarkName()[varLandmarkNoHidden]}"/><br>
-											<c:out value="${outPutForm.getDistanceFromLandmark()[varLandmarkNoHidden]}"/>
-										</c:if>
-									</c:forEach>
-								</td>
-								<th><dm3lookup:lookup lookupName="buildingLandmark_landmarkType" lookupKey="008"/></th>
-								<td>
-									<c:forEach var="varLandmarkNoHidden" items="${outPutForm.getLandmarkNoHidden()}">
-										<c:if test="${outPutForm.getLandmarkType()[varLandmarkNoHidden] == '008'}">
-											<c:out value="${outPutForm.getLandmarkName()[varLandmarkNoHidden]}"/><br>
-											<c:out value="${outPutForm.getDistanceFromLandmark()[varLandmarkNoHidden]}"/>
-										</c:if>
-									</c:forEach>
-								</td>
-							</tr>
+							
 						</tbody>
 					</table>
 				</div>

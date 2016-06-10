@@ -47,22 +47,28 @@
 			<th class="head_tr" width="20%">備考</th>
 			<td colspan="3" width="80%"><c:out value="${inputForm.note1}" escapeXml="false"/>&nbsp;</td>
 		</tr>
-		<tr>
-            <th class="head_tr" width="20%">カテゴリ</th>
-            <td colspan="3" width="80%">
+        <tr>
+            <th class="head_tr" width="20%">カテゴリ1</th>
+            <td width="30%">
                 <c:if test="${inputForm.planCategory1 != null}">
                     <c:forEach var="category1" items="${inputForm.supperCategories}">
                         <c:if test="${category1.id == inputForm.planCategory1}">
                             <c:out value="${category1.name}"/>
-                            <c:if test="${inputForm.planCategory2 != null}">
-                                <c:forEach items="${category1.children}" var="category2">
-                                    <c:if test="${category2.id == inputForm.planCategory2}">
-                                      -<c:out value="${category2.name}"/>
-                                    </c:if>
-                                </c:forEach>
-                            </c:if>
                         </c:if>
-                        
+                    </c:forEach>
+                </c:if>
+            </td>
+            <th class="head_tr" width="20%">カテゴリ2</th>
+            <td width="30%">
+                <c:if test="${inputForm.planCategory2 != null}">
+                    <c:forEach var="category1" items="${inputForm.supperCategories}">
+                        <c:if test="${category1.id == inputForm.planCategory1}">
+                            <c:forEach items="${category1.children}" var="category2">
+                                <c:if test="${category2.id == inputForm.planCategory2}">
+                                  <c:out value="${category2.name}"/>
+                                </c:if>
+                            </c:forEach>
+                        </c:if>
                     </c:forEach>
                 </c:if>
             </td>
@@ -175,8 +181,8 @@
 	<input type="hidden" name="dtlFlg" value="<c:out value="${inputForm.dtlFlg}"/>" />
 	<input type="hidden" name="imgFlg" value="<c:out value="${inputForm.imgFlg}"/>" />
 	<input type="hidden" name="imgSelFlg" value="<c:out value="${inputForm.imgSelFlg}"/>" />
-	<input type="hidden" name="planCategory1" value="<c:out value="${inputForm.planCategory1}"/>" />
-	<input type="hidden" name="planCategory2" value="<c:out value="${inputForm.planCategory2}"/>" />
+    <input type="hidden" name="planCategory1" value="<c:out value="${inputForm.planCategory1}"/>" />
+    <input type="hidden" name="planCategory2" value="<c:out value="${inputForm.planCategory2}"/>" />
 	<dm3token:oneTimeToken/>
 </form>
 

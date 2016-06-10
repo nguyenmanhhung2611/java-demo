@@ -179,9 +179,10 @@ public class PanaHousingSearchForm extends HousingSearchForm implements Validate
 
 	/** 物件番号（検索条件） */
 	private String keyHousingCd;
-	
-//	private String keyReformType;
 
+    /** key word for searching housing base on reform category codes */
+    private String keyPartSrchReformCd;
+	
 	/**
 	 * 駅を取得する。<br/>
 	 * <br/>
@@ -956,22 +957,8 @@ public class PanaHousingSearchForm extends HousingSearchForm implements Validate
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
-//	/**
-//     * @return the reformType
-//     */
-//    public String getKeyReformType() {
-//        return keyReformType;
-//    }
-//
-//    /**
-//     * @param reformType the reformType to set
-//     */
-//    public void setKeyReformType(String reformType) {
-//        this.keyReformType = reformType;
-//    }
 
-    /**
+	/**
      * 共通コード変換処理を取得する。<br/>
      * <br/>
      * @return codeLookupManager 共通コード変換処理
@@ -1179,5 +1166,24 @@ public class PanaHousingSearchForm extends HousingSearchForm implements Validate
         	this.setKeyOrderType("0");
 		}
         model.put("prefMst", prefMstList);
+    }
+
+    /**
+     * get value of key word for searching housing base on reform category codes
+     * 
+     * @return key word for searching housing base on reform category codes
+     */
+    public String getKeyPartSrchReformCd() {
+        return keyPartSrchReformCd;
+    }
+
+    /**
+     * set value of key word for searching housing base on reform category codes
+     * 
+     * @param keyPartSrchReformCd
+     *            key word for searching housing base on reform category codes
+     */
+    public void setKeyPartSrchReformCd(String keyPartSrchReformCd) {
+        this.keyPartSrchReformCd = keyPartSrchReformCd;
     }
 }

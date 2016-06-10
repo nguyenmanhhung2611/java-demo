@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+                           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+                           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+                           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+
+  <bean id="newsManage" class="jp.co.transcosmos.dm3.core.model.social.impl.NewsManageImpl">
+    <property name="valueObjectFactory" ref="valueObjectFactory" />
+    <property name="newsListDAO" ref="newsListDAO" />
+    <property name="newsDAO" ref="newsDAO" />
+    <property name="commentDAO" ref="commentDAO" />
+    <property name="adminLoginInfoDAO" ref="adminLoginInfoDAO" />
+    <property name="memberInfoDAO" ref="memberInfoDAO" />
+    <property name="commentListDAO" ref="commentListDAO" />
+  </bean>
+  
+  <bean id="newsDAO" class="jp.co.transcosmos.dm3.dao.ReflectingDAO">
+    <property name="dataSource" ref="requestScopeDS"/>
+    <property name="valueObjectClassName" value="jp.co.transcosmos.dm3.core.vo.News"/>
+   <!--  <property name="sequenceNextvalExpression" value="SELECT LPAD(news_id_nextval(), 20, '0')"/> -->
+    <property name="pkFields" value="newsId"/>
+    <property name="emptyStringsToNull" value="true"/>
+    <property name="useAutonumberColumns" value="false"/>
+  </bean>
+  
+  <bean id="commentDAO" class="jp.co.transcosmos.dm3.dao.ReflectingDAO">
+    <property name="dataSource" ref="requestScopeDS"/>
+    <property name="valueObjectClassName" value="jp.co.transcosmos.dm3.core.vo.UserComment"/>
+    <property name="sequenceNextvalExpression" value="SELECT LPAD(comment_id_nextval(), 20, '0')"/>
+    <property name="pkFields" value="commentId"/>
+    <property name="emptyStringsToNull" value="true"/>
+    <property name="useAutonumberColumns" value="false"/>
+  </bean>
+  
+  <bean id="newsListDAO" class="jp.co.transcosmos.dm3.dao.JoinDAO">
+	  <property name="dataSource" ref="requestScopeDS"/>
+	  <property name="joinable1" ref="newsDAO"/>
+	  <property name="alias1" value="news"/>
+	  <property name="joinable2" ref="commentDAO"/>
+	  <property name="alias2" value="user_comment"/>
+	  <property name="joinType" value="LEFT JOIN"/>
+  </bean>
+  
+  <bean id="commentListDAO" class="jp.co.transcosmos.dm3.dao.JoinDAO">
+	  <property name="dataSource" ref="requestScopeDS"/>
+	  <property name="joinable1" ref="commentDAO"/>
+	  <property name="alias1" value="user_comment"/>
+	  <property name="joinable2" ref="memberInfoDAO"/>
+	  <property name="alias2" value="member_info"/>
+	  <property name="joinType" value="INNER JOIN"/>
+	  <property name="conditions">
+	    <bean class="jp.co.transcosmos.dm3.dao.JoinCondition">
+	      <property name="field1" value="updUserId"/>
+	      <property name="field2" value="userId"/>
+	    </bean>
+	  </property>
+  </bean>
+  
+  <bean id="newsFormFactory"
+    class="jp.co.transcosmos.dm3.core.model.social.form.NewsFormFactory">
+    <property name="codeLookupManager" ref="codeLookupManager" />
+    <property name="lengthUtils" ref="lengthValidationUtils" />
+  </bean>
+  
+  <bean id="commentFormFactory"
+    class="jp.co.transcosmos.dm3.core.model.social.form.CommentFormFactory">
+    <property name="codeLookupManager" ref="codeLookupManager" />
+    <property name="lengthUtils" ref="lengthValidationUtils" />
+  </bean>
+</beans>

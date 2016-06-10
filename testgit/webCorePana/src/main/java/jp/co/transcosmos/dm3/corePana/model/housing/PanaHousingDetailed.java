@@ -40,6 +40,7 @@ import jp.co.transcosmos.dm3.lookup.CodeLookupManager;
  * 担当者        修正日        修正内容
  * ------------ ----------- -----------------------------------------------------
  * gao.long        2015.04.13     新規作成
+ * lhxvinh         2015.12.24     Add reform categories.
  * </pre>
  * <p>
  *
@@ -151,8 +152,6 @@ public class PanaHousingDetailed {
 	private String[] reformCdHidden;
 	/** システムリフォームURL【hidden】「配列」 */
 	private String[] reformUrl;
-	/** List of reform categories*/
-	private String[] reformCategory;
 	/** 画像の表示フラグ */
 	private boolean imgDisplayFlg;
 	/** 画像番号【hidden】「配列」 */
@@ -361,6 +360,10 @@ public class PanaHousingDetailed {
 	private String[] researchUrl;
 	/** 再検索都道府県名「配列」 */
 	private String[] researchPrefName;
+	/** List of reform categories*/
+	private String[] reformCategory;
+	/** List of other reform categories*/
+	private String[] otherReformCategory;
 
 	/**
 	 * 共通コード変換処理 を取得する。<br/>
@@ -1226,17 +1229,7 @@ public class PanaHousingDetailed {
 		this.reformUrl = reformUrl;
 	}
 
-	public void setReformCategory(String[] reformCategory){
-	    this.reformCategory = reformCategory;
-	}
 	/**
-     * @return the reformCategory
-     */
-    public String[] getReformCategory() {
-        return reformCategory;
-    }
-
-    /**
 	 * 画像の表示フラグ を取得する。<br/>
 	 * <br/>
 	 * @return 画像の表示フラグ
@@ -3117,6 +3110,34 @@ public class PanaHousingDetailed {
 		this.commonParameters = commonParameters;
 		this.panaFileUtil = panaFileUtil;
 	}
+	
+	/**
+	 * @return the reformCategory
+	 */
+	public String[] getReformCategory() {
+		return reformCategory;
+	}
+
+	/**
+	 * @param reformCategory the reformCategory to set
+	 */
+	public void setReformCategory(String[] reformCategory) {
+		this.reformCategory = reformCategory;
+	}
+
+	/**
+	 * @return the orderReformCategory
+	 */
+	public String[] getOtherReformCategory() {
+		return otherReformCategory;
+	}
+
+	/**
+	 * @param orderReformCategory the orderReformCategory to set
+	 */
+	public void setOtherReformCategory(String[] otherReformCategory) {
+		this.otherReformCategory = otherReformCategory;
+	}
 
 	/**
 	 * 渡されたバリーオブジェクトから Form へ初期値を設定する。<br/>
@@ -3548,6 +3569,7 @@ public class PanaHousingDetailed {
 
 						// システムリフォームURL【hidden】「配列」
 						reformUrl[i] = (makeUrl(buildingInfo.getPrefCd(), housingInfo.getSysHousingCd(), getHousingKindCd(), reformPlan.getSysReformCd()));
+						// get plan category 1
 						reformCategory[i] = reformPlan.getPlanCategory1();
 					}
 
@@ -3572,6 +3594,7 @@ public class PanaHousingDetailed {
 					// システムリフォームURL【hidden】「配列」
 					setReformUrl(reformUrl);
 					
+					// set data for category reform
 					setReformCategory(reformCategory);
 
 				} else {
@@ -4429,6 +4452,8 @@ public class PanaHousingDetailed {
 
 				// その他のシステムリフォームURL【hidden】「配列」
 				setOtherReformUrl(getReformUrl());
+				
+				setOtherReformCategory(getReformCategory());
 
 			} else if (REFORM_MODE.equals(getMode())) {
 
@@ -4443,7 +4468,7 @@ public class PanaHousingDetailed {
 					String[] reformCdHidden = new String[cnt];
 					String[] reformUrl = new String[cnt];
 					String[] reformCategory = new String[cnt];
- 
+
 					for (int i = 0; i < getPlanNoHidden().length; i++) {
 						if (getReformCdHidden()[i] != null && !getReformCdHidden()[i].equals(getReformCd())) {
 							// その他のプラン番号【hidden】「配列」
@@ -4489,8 +4514,8 @@ public class PanaHousingDetailed {
 					// その他のシステムリフォームURL【hidden】「配列」
 					setOtherReformUrl(reformUrl);
 					
-					setReformCategory(reformCategory);
-					
+					// set other reform category
+					setOtherReformCategory(reformCategory);
 				}
 			}
 		}
@@ -5064,4 +5089,5 @@ public class PanaHousingDetailed {
 		}
 		return new Long((new Long(defaultString(s1, "0")) + new Long(defaultString(s2, "0")))).toString();
 	}
+
 }

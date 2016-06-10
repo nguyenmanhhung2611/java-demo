@@ -14,29 +14,16 @@
     <property name="location" value="classpath:site.properties" />
   </bean>
 
-  <bean id="mysqlDS" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
-    <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-    <property name="url" value="jdbc:mysql://localhost:3306/panasonicdb?characterEncoding=ms932&amp;zeroDateTimeBehavior=convertToNull&amp;profileSQL=false&amp;traceProtocol=false" />
-    <property name="username" value="root" />
-    <property name="password" value="root" />
-  </bean>
-
   <!-- DB 接続 定義 （MySQL 用）-->
-<!--   <bean id="mysqlDS" class="org.springframework.jndi.JndiObjectFactoryBean"> -->
-<!--     <property name="jndiName"><value>java:comp/env/jdbc/panasonic</value></property> -->
-<!--   </bean> -->
-  
-  <!-- DB 接続 定義 （管理サイトログ出力用）-->
-<!--   <bean id="mysqlDSLog" class="org.springframework.jndi.JndiObjectFactoryBean"> -->
-<!--     <property name="jndiName"><value>java:comp/env/jdbc/panasonic</value></property> -->
-<!--   </bean> -->
-
-  <bean id="mysqlDSLog" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
-    <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-    <property name="url" value="jdbc:mysql://localhost:3306/panasonicdb?characterEncoding=ms932&amp;zeroDateTimeBehavior=convertToNull&amp;profileSQL=false&amp;traceProtocol=false" />
-    <property name="username" value="root" />
-    <property name="password" value="root" />
+  <bean id="mysqlDS" class="org.springframework.jndi.JndiObjectFactoryBean">
+    <property name="jndiName"><value>java:comp/env/jdbc/panasonic</value></property>
   </bean>
+
+  <!-- DB 接続 定義 （管理サイトログ出力用）-->
+  <bean id="mysqlDSLog" class="org.springframework.jndi.JndiObjectFactoryBean">
+    <property name="jndiName"><value>java:comp/env/jdbc/panasonic</value></property>
+  </bean>
+
   <!--
     RequestScopeDataSource の Bena ID は、手動ロールバックしている機能が個別に値を保持している。
          よって、ID を変更する場合は注意する事。
@@ -275,14 +262,6 @@
     <property name="emptyStringsToNull" value="true"/>
     <property name="useAutonumberColumns" value="false"/>
   </bean>
-  
-  <bean id="newsTargetDAO" class="jp.co.transcosmos.dm3.dao.ReflectingDAO">
-    <property name="dataSource" ref="requestScopeDS"/>
-    <property name="valueObjectClassName" value="jp.co.transcosmos.dm3.core.vo.NewsTarget"/>
-    <property name="pkFields" value="newsId,userId"/>
-    <property name="emptyStringsToNull" value="true"/>
-    <property name="useAutonumberColumns" value="false"/>
-  </bean>
 
  <!--
   	お知らせ一覧取得用 DAO
@@ -332,7 +311,7 @@
     </bean>
   </property>
   </bean>
-  
+
   <!-- 駅マスタCSVアップロード用カスタムDAO -->
   <bean id="stationSortOrderUpdateDAO" class="jp.co.transcosmos.dm3.core.model.csvMaster.dao.StationSortOrderUpdateDAOImpl">
     <property name="dataSource" ref="requestScopeDS"/>
@@ -1145,21 +1124,7 @@
     <property name="informationDAO" ref="informationDAO" />
     <property name="informationTargetDAO" ref="informationTargetDAO" />
   </bean>
-  
-   <bean id="newsManager" class="jp.co.transcosmos.dm3.corePana.model.news.PanaNewsManageImpl">
-    <property name="valueObjectFactory" ref="valueObjectFactory" />
-    <property name="newsDAO" ref="newsDAO" />
-  </bean>
-  
-   <bean id="newsDAO" class="jp.co.transcosmos.dm3.dao.ReflectingDAO">
-    <property name="dataSource" ref="requestScopeDS"/>
-    <property name="valueObjectClassName" value="jp.co.transcosmos.dm3.core.vo.News"/>
-    <property name="sequenceNextvalExpression" value="SELECT CONCAT('N', LPAD(news_no_nextval(), 19, '0'))"/>
-    <property name="pkFields" value="newsId"/>
-    <property name="emptyStringsToNull" value="true"/>
-    <property name="useAutonumberColumns" value="false"/>
-  </bean>
-  
+
   <!-- マイページ会員  Model -->
   <bean id="mypageUserManager" class="jp.co.transcosmos.dm3.core.model.mypage.MypageUserManageImpl">
     <property name="valueObjectFactory" ref="valueObjectFactory"/>
@@ -1276,6 +1241,7 @@
   <!-- パナ共通処理の Model -->
   <bean id="panamCommonManager" class="jp.co.transcosmos.dm3.corePana.model.common.PanaCommonManageImpl">
     <property name="prefMstDAO" ref="prefMstDAO" />
+    <property name="newsDAO" ref="newsDAO" />
     <property name="addressMstDAO" ref="addressMstDAO" />
     <property name="routeMstDAO" ref="routeMstDAO" />
     <property name="stationMstDAO" ref="stationMstDAO" />
@@ -1376,11 +1342,7 @@
     <property name="categoryToPart">
       <map>
         <entry key="R00" value="R00"/>
-        <entry key="R01" value="R01"/>
-        <entry key="R02" value="R02"/>
         <entry key="R10" value="R10"/>
-        <entry key="R11" value="R11"/>
-        <entry key="R12" value="R12"/>
         <entry key="R20" value="R20"/>
         <entry key="R21" value="R21"/>
         <entry key="R22" value="R22"/>
@@ -1389,7 +1351,6 @@
       </map>
     </property>
   </bean>
-
   <!-- 会員  Model （Panasonic 用拡張 DAO）-->
   <bean id="panaMypageUserManager" class="jp.co.transcosmos.dm3.corePana.model.member.PanaMypageUserManageImpl">
     <property name="valueObjectFactory" ref="valueObjectFactory"/>
@@ -1426,7 +1387,7 @@
         <value>800</value>
       </list>
     </property>
-    <property name="commonResourceRootUrl" value="/webFrontPana/" />
+    <property name="commonResourceRootUrl" value="/" />
     <property name="adminPwdUseMarks" value="${admin.usePwdMarks}" />
     <property name="adminPwdMastMarks" value="${admin.usePwdMarks}" />
 
@@ -1473,7 +1434,6 @@
     <property name="noPhoto200" value="buy/img/nophoto/nophoto_200.jpg" />
     <property name="noPhoto800" value="buy/img/nophoto/nophoto_800.jpg" />
 
-    <property name="resourceRootUrl" value="/webAdminPana/admin_rsc/" />
   </bean>
 
   <!-- ログイン処理の委譲先クラス （認証処理が必要な場合は、ID = authentication　を使用する事。）  -->
@@ -1508,7 +1468,7 @@
 
   <!-- サムネイル画像作成クラス -->
   <bean id="imgUtils" class="jp.co.transcosmos.dm3.core.util.imgUtils.ImgUtilImageMagick">
-    <property name="convertCommand" value="E:\tools\ImageMagic\convert.exe" />
+    <property name="convertCommand" value="C:\Workspace\ImageMagick-6.9.1-0\convert" />
   </bean>
 
   <bean id="thumbnailCreator" class="jp.co.transcosmos.dm3.core.util.ThumbnailCreator">
@@ -1520,7 +1480,7 @@
   <!-- 認証用ロギングクラス -->
   <bean id="authLogging" class="jp.co.transcosmos.dm3.utils.SimpleLogging">
     <property name="timeout" value="3000" />
-    <property name="logFileName" value="D:\logs\auth.log" />
+    <property name="logFileName" value="C:\Workspace\log\auth.log" />
     <property name="rotate" value="day" />
   </bean>
   
@@ -1595,11 +1555,6 @@
 
   <bean id="informationFormFactory"
     class="jp.co.transcosmos.dm3.corePana.model.information.form.PanaInformationFormFactory">
-    <property name="codeLookupManager" ref="codeLookupManager" />
-    <property name="lengthUtils" ref="lengthValidationUtils" />
-  </bean>
-  
-  <bean id="newsFormFactory" class="jp.co.trancosmos.dm3.corePana.model.news.form.PanaNewsFormFactory">
     <property name="codeLookupManager" ref="codeLookupManager" />
     <property name="lengthUtils" ref="lengthValidationUtils" />
   </bean>

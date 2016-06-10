@@ -231,6 +231,7 @@
                 <value>/mypage/request/result/</value>
                 <value>/mypage/request/delete/result/</value>
                 <value>/inquiry/result/</value>
+                <value>/event/result/</value>
                 <value>/account/member/new/result/</value>
                 <value>/mypage/member/change/result/</value>
                 <value>/account/pw/forgot/result/</value>

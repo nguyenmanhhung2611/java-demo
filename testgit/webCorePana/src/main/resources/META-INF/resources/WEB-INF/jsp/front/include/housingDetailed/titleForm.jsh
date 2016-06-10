@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://dm3.transcosmos.co.jp/tags/lookup" prefix="dm3lookup" %>
 			<c:if test="${outPutForm.isReformPlanExists() == 'true'}">
-				<div class="ancBlock"><a href="#anc01"><span>この物件にはおすすめリフォームプラン例があります。</span></a><span class="SPdisplayBlock"></span></div>
+				<div class="ancBlock"><a href="#anc01"><span>この物件のおすすめリフォームプラン例を見る</span></a><span class="SPdisplayBlock"></span></div>
 			</c:if>
 			<div class="buildingName clearfix">
 				<div class="blockRight">
@@ -16,8 +16,8 @@
 							<li class="icoNew01">新着</li>
 						</c:if>
 						<li class="icoMansion01"><dm3lookup:lookup lookupName="buildingInfo_housingKindCd_front_icon" lookupKey="${outPutForm.getHousingKindCd()}"/></li>
-                        <c:if test="${outPutForm.isReformPlanDisplayFlg() == 'true'}">
-                            <li class="icoNew01">リフォームプランあり</li>
+					    <c:if test="${outPutForm.isReformPlanDisplayFlg() == 'true'}">
+                            <li class="icoReform01">リフォームプランあり</li>
                         </c:if>
 					</ul>
 

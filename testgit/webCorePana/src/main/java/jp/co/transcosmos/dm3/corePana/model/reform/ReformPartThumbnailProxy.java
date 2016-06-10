@@ -43,6 +43,7 @@ import org.springframework.util.StringUtils;
  * 担当者		修正日		修正内容
  * ------------ ----------- -----------------------------------------------------
  * TRANS		2015.04.13	新規作成
+ * Thi Tran     2015.17.18  Add creators to order to change housing part info when reform plan is edited
  * </pre>
  * <p>
  * 注意事項<br/>
@@ -59,9 +60,9 @@ public class ReformPartThumbnailProxy implements ReformManage {
 
 	/** サムネイル画像作成処理Util */
 	private ThumbnailCreator thumbnailCreator;
-	
-	/** こだわり条件生成クラスのリスト */
-	protected List<HousingPartCreator> partCreateors;
+
+    /** こだわり条件生成クラスのリスト */
+    protected List<HousingPartCreator> partCreateors;
 
 	/** サムネイル画像作成クラス */
 	private ImgUtils imgUtils;
@@ -85,9 +86,9 @@ public class ReformPartThumbnailProxy implements ReformManage {
 		this.reformManager = reformManager;
 	}
 
-	public void setPartCreateors(List<HousingPartCreator> partCreateors) {
-		this.partCreateors = partCreateors;
-	}
+    public void setPartCreateors(List<HousingPartCreator> partCreateors) {
+        this.partCreateors = partCreateors;
+    }
 
 	/**
 	 * 共通パラメータオブジェクトを設定する。<br/>
@@ -123,53 +124,60 @@ public class ReformPartThumbnailProxy implements ReformManage {
 	 */
 	@Override
 	public String addReformPlan(ReformPlan reformPlan, ReformInfoForm inputForm, String userId) throws Exception {
-		// リフォーム情報の登録処理へ委譲する。
+        // リフォーム情報の登録処理へ委譲する。
 		String sysReformCd = this.reformManager.addReformPlan(reformPlan, inputForm, userId);
 		createPartInfo(inputForm.getSysHousingCd(), "addReform");
-
+		
         // 建物基本情報を取得する。
         BuildingInfo buildingInfo = this.reformManager.searchBuildingInfo(inputForm.getSysHousingCd());
         String uploadPath = ReformManageImpl.getUploadPath(buildingInfo, inputForm.getSysHousingCd());
 
-		// Tempパスの取得
+        // Tempパスの取得
 		String temPath = this.commonParameters.getHousImgTempPhysicalPath();
 		temPath = PanaFileUtil.conPhysicalPath(temPath, inputForm.getTemPath());
 
-		// baseパスの取得
+        // baseパスの取得
 		String basePath = this.commonParameters.getHousImgOpenPhysicalMemberPath();
-		// /「定数値」/[リフォーム種別CD]/[都道府県CD]/[市区町村CD]/システムリフォーム番号/chart/
+        // /「定数値」/[リフォーム種別CD]/[都道府県CD]/[市区町村CD]/システムリフォーム番号/chart/
 		basePath = PanaFileUtil.conPhysicalPath(basePath, uploadPath);
 		basePath = PanaFileUtil.conPhysicalPath(basePath, commonParameters.getAdminSiteChartFolder());
 
-		// Tempフォルダーのファイル⇒公開フォルダーへ移動
+        // Tempフォルダーのファイル⇒公開フォルダーへ移動
 		this.createImgFile(inputForm, basePath);
 
 		return sysReformCd;
 	}
 	
-	/**
-	 * こだわり条件を再作成する。<br/>
-	 * <br/>
-	 * @param sysHousingCd システム物件CD
-	 * @param methodName 実行された物件 model のメソッド名
-	 * 
-	 * @throws Exception 
-	 */
-	protected void createPartInfo(String sysHousingCd, String methodName) throws Exception{
+    /**
+     * こだわり条件を再作成する。<br/>
+     * <br/>
+     * 
+     * @param sysHousingCd
+     *            システム物件CD
+     * @param methodName
+     *            実行された物件 model のメソッド名
+     * 
+     * @throws Exception
+     */
+    protected void createPartInfo(String sysHousingCd, String methodName)
+            throws Exception {
 
-		// こだわり条件生成用のクラスが設定されていない場合はなにもしない。
-		if (this.partCreateors == null || this.partCreateors.size() == 0) return;
+        // こだわり条件生成用のクラスが設定されていない場合はなにもしない。
+        if (this.partCreateors == null || this.partCreateors.size() == 0)
+            return;
 
-		PanaHousing housing = (PanaHousing)this.reformManager.searchHousingByPk(sysHousingCd);
+        PanaHousing housing = (PanaHousing) this.reformManager
+                .searchHousingByPk(sysHousingCd, true);
 
-		for (HousingPartCreator creator : this.partCreateors){
-			// 実行対象外の場合は次のこだわり条件作成クラスへ
-			if (!creator.isExecuteMethod(methodName)) continue;
+        for (HousingPartCreator creator : this.partCreateors) {
+            // 実行対象外の場合は次のこだわり条件作成クラスへ
+            if (!creator.isExecuteMethod(methodName))
+                continue;
 
-			// こだわり条件を作成する。
-			creator.createPart(housing);
-		}
-	}
+            // こだわり条件を作成する。
+            creator.createPart(housing);
+        }
+    }
 
 	/**
 	 * リフォームプラン情報の更新を行う<br/>
@@ -185,49 +193,48 @@ public class ReformPartThumbnailProxy implements ReformManage {
 	 */
 	@Override
 	public void updateReformPlan(ReformInfoForm inputForm, String userId) throws Exception {
-		// リフォーム情報の更新処理へ委譲する。
+        // リフォーム情報の更新処理へ委譲する。
 		this.reformManager.updateReformPlan(inputForm, userId);
-		
 		createPartInfo(inputForm.getSysHousingCd(), "updReform");
-
+		
         // 建物基本情報を取得する。
         BuildingInfo buildingInfo = this.reformManager.searchBuildingInfo(inputForm.getSysHousingCd());
         String uploadPath = ReformManageImpl.getUploadPath(buildingInfo, inputForm.getSysHousingCd());
 
-		// レーターチァート画像ファイルを削除
+        // レーターチァート画像ファイルを削除
 		if ("on".equals(inputForm.getReformImgDel())) {
 			String rootPath = this.commonParameters.getHousImgOpenPhysicalMemberPath();
 			String file[] = inputForm.getImgFile2().split("/");
 			String imgName = file[file.length-1];
 
-			// /「定数値」/[リフォーム種別CD]/[都道府県CD]/[市区町村CD]/システム物件番号/
+            // /「定数値」/[リフォーム種別CD]/[都道府県CD]/[市区町村CD]/システム物件番号/
 			String delPath = PanaFileUtil.conPhysicalPath(rootPath, uploadPath);
 			Map<String, String> delFiles = new HashMap<String, String>();
 			delFiles.put(imgName, delPath);
 
-			// 委譲先の model を実行してリフォーム情報を削除する。
+            // 委譲先の model を実行してリフォーム情報を削除する。
 			for (String keyFileName : delFiles.keySet()) {
 				PanaFileUtil.delPhysicalPathFile(delFiles.get(keyFileName),
 						keyFileName);
 			}
 		}
-		// レーターチァート画像ファイルを追加
+        // レーターチァート画像ファイルを追加
 		if("1".equals(inputForm.getImgSelFlg())){
 
-			// Tempパスの取得
+            // Tempパスの取得
 			String temPath = this.commonParameters.getHousImgTempPhysicalPath();
 			temPath = PanaFileUtil.conPhysicalPath(temPath, inputForm.getTemPath());
 
-			// baseパスの取得
+            // baseパスの取得
 			String basePath = this.commonParameters.getHousImgOpenPhysicalMemberPath();
-			// /「定数値」/[リフォーム種別CD]/[都道府県CD]/[市区町村CD]/システムリフォーム番号/chart/
+            // /「定数値」/[リフォーム種別CD]/[都道府県CD]/[市区町村CD]/システムリフォーム番号/chart/
 			basePath = PanaFileUtil.conPhysicalPath(basePath, uploadPath);
 			basePath = PanaFileUtil.conPhysicalPath(basePath, commonParameters.getAdminSiteChartFolder());
 
-			// Tempフォルダーのファイル⇒公開フォルダーへ移動
+            // Tempフォルダーのファイル⇒公開フォルダーへ移動
 			this.createImgFile(inputForm, basePath);
 
-			// 委譲先の model を実行してリフォーム情報を削除する。
+            // 委譲先の model を実行してリフォーム情報を削除する。
 			String file[] = inputForm.getImgFile2().split("/");
 			String imgName = file[file.length-1];
 			Map<String, String> delFiles = new HashMap<String, String>();
@@ -263,23 +270,23 @@ public class ReformPartThumbnailProxy implements ReformManage {
 			if (!srcRoot.endsWith("/")) srcRoot += "/";
 			srcRoot += PanaFileUtil.getUploadTempPath() + "/";
 
-			// サムネイル作成用 MAP の作成
+            // サムネイル作成用 MAP の作成
 			Map<String, String> thumbnailMap = new HashMap<>();
 			thumbnailMap.put(
 					PanaFileUtil.conPhysicalPath(srcRoot,
 							inputForm.getImgName()), basePath);
 
-			// 作成するファイル分繰り返す
+            // 作成するファイル分繰り返す
 			for (Entry<String, String> e : thumbnailMap.entrySet()){
 
-				// サムネイル作成元のファイルオブジェクトを作成する。
+                // サムネイル作成元のファイルオブジェクトを作成する。
 				File srcFile = new File(e.getKey());
 
-				// サムネイル出力先のルートパス （画像サイズの直前までのフォルダ階層）
+                // サムネイル出力先のルートパス （画像サイズの直前までのフォルダ階層）
 				String destRootPath = e.getValue();
 				if (!destRootPath.endsWith("/")) destRootPath += "/";
 
-				// オリジナル画像をフルサイズ画像として copy する。
+                // オリジナル画像をフルサイズ画像として copy する。
 				FileUtils.copyFileToDirectory(srcFile, new File(destRootPath));
 
 			}
@@ -302,20 +309,20 @@ public class ReformPartThumbnailProxy implements ReformManage {
 	@SuppressWarnings("unchecked")
 	public void delReformPlan(String sysHousingCd, String sysReformCd,
 			String userId) throws Exception {
-		// リフォーム情報
+        // リフォーム情報
 		Map<String, Object> reform = this.reformManager
 				.searchReform(sysReformCd);
-		// リフォームプラン情報
+        // リフォームプラン情報
 	    ReformPlan reformPlan = (ReformPlan) reform.get("reformPlan");
-		// リフォーム詳細情報
+        // リフォーム詳細情報
 		List<ReformDtl> dtlList = (List<ReformDtl>) reform.get("dtlList");
-		// リフォーム画像情報
+        // リフォーム画像情報
 		List<ReformImg> imgList = (List<ReformImg>) reform.get("imgList");
 
 		Map<String, String> delFiles = new HashMap<String, String>();
 
-		// レーダーチャート画像を削除
-	    String rootPath = ""; // /「定数値」
+        // レーダーチャート画像を削除
+        String rootPath = ""; // /「定数値」
 	    if (reformPlan != null) {
 	    	rootPath = PanaFileUtil.conPhysicalPath(
 					this.commonParameters.getHousImgOpenPhysicalMemberPath(), reformPlan.getReformChartImagePathName());
@@ -323,39 +330,39 @@ public class ReformPartThumbnailProxy implements ReformManage {
 			delFiles.put(reformPlan.getReformChartImageFileName(), rootPath);
 	    }
 
-		// リフォーム詳細情報（PDFファイル）を削除
+        // リフォーム詳細情報（PDFファイル）を削除
 		for (ReformDtl dtl : dtlList) {
-			rootPath = ""; // /「定数値」
-			// 閲覧権限が会員のみの場合
+            rootPath = ""; // /「定数値」
+            // 閲覧権限が会員のみの場合
 			if (PanaCommonConstant.ROLE_ID_PRIVATE.equals(dtl.getRoleId())) {
 				rootPath = this.commonParameters
 						.getHousImgOpenPhysicalMemberPath();
 			} else {
-				// 閲覧権限が全員の場合
+                // 閲覧権限が全員の場合
 				rootPath = this.commonParameters.getHousImgOpenPhysicalPath();
 			}
-			// /「定数値」/[リフォーム種別CD]/[都道府県CD]/[市区町村CD]/システムリフォーム番号/
+            // /「定数値」/[リフォーム種別CD]/[都道府県CD]/[市区町村CD]/システムリフォーム番号/
 			rootPath = PanaFileUtil
 					.conPhysicalPath(rootPath, dtl.getPathName());
 			delFiles.put(dtl.getFileName(), rootPath);
 		}
 
-		// リフォーム画像ファイルを削除
+        // リフォーム画像ファイルを削除
 		for (ReformImg img : imgList) {
-			rootPath = ""; // /「定数値」
-			// 閲覧権限が会員のみの場合
+            rootPath = ""; // /「定数値」
+            // 閲覧権限が会員のみの場合
 			if (PanaCommonConstant.ROLE_ID_PRIVATE.equals(img.getRoleId())) {
 				rootPath = this.commonParameters
 						.getHousImgOpenPhysicalMemberPath();
 			} else {
-				// 閲覧権限が全員の場合
+                // 閲覧権限が全員の場合
 				rootPath = this.commonParameters.getHousImgOpenPhysicalPath();
 			}
-			// /「定数値」/[リフォーム種別CD]/[都道府県CD]/[市区町村CD]/システム物件番号/
-			// After画像ファイルパス
+            // /「定数値」/[リフォーム種別CD]/[都道府県CD]/[市区町村CD]/システム物件番号/
+            // After画像ファイルパス
 			String afterPath = PanaFileUtil.conPhysicalPath(rootPath,
 					img.getAfterPathName());
-			// Before画像ファイルパス
+            // Before画像ファイルパス
 			String beforePath = PanaFileUtil.conPhysicalPath(rootPath,
 					img.getBeforePathName());
 
@@ -363,11 +370,11 @@ public class ReformPartThumbnailProxy implements ReformManage {
 			delFiles.put(img.getBeforeFileName(), beforePath);
 		}
 
-		// 委譲先の model を実行してリフォーム情報を削除する。
+        // 委譲先の model を実行してリフォーム情報を削除する。
 		this.reformManager.delReformPlan(sysHousingCd, sysReformCd, userId);
-		
-		createPartInfo(sysHousingCd, "delReform");
 
+		createPartInfo(sysHousingCd, "delReform");
+		
 		for (String keyFileName : delFiles.keySet()) {
 			if(keyFileName!= null){
 				PanaFileUtil.delPhysicalPathFile(delFiles.get(keyFileName),
@@ -390,37 +397,37 @@ public class ReformPartThumbnailProxy implements ReformManage {
 	@Override
 	public List<ReformDtl> addReformDtl(ReformDtlForm inputForm)
 			throws Exception {
-		// 委譲先の処理を実行する。
-		// このメソッドの戻り値は、新規追加したリフォーム詳細情報のリストが復帰される。
+        // 委譲先の処理を実行する。
+        // このメソッドの戻り値は、新規追加したリフォーム詳細情報のリストが復帰される。
 		List<ReformDtl> dtlList = this.reformManager.addReformDtl(inputForm);
 
-		// サムネイルの作成元フォルダ名　（日付を指定したフォルダ階層まで）
+        // サムネイルの作成元フォルダ名　（日付を指定したフォルダ階層まで）
 		String srcRoot = this.commonParameters.getHousImgTempPhysicalPath();
 		if (!srcRoot.endsWith("/")) srcRoot += "/";
 		srcRoot += PanaFileUtil.getUploadTempPath() + "/";
 
 		for(int i=0;i<dtlList.size();i++){
-			// Tempフォルダーから公開フォルダーへ移動
+            // Tempフォルダーから公開フォルダーへ移動
 			String basePath = "";
-			// 閲覧権限が会員のみの場合
+            // 閲覧権限が会員のみの場合
 			if (PanaCommonConstant.ROLE_ID_PRIVATE.equals(dtlList.get(i).getRoleId())) {
 				basePath = this.commonParameters.getHousImgOpenPhysicalMemberPath();
 			} else {
-				// 閲覧権限が全員の場合
+                // 閲覧権限が全員の場合
 				basePath = this.commonParameters.getHousImgOpenPhysicalPath();
 			}
 
-			// /「定数値」/[リフォーム種別CD]/[都道府県CD]/[市区町村CD]/システムリフォーム番号/
+            // /「定数値」/[リフォーム種別CD]/[都道府県CD]/[市区町村CD]/システムリフォーム番号/
 			String afterPath = PanaFileUtil.conPhysicalPath(basePath,
 					dtlList.get(i).getPathName());
 
-			// サムネイル作成用 MAP の作成
+            // サムネイル作成用 MAP の作成
 			Map<String, String> thumbnailMap = new HashMap<>();
 			thumbnailMap.put(
 					PanaFileUtil.conPhysicalPath(srcRoot,
 							dtlList.get(i).getFileName()), afterPath);
 
-			// テストメソッド実行
+            // テストメソッド実行
 			this.create(thumbnailMap);
 		}
 
@@ -440,67 +447,67 @@ public class ReformPartThumbnailProxy implements ReformManage {
 	@Override
 	public List<ReformDtl> updateReformDtl(ReformDtlForm inputForm)
 			throws Exception {
-		// 委譲先の処理を実行する。
-		// 削除された リフォーム詳細情報のリストが戻される。
+        // 委譲先の処理を実行する。
+        // 削除された リフォーム詳細情報のリストが戻される。
 		List<ReformDtl> dtlList = this.reformManager.updateReformDtl(inputForm);
 
 
-		// null の場合、削除画像が無かったとして null を復帰する。
+        // null の場合、削除画像が無かったとして null を復帰する。
 		if (dtlList == null)
 			return null;
 
 		for (int idx = 0; idx < inputForm.getDivNo().length; idx++) {
 			if (!StringUtils.isEmpty(inputForm.getDivNo()[idx])) {
 				String srcPath = "";
-				// 閲覧権限が会員のみの場合
+                // 閲覧権限が会員のみの場合
 				if (PanaCommonConstant.ROLE_ID_PRIVATE.equals(inputForm.getOldRoleId()[idx])) {
 					srcPath = this.commonParameters.getHousImgOpenPhysicalMemberPath();
 				} else {
-					// 閲覧権限が全員の場合
+                    // 閲覧権限が全員の場合
 					srcPath = this.commonParameters.getHousImgOpenPhysicalPath();
 				}
 
-				// /「定数値」/[リフォーム種別CD]/[都道府県CD]/[市区町村CD]/システムリフォーム番号/
+                // /「定数値」/[リフォーム種別CD]/[都道府県CD]/[市区町村CD]/システムリフォーム番号/
 				String afterSrcPath = PanaFileUtil.conPhysicalPath(srcPath,
 						inputForm.getPathName()[idx]);
 
-				// 削除処理の場合
+                // 削除処理の場合
 				if ("1".equals(inputForm.getDelFlg()[idx])) {
-					// 移動後、移動元のイメージファイルとそのサムネイルを削除
+                    // 移動後、移動元のイメージファイルとそのサムネイルを削除
 					this.deleteImgFile(afterSrcPath,
 							inputForm.getUpdHidFileName()[idx]);
 				} else {
-					// 更新処理の場合
-					// 閲覧権限の設定が変更された場合
+                    // 更新処理の場合
+                    // 閲覧権限の設定が変更された場合
 					if (!inputForm.getOldRoleId()[idx].equals(inputForm
 							.getRoleId()[idx])) {
 						String uploadPath = "";
-						// 閲覧権限が会員のみの場合
+                        // 閲覧権限が会員のみの場合
 						if (PanaCommonConstant.ROLE_ID_PRIVATE.equals(inputForm.getRoleId()[idx])) {
 							uploadPath = this.commonParameters
 									.getHousImgOpenPhysicalMemberPath();
 						} else {
-							// 閲覧権限が全員の場合
+                            // 閲覧権限が全員の場合
 							uploadPath = this.commonParameters
 									.getHousImgOpenPhysicalPath();
 						}
 
-						// /「定数値」/[リフォーム種別CD]/[都道府県CD]/[市区町村CD]/システムリフォーム番号/
+                        // /「定数値」/[リフォーム種別CD]/[都道府県CD]/[市区町村CD]/システムリフォーム番号/
 						String afterUploadPath = PanaFileUtil.conPhysicalPath(
 								uploadPath,
 								inputForm.getPathName()[idx]);
 
-						// サムネイル作成用 MAP の作成
+                        // サムネイル作成用 MAP の作成
 						Map<String, String> thumbnailMap = new HashMap<>();
 						thumbnailMap.put(PanaFileUtil.conPhysicalPath(
 								afterSrcPath,
 								this.commonParameters.getAdminSitePdfFolder()+"/"+ inputForm.getUpdHidFileName()[idx]),
 								afterUploadPath);
 
-						// テストメソッド実行
+                        // テストメソッド実行
 						this.create(thumbnailMap);
 
-						// 移動後、移動元のイメージファイルとそのサムネイルを削除
+                        // 移動後、移動元のイメージファイルとそのサムネイルを削除
 						this.deleteImgFile(afterSrcPath,
 								inputForm.getUpdHidFileName()[idx]);
 					}
@@ -524,24 +531,24 @@ public class ReformPartThumbnailProxy implements ReformManage {
 	 */
 	@Override
 	public ReformDtl delReformDtl(String sysReformCd, int divNo) {
-		// 委譲先の処理を実行してリフォーム詳細情報を削除する。
+        // 委譲先の処理を実行してリフォーム詳細情報を削除する。
 		ReformDtl reformDtl = this.reformManager.delReformDtl(sysReformCd,
 				divNo);
 
-		// ファイルの削除処理
+        // ファイルの削除処理
 		String srcPath = "";
-		// 閲覧権限が会員のみの場合
+        // 閲覧権限が会員のみの場合
 		if (PanaCommonConstant.ROLE_ID_PRIVATE.equals(reformDtl.getRoleId())) {
 			srcPath = this.commonParameters.getHousImgOpenPhysicalMemberPath();
 		} else {
-			// 閲覧権限が全員の場合
+            // 閲覧権限が全員の場合
 			srcPath = this.commonParameters.getHousImgOpenPhysicalPath();
 		}
-		// /「定数値」/[リフォーム種別CD]/[都道府県CD]/[市区町村CD]/システムリフォーム番号/
+        // /「定数値」/[リフォーム種別CD]/[都道府県CD]/[市区町村CD]/システムリフォーム番号/
 		srcPath = PanaFileUtil
 				.conPhysicalPath(srcPath, reformDtl.getPathName());
 
-		// PDFファイルを削除
+        // PDFファイルを削除
 		PanaFileUtil.delPhysicalPathFile(srcPath, reformDtl.getFileName());
 
 		return reformDtl;
@@ -563,17 +570,17 @@ public class ReformPartThumbnailProxy implements ReformManage {
 	public void create(Map<String, String> thumbnailMap)
 			throws IOException, Exception {
 
-		// 作成するファイル分繰り返す
+        // 作成するファイル分繰り返す
 		for (Entry<String, String> e : thumbnailMap.entrySet()){
 
-			// サムネイル作成元のファイルオブジェクトを作成する。
+            // サムネイル作成元のファイルオブジェクトを作成する。
 			File srcFile = new File(e.getKey());
 
-			// サムネイル出力先のルートパス （画像サイズの直前までのフォルダ階層）
+            // サムネイル出力先のルートパス （画像サイズの直前までのフォルダ階層）
 			String destRootPath = e.getValue();
 			if (!destRootPath.endsWith("/")) destRootPath += "/";
 
-			// オリジナル画像をフルサイズ画像として copy する。
+            // オリジナル画像をフルサイズ画像として copy する。
 			FileUtils.copyFileToDirectory(srcFile, new File(destRootPath + this.commonParameters.getAdminSitePdfFolder()));
 
 		}
@@ -589,7 +596,7 @@ public class ReformPartThumbnailProxy implements ReformManage {
 	 */
 	public void deleteImgFile(String filePath, String fileName) throws IOException{
 
-		// オリジナル画像の削除
+        // オリジナル画像の削除
 		if(!StringValidateUtil.isEmpty(fileName)){
 			(new File(filePath + this.commonParameters.getAdminSitePdfFolder() + "/" + fileName)).delete();
 		}
@@ -608,33 +615,33 @@ public class ReformPartThumbnailProxy implements ReformManage {
 	 */
 	@Override
 	public ReformImg addReformImg(ReformImgForm inputForm) throws Exception {
-		// 委譲先の処理を実行する。
-		// このメソッドの戻り値は、新規追加した画像情報のリストが復帰される。
+        // 委譲先の処理を実行する。
+        // このメソッドの戻り値は、新規追加した画像情報のリストが復帰される。
 		ReformImg reformImg = this.reformManager.addReformImg(inputForm);
 
-		// サムネイルの作成元フォルダ名　（日付を指定したフォルダ階層まで）
+        // サムネイルの作成元フォルダ名　（日付を指定したフォルダ階層まで）
 		String srcRoot = this.commonParameters.getHousImgTempPhysicalPath();
 		if (!srcRoot.endsWith("/")) srcRoot += "/";
 		srcRoot += PanaFileUtil.getUploadTempPath() + "/";
 
-		// Tempフォルダーから公開フォルダーへ移動
+        // Tempフォルダーから公開フォルダーへ移動
 		String basePath = "";
-		// 閲覧権限が会員のみの場合
+        // 閲覧権限が会員のみの場合
 		if (PanaCommonConstant.ROLE_ID_PRIVATE.equals(reformImg.getRoleId())) {
 			basePath = this.commonParameters.getHousImgOpenPhysicalMemberPath();
 		} else {
-			// 閲覧権限が全員の場合
+            // 閲覧権限が全員の場合
 			basePath = this.commonParameters.getHousImgOpenPhysicalPath();
 		}
 
-		// /「定数値」/[リフォーム種別CD]/[都道府県CD]/[市区町村CD]/システムリフォーム番号/
+        // /「定数値」/[リフォーム種別CD]/[都道府県CD]/[市区町村CD]/システムリフォーム番号/
 		String afterPath = PanaFileUtil.conPhysicalPath(basePath,
 				reformImg.getAfterPathName());
-		// /「定数値」/[リフォーム種別CD]/[都道府県CD]/[市区町村CD]/システムリフォーム番号/
+        // /「定数値」/[リフォーム種別CD]/[都道府県CD]/[市区町村CD]/システムリフォーム番号/
 		String beforePath = PanaFileUtil.conPhysicalPath(basePath,
 				reformImg.getBeforePathName());
 
-		// サムネイル作成用 MAP の作成
+        // サムネイル作成用 MAP の作成
 		Map<String, String> thumbnailMap = new HashMap<>();
 		thumbnailMap.put(
 				PanaFileUtil.conPhysicalPath(srcRoot,
@@ -643,7 +650,7 @@ public class ReformPartThumbnailProxy implements ReformManage {
 				PanaFileUtil.conPhysicalPath(srcRoot,
 						reformImg.getBeforeFileName()), beforePath);
 
-		// テストメソッド実行
+        // テストメソッド実行
 		this.thumbnailCreator.create(thumbnailMap);
 
 		return reformImg;
@@ -662,57 +669,57 @@ public class ReformPartThumbnailProxy implements ReformManage {
 	@Override
 	public List<ReformImg> updateReformImg(ReformImgForm inputForm)
 			throws Exception {
-		// 委譲先の処理を実行する。
-		// 削除されたリフォーム画像情報のリストが戻される。
+        // 委譲先の処理を実行する。
+        // 削除されたリフォーム画像情報のリストが戻される。
 		List<ReformImg> imgList = this.reformManager.updateReformImg(inputForm);
 
-		// null の場合、削除画像が無かったとして null を復帰する。
+        // null の場合、削除画像が無かったとして null を復帰する。
 		if (imgList == null)
 			return null;
 
 		for (int idx = 0; idx < inputForm.getDivNo().length; idx++) {
 			if (!StringUtils.isEmpty(inputForm.getDivNo()[idx])) {
 				String srcPath = "";
-				// 閲覧権限が会員のみの場合
+                // 閲覧権限が会員のみの場合
 				if (PanaCommonConstant.ROLE_ID_PRIVATE.equals(inputForm.getEditOldRoleId()[idx])) {
 					srcPath = this.commonParameters.getHousImgOpenPhysicalMemberPath();
 				} else {
-					// 閲覧権限が全員の場合
+                    // 閲覧権限が全員の場合
 					srcPath = this.commonParameters.getHousImgOpenPhysicalPath();
 				}
 
-				// /「定数値」/[リフォーム種別CD]/[都道府県CD]/[市区町村CD]/システムリフォーム番号/
+                // /「定数値」/[リフォーム種別CD]/[都道府県CD]/[市区町村CD]/システムリフォーム番号/
 				String afterSrcPath = PanaFileUtil.conPhysicalPath(srcPath,
 						inputForm.getEditAfterPathName()[idx]);
-				// /「定数値」/[リフォーム種別CD]/[都道府県CD]/[市区町村CD]/システムリフォーム番号/
+                // /「定数値」/[リフォーム種別CD]/[都道府県CD]/[市区町村CD]/システムリフォーム番号/
 				String beforeSrcPath = PanaFileUtil.conPhysicalPath(srcPath,
 						inputForm.getEditBeforePathName()[idx]);
 
-				// 削除処理の場合
+                // 削除処理の場合
 				if ("1".equals(inputForm.getDelFlg()[idx])) {
 
 					this.thumbnailCreator.deleteImgFile(afterSrcPath,
 							inputForm.getEditAfterFileName()[idx]);
-					// 移動後、移動元のイメージファイルとそのサムネイルを削除
+                    // 移動後、移動元のイメージファイルとそのサムネイルを削除
 					this.thumbnailCreator.deleteImgFile(beforeSrcPath,
 							inputForm.getEditBeforeFileName()[idx]);
 				} else {
-					// 更新処理の場合
-					// 閲覧権限の設定が変更された場合
+                    // 更新処理の場合
+                    // 閲覧権限の設定が変更された場合
 					if (!inputForm.getEditOldRoleId()[idx].equals(inputForm
 							.getEditRoleId()[idx])) {
 						String uploadPath = "";
-						// 閲覧権限が会員のみの場合
+                        // 閲覧権限が会員のみの場合
 						if (PanaCommonConstant.ROLE_ID_PRIVATE.equals(inputForm.getEditRoleId()[idx])) {
 							uploadPath = this.commonParameters
 									.getHousImgOpenPhysicalMemberPath();
 						} else {
-							// 閲覧権限が全員の場合
+                            // 閲覧権限が全員の場合
 							uploadPath = this.commonParameters
 									.getHousImgOpenPhysicalPath();
 						}
 
-						// /「定数値」/[リフォーム種別CD]/[都道府県CD]/[市区町村CD]/システムリフォーム番号/
+                        // /「定数値」/[リフォーム種別CD]/[都道府県CD]/[市区町村CD]/システムリフォーム番号/
 						String afterUploadPath = PanaFileUtil.conPhysicalPath(
 								uploadPath,
 								inputForm.getEditAfterPathName()[idx]);
@@ -720,7 +727,7 @@ public class ReformPartThumbnailProxy implements ReformManage {
 								uploadPath,
 								inputForm.getEditBeforePathName()[idx]);
 
-						// サムネイル作成用 MAP の作成
+                        // サムネイル作成用 MAP の作成
 						Map<String, String> thumbnailMap = new HashMap<>();
 						thumbnailMap.put(PanaFileUtil.conPhysicalPath(
 								afterSrcPath,
@@ -731,12 +738,12 @@ public class ReformPartThumbnailProxy implements ReformManage {
 								this.commonParameters.getAdminSiteFullFolder()+"/"+ inputForm.getEditBeforeFileName()[idx]),
 								beforeUploadPath);
 
-						// テストメソッド実行
+                        // テストメソッド実行
 						this.thumbnailCreator.create(thumbnailMap);
 
 						this.thumbnailCreator.deleteImgFile(afterSrcPath,
 								inputForm.getEditAfterFileName()[idx]);
-						// 移動後、移動元のイメージファイルとそのサムネイルを削除
+                        // 移動後、移動元のイメージファイルとそのサムネイルを削除
 						this.thumbnailCreator.deleteImgFile(beforeSrcPath,
 								inputForm.getEditBeforeFileName()[idx]);
 					}
@@ -762,20 +769,20 @@ public class ReformPartThumbnailProxy implements ReformManage {
 	@Override
 	public ReformImg delReformImg(String sysReformCd, int divNo)
 			throws IOException {
-		// 委譲先の処理を実行してリフォーム画像情報を削除する。
+        // 委譲先の処理を実行してリフォーム画像情報を削除する。
 		ReformImg reformImg = this.reformManager.delReformImg(sysReformCd,
 				divNo);
 
-		// ファイルの削除処理
+        // ファイルの削除処理
 		String filePath = "";
-		// 閲覧権限が会員のみの場合
+        // 閲覧権限が会員のみの場合
 		if (PanaCommonConstant.ROLE_ID_PRIVATE.equals(reformImg.getRoleId())) {
 			filePath = this.commonParameters.getHousImgOpenPhysicalMemberPath();
 		} else {
-			// 閲覧権限が全員の場合
+            // 閲覧権限が全員の場合
 			filePath = this.commonParameters.getHousImgOpenPhysicalPath();
 		}
-		// /「定数値」/[リフォーム種別CD]/[都道府県CD]/[市区町村CD]/システムリフォーム番号/
+        // /「定数値」/[リフォーム種別CD]/[都道府県CD]/[市区町村CD]/システムリフォーム番号/
 		String afterSrcPath = PanaFileUtil.conPhysicalPath(filePath,
 				reformImg.getAfterPathName());
 		String beforeSrcPath = PanaFileUtil.conPhysicalPath(filePath,
@@ -783,7 +790,7 @@ public class ReformPartThumbnailProxy implements ReformManage {
 
 		this.thumbnailCreator.deleteImgFile(afterSrcPath,
 				reformImg.getAfterPathName());
-		// 移動後、移動元のイメージファイルとそのサムネイルを削除
+        // 移動後、移動元のイメージファイルとそのサムネイルを削除
 		this.thumbnailCreator.deleteImgFile(beforeSrcPath,
 				reformImg.getBeforePathName());
 
@@ -806,7 +813,7 @@ public class ReformPartThumbnailProxy implements ReformManage {
 	 */
 	@Override
 	public Map<String, Object> searchReform(String sysReformCd) {
-		// 委譲先の処理を実行してリフォーム画像情報を削除する。
+        // 委譲先の処理を実行してリフォーム画像情報を削除する。
 		return this.reformManager.searchReform(sysReformCd);
 	}
 
@@ -820,7 +827,7 @@ public class ReformPartThumbnailProxy implements ReformManage {
 	 */
 	@Override
 	public void updReformChart(ReformInfoForm form, int count) {
-		// 委譲先の処理を実行してリフォーム画像情報を削除する。
+        // 委譲先の処理を実行してリフォーム画像情報を削除する。
 		this.reformManager.updReformChart(form, count);
 
 	}
@@ -835,7 +842,7 @@ public class ReformPartThumbnailProxy implements ReformManage {
 	 */
 	@Override
 	public void addReformChart(ReformInfoForm form, int count) {
-		// 委譲先の処理を実行してリフォーム画像情報を削除する。
+        // 委譲先の処理を実行してリフォーム画像情報を削除する。
 		this.reformManager.addReformChart(form, count);
 
 	}
@@ -851,7 +858,7 @@ public class ReformPartThumbnailProxy implements ReformManage {
 	 */
 	@Override
 	public void delReformChart(String sysReformCd) {
-		// 委譲先の処理を実行してリフォーム画像情報を削除する。
+        // 委譲先の処理を実行してリフォーム画像情報を削除する。
 		this.reformManager.delReformChart(sysReformCd);
 
 	}
@@ -866,7 +873,7 @@ public class ReformPartThumbnailProxy implements ReformManage {
 	 */
 	@Override
 	public int getReformImgDivNo(String sysReformCd) {
-		// 委譲先の処理を実行してリフォーム画像情報を削除する。
+        // 委譲先の処理を実行してリフォーム画像情報を削除する。
 		return this.reformManager.getReformImgDivNo(sysReformCd);
 	}
 
@@ -880,7 +887,7 @@ public class ReformPartThumbnailProxy implements ReformManage {
 	 */
 	@Override
 	public int getReformDtlDivNo(String sysReformCd) {
-		// 委譲先の処理を実行してリフォーム画像情報を削除する。
+        // 委譲先の処理を実行してリフォーム画像情報を削除する。
 		return this.reformManager.getReformDtlDivNo(sysReformCd);
 	}
 
@@ -898,7 +905,7 @@ public class ReformPartThumbnailProxy implements ReformManage {
 	 */
 	@Override
 	public HousingInfo searchHousingInfo(String sysHousingCd) throws Exception {
-		// 委譲先の処理を実行してリフォーム画像情報を削除する。
+        // 委譲先の処理を実行してリフォーム画像情報を削除する。
 		return this.reformManager.searchHousingInfo(sysHousingCd);
 	}
 
@@ -917,78 +924,78 @@ public class ReformPartThumbnailProxy implements ReformManage {
 	@Override
 	public BuildingInfo searchBuildingInfo(String sysHousingCd)
 			throws Exception {
-		// 委譲先の処理を実行してリフォーム画像情報を削除する。
+        // 委譲先の処理を実行してリフォーム画像情報を削除する。
 		return this.reformManager.searchBuildingInfo(sysHousingCd);
 	}
 
-	/**
-	 * リフォーム詳細情報を検索し、結果を復帰する。<br/>
-	 * 引数で渡された Form パラメータの値で検索条件を生成し、リフォーム詳細情報を検索する。<br/>
-	 * 検索結果は Form オブジェクトに格納され、取得した該当レコードを戻り値として復帰する。<br/>
-	 * <br/>
-	 *
-	 * @param sysReformCd
-	 *            システムリフォームCD
-	 * @param divNo
-	 *            枝番
-	 *
-	 * @return 検索条件に該当するリフォーム詳細情報
-	 *
-	 */
+    /**
+     * リフォーム詳細情報を検索し、結果を復帰する。<br/>
+     * 引数で渡された Form パラメータの値で検索条件を生成し、リフォーム詳細情報を検索する。<br/>
+     * 検索結果は Form オブジェクトに格納され、取得した該当レコードを戻り値として復帰する。<br/>
+     * <br/>
+     *
+     * @param sysReformCd
+     *            システムリフォームCD
+     * @param divNo
+     *            枝番
+     *
+     * @return 検索条件に該当するリフォーム詳細情報
+     *
+     */
 	@Override
 	public ReformDtl searchReformDtlByPk(String sysReformCd, String divNo)
 			throws Exception {
-		// 委譲先の処理を実行してリフォーム画像情報を削除する。
+        // 委譲先の処理を実行してリフォーム画像情報を削除する。
 		return this.reformManager.searchReformDtlByPk(sysReformCd, divNo);
 	}
 
-	/**
-	 * リフォームプラン情報を検索し、結果を復帰する。<br/>
-	 * <br/>
-	 *
-	 * @param sysHousingCd
-	 *            システム物件CD
-	 *
-	 * @return 検索条件に該当するリフォームプラン情報
-	 *
-	 * @exception Exception
-	 *                実装クラスによりスローされる任意の例外
-	 */
+    /**
+     * リフォームプラン情報を検索し、結果を復帰する。<br/>
+     * <br/>
+     *
+     * @param sysHousingCd
+     *            システム物件CD
+     *
+     * @return 検索条件に該当するリフォームプラン情報
+     *
+     * @exception Exception
+     *                実装クラスによりスローされる任意の例外
+     */
 	@Override
 	public List<ReformPlan> searchReformPlan(String sysHousingCd)
 			throws Exception {
-		// 委譲先の処理を実行してリフォーム画像情報を削除する。
+        // 委譲先の処理を実行してリフォーム画像情報を削除する。
 		return this.reformManager.searchReformPlan(sysHousingCd);
 	}
 
-	/**
-	 * リフォーム画像ファイル名を取得するメソッド.<br>
-	 * <br>
-	 *
-	 * @return リフォーム画像ファイル名
-	 * @throws Exception
-	 */
+    /**
+     * リフォーム画像ファイル名を取得するメソッド.<br>
+     * <br>
+     *
+     * @return リフォーム画像ファイル名
+     * @throws Exception
+     */
 	public String getReformJpgFileName() throws Exception {
 		return getSequenceFileName("jpg");
 	}
 
-	/**
-	 * リフォームPDFファイル名を取得するメソッド.<br>
-	 * <br>
-	 *
-	 * @return リフォームPDFファイル名
-	 * @throws Exception
-	 */
+    /**
+     * リフォームPDFファイル名を取得するメソッド.<br>
+     * <br>
+     *
+     * @return リフォームPDFファイル名
+     * @throws Exception
+     */
 	public String getReformPdfFileName() throws Exception {
 		return getSequenceFileName("pdf");
 	}
 
-	/**
-	 * リフォーム画像/PDFファイル名をシーケンスから取得して復帰する。<br/>
-	 * <br/>
-	 *
-	 * @return 画像/PDFファイル名
-	 */
+    /**
+     * リフォーム画像/PDFファイル名をシーケンスから取得して復帰する。<br/>
+     * <br/>
+     *
+     * @return 画像/PDFファイル名
+     */
 	public String getSequenceFileName(String extension) throws Exception {
 		String fileName = this.thumbnailCreator.getFIleName();
 
@@ -999,16 +1006,16 @@ public class ReformPartThumbnailProxy implements ReformManage {
 		return fileName;
 	}
 
-	/**
-	 * 物件基本情報のタイムスタンプ情報を更新する。<br/>
-	 * <br/>
-	 *
-	 * @param sysHousingCd
-	 *            更新対象システム物件CD
-	 * @param editUserId
-	 *            更新者ID
-	 * @throws Exception
-	 */
+    /**
+     * 物件基本情報のタイムスタンプ情報を更新する。<br/>
+     * <br/>
+     *
+     * @param sysHousingCd
+     *            更新対象システム物件CD
+     * @param editUserId
+     *            更新者ID
+     * @throws Exception
+     */
 	public void updateEditTimestamp(String sysHousingCd, String sysReformCd,
 			String editUserId) throws Exception {
 		this.reformManager.updateEditTimestamp(sysHousingCd, sysReformCd,
@@ -1029,52 +1036,59 @@ public class ReformPartThumbnailProxy implements ReformManage {
 		return this.reformManager.searchReformPlan(sysHousingCd, full);
 	}
 
-	/**
-	 * サムネイル画像を作成する。<br/>
-	 * また、オリジナルサイズの画像を、画像サイズの階層が full のフォルダへ配置する。<br/>
-	 * thumbnailMap の構造は下記の通り。　ファイル名は元のファイル名が使用される。<br/>
-	 * <ul>
-	 * <li>Key : サムネイル作成元のファイル名（フルパス）</li>
-	 * <li>value : サムネイルの出力先パス（ルート～システム物件番号までのパス。　サイズや、ファイル名は含まない。）</li>
-	 * </ul>
-	 * @param thumbnailMap 作成するファイルの情報
-	 *
-	 * @throws Exception 委譲先がスローする任意の例外
-	 */
+    /**
+     * サムネイル画像を作成する。<br/>
+     * また、オリジナルサイズの画像を、画像サイズの階層が full のフォルダへ配置する。<br/>
+     * thumbnailMap の構造は下記の通り。　ファイル名は元のファイル名が使用される。<br/>
+     * <ul>
+     * <li>Key : サムネイル作成元のファイル名（フルパス）</li>
+     * <li>value : サムネイルの出力先パス（ルート～システム物件番号までのパス。　サイズや、ファイル名は含まない。）</li>
+     * </ul>
+     * @param thumbnailMap 作成するファイルの情報
+     *
+     * @throws Exception 委譲先がスローする任意の例外
+     */
 	public void addTempFile(FileItem fileItem, String temPath, String fileName) throws Exception{
 
 		String tempUploadPath=PanaFileUtil.conPhysicalPath(this.commonParameters.getHousImgTempPhysicalPath(), temPath+"/");
 		PanaFileUtil.uploadFile(fileItem,tempUploadPath, fileName);
 
-		// サムネイル作成元のファイルオブジェクトを作成する。
+        // サムネイル作成元のファイルオブジェクトを作成する。
 		File srcFile = new File(tempUploadPath + fileName);
 
-		// サムネイル出力先のルートパス （画像サイズの直前までのフォルダ階層）
+        // サムネイル出力先のルートパス （画像サイズの直前までのフォルダ階層）
 		String destRootPath = tempUploadPath;
 		if (!destRootPath.endsWith("/")) destRootPath += "/";
 
-		// サイズリストが未設定の場合はサムネイル画像を作成しない。
+        // サイズリストが未設定の場合はサムネイル画像を作成しない。
 		if (this.commonParameters.getThumbnailSizes() == null) return;
 
-		// 作成するサムネイルサイズ分繰り返す
+        // 作成するサムネイルサイズ分繰り返す
 		for (Integer size : this.commonParameters.getThumbnailSizes()){
 
-			// 出力先サブフォルダが存在しない場合、フォルダを作成する。
-			// createImgFile() は、サブフォルダを作成しないので..。
+            // 出力先サブフォルダが存在しない場合、フォルダを作成する。
+            // createImgFile() は、サブフォルダを作成しないので..。
 			File subDir = new File(destRootPath + size.toString());
 			if (!subDir.exists()){
 				FileUtils.forceMkdir(subDir);
 			}
 
-			// サムネイルの出力先はファイルサイズ毎に異なるので、サイズ毎に生成する。
+            // サムネイルの出力先はファイルサイズ毎に異なるので、サイズ毎に生成する。
 			File destFile = new File(destRootPath + size.toString() + "/" + srcFile.getName());
-			// サムネイル画像を作成
+            // サムネイル画像を作成
 			this.imgUtils.createImgFile(srcFile, destFile, size.intValue());
 		}
 	}
 
-	@Override
-	public Housing searchHousingByPk(String sysHousingCd) throws Exception {
-		return this.reformManager.searchHousingByPk(sysHousingCd);
-	}
+    /**
+     * Seach housing by the given housing cd
+     * @param sysHousingCd the housing cd string
+     * @param full Return public properties if false. Else, return all
+     * @exception Exception is thrown while implementing
+     */
+    @Override
+    public Housing searchHousingByPk(String sysHousingCd, boolean full)
+            throws Exception {
+        return this.reformManager.searchHousingByPk(sysHousingCd, full);
+    }
 }

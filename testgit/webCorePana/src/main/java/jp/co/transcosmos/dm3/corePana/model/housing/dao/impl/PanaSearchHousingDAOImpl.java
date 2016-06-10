@@ -9,7 +9,9 @@ import java.sql.SQLException;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -123,8 +125,6 @@ public class PanaSearchHousingDAOImpl implements PanaSearchHousingDAO {
 	protected static final String TABLE_ADMIN_LOGIN_INFO1_ALIAS = "adminLoginInfo1";
 	/** 管理者ログインＩＤ情報エイリアス */
 	protected static final String TABLE_ADMIN_LOGIN_INFO2_ALIAS = "adminLoginInfo2";
-	
-	protected static final String TABLE_REFORM_PLAN_ALIAS = "reformPlan";
 
 	/** CSV出力の名 */
 	protected static final String[] CSV_OUT_NAME = {"housing","reform"};
@@ -1391,7 +1391,7 @@ public class PanaSearchHousingDAOImpl implements PanaSearchHousingDAO {
 
 		StringBuffer sbSelect = new StringBuffer();
 
-		sbSelect.append(" SELECT distinct");
+		sbSelect.append(" SELECT ");
 		// 物件情報
 		// システム物件CD
 		sbSelect.append(" " + TABLE_HOUSING_INFO_ALIAS + ".sys_housing_cd AS " + TABLE_HOUSING_INFO_ALIAS + "_sysHousingCd");
@@ -1737,7 +1737,6 @@ public class PanaSearchHousingDAOImpl implements PanaSearchHousingDAO {
 		sbFrom.append(" LEFT OUTER JOIN " + TABLE_MEMBER_INFO_NAME + " " + TABLE_MEMBER_INFO_ALIAS + " ON " + TABLE_HOUSING_STATUS_INFO_ALIAS + ".user_id = " + TABLE_MEMBER_INFO_ALIAS + ".user_id");
 		sbFrom.append(" LEFT OUTER JOIN " + TABLE_ADMIN_LOGIN_INFO_NAME + " " + TABLE_ADMIN_LOGIN_INFO1_ALIAS + " ON " + TABLE_HOUSING_INFO_ALIAS + ".ins_user_id = " + TABLE_ADMIN_LOGIN_INFO1_ALIAS + ".admin_user_id");
 		sbFrom.append(" LEFT OUTER JOIN " + TABLE_ADMIN_LOGIN_INFO_NAME + " " + TABLE_ADMIN_LOGIN_INFO2_ALIAS + " ON " + TABLE_HOUSING_INFO_ALIAS + ".upd_user_id = " + TABLE_ADMIN_LOGIN_INFO2_ALIAS + ".admin_user_id");
-//		sbFrom.append(" LEFT OUTER JOIN " + TABLE_REFORM_PLAN_NAME + " " + TABLE_REFORM_PLAN_ALIAS + " ON " + TABLE_HOUSING_INFO_ALIAS + ".sys_housing_cd = " + TABLE_REFORM_PLAN_ALIAS + ".sys_housing_cd");
 
 		sbSql.append(sbFrom.toString());
 
@@ -1839,7 +1838,6 @@ public class PanaSearchHousingDAOImpl implements PanaSearchHousingDAO {
 
 		// こだわり条件
 		createWhereAndPartSrchCd(sbWhere, params, searchForm);
-//		createWhereAndReformType(sbWhere, params, searchForm.getKeyReformType());
 
 		// 最初の「AND」を削除して「 WHERE 」を付ける
 		if (sbWhere.length() > 0) {
@@ -1853,20 +1851,6 @@ public class PanaSearchHousingDAOImpl implements PanaSearchHousingDAO {
 
 	}
 
-//	/**
-//	 * 
-//	 * @param sbWhere
-//	 * @param params
-//	 * @param reformType
-//	 */
-//	protected void createWhereAndReformType(StringBuffer sbWhere,
-//            List<Object> params, String reformType) {
-//	    if (!StringValidateUtil.isEmpty(reformType)) {
-//            sbWhere.append(" AND " + TABLE_REFORM_PLAN_ALIAS
-//                    + ".type = ? ");
-//            params.add(reformType);
-//        }
-//	}
 	/**
 	 * 物件番号の検索条件文字列を追加する<br/>
 	 * <br/>
@@ -2497,7 +2481,21 @@ public class PanaSearchHousingDAOImpl implements PanaSearchHousingDAO {
 			sbWhere.append(" ) ");
 		}
 
-	}
+        if (!StringValidateUtil.isEmpty(searchForm.getKeyPartSrchReformCd())) {
+            // to split param into pieces which each of them is a ID of seeking reform category 
+            String[] codes = searchForm.getKeyPartSrchReformCd().split(",");
+            if (codes.length > 0) {
+                // to render "WHERE x IN (?,?,?,?)
+                String placeholder = StringUtils.collectionToDelimitedString(Collections.nCopies(codes.length, "?"), ",");
+                // building condition query that filters reform plans have category in the list 
+                sbWhere.append(" AND (EXISTS(SELECT 1 FROM housing_part_info "
+                        + " WHERE housingInfo.sys_housing_cd = housing_part_info.sys_housing_cd "
+                        + " AND housing_part_info.part_srch_cd IN (" + placeholder + "))) ");
+                // put ids of seeking reform category
+                params.addAll(Arrays.asList(codes));
+            }
+        }
+    }
 
 	/**
 	 * 物件種類の検索条件文字列を追加する<br/>

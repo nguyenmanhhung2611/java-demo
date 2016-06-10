@@ -1,6 +1,7 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://dm3.transcosmos.co.jp/tags/lookup" prefix="dm3lookup" %>
 
 			<div class="reformPlan mb00">
 				<c:if test="${'detail' == outPutForm.getMode()}">
@@ -12,17 +13,15 @@
 				<table class="tableType2 SPdisplayNone">
 					<thead>
 						<tr>
-						    <th>&nbsp;</th>
 							<th>リフォームプラン</th>
-							<th>総額<span>※下段は内訳価格 </span></th>
+							<th>総額<span>※下段は内訳総額 </span></th>
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="varOtherPlanNoHidden" items="${outPutForm.getOtherPlanNoHidden()}">
+						<c:forEach var="varOtherPlanNoHidden" items="${outPutForm.getOtherPlanNoHidden()}" end="${null != outPutForm.getReformCd() ? 1 : 2}">
 							<c:if test="${!empty outPutForm.getOtherPlanType()[varOtherPlanNoHidden]}">
 								<tr>
-								    <th><c:out value="${outPutForm.getReformCategory()[varOtherPlanNoHidden] }"/></th>
-									<td><a href="<c:if test="${outPutForm.isPreviewFlg() == 'false'}"><c:out value="${pageContext.request.contextPath}"/><c:out value="${outPutForm.getOtherReformUrl()[varOtherPlanNoHidden]}#anc01"/></c:if><c:if test="${outPutForm.isPreviewFlg() == 'true'}">javascript:void(0);</c:if>"><c:out value="${outPutForm.getOtherPlanType()[varOtherPlanNoHidden]}"/></a></td>
+									<th><a class="<dm3lookup:lookup lookupName="iconPlanCategories" lookupKey="${outPutForm.getOtherReformCategory()[varOtherPlanNoHidden]}"/>" href="<c:if test="${outPutForm.isPreviewFlg() == 'false'}"><c:out value="${pageContext.request.contextPath}"/><c:out value="${outPutForm.getOtherReformUrl()[varOtherPlanNoHidden]}#anc01"/></c:if><c:if test="${outPutForm.isPreviewFlg() == 'true'}">javascript:void(0);</c:if>"><c:out value="${outPutForm.getOtherPlanType()[varOtherPlanNoHidden]}"/></a></th>
 									<td><span class="buildingPrice"><c:out value="${outPutForm.getOtherTotalPrice1()[varOtherPlanNoHidden]}"/></span><br>
 									<c:out value="${outPutForm.getOtherTotalPrice2()[varOtherPlanNoHidden]}"/></td>
 								</tr>
@@ -31,8 +30,11 @@
 					</tbody>
 				</table>
 				<ul class="SPdisplayBlock">
-						<c:forEach var="varPlanNoHidden" items="${outPutForm.getOtherPlanNoHidden()}">
-							<li><a href="<c:if test="${outPutForm.isPreviewFlg() == 'false'}"><c:out value="${pageContext.request.contextPath}"/><c:out value="${outPutForm.getOtherReformUrl()[varPlanNoHidden]}#anc01"/></c:if><c:if test="${outPutForm.isPreviewFlg() == 'true'}">javascript:void(0);</c:if>"><span><c:out value="${outPutForm.getOtherPlanType()[varPlanNoHidden]}"/><br>
+						<c:forEach var="varPlanNoHidden" items="${outPutForm.getOtherPlanNoHidden()}" end="${null != outPutForm.getReformCd() ? 1 : 2}">
+                        <li><a href="<c:if test="${outPutForm.isPreviewFlg() == 'false'}"><c:out value="${pageContext.request.contextPath}"/><c:out value="${outPutForm.getOtherReformUrl()[varPlanNoHidden]}#anc01"/></c:if><c:if test="${outPutForm.isPreviewFlg() == 'true'}">javascript:void(0);</c:if>">
+                            <span class="<dm3lookup:lookup lookupName="iconPlanCategories" lookupKey="${outPutForm.getOtherReformCategory()[varPlanNoHidden]}"/>">
+                                 <c:out value="${outPutForm.getOtherPlanType()[varPlanNoHidden]}"/>
+                            </span>
 							<c:if test="${!empty outPutForm.getOtherTotalPrice1()[varPlanNoHidden]}">総額：</c:if><c:out value="${outPutForm.getOtherTotalPrice1()[varPlanNoHidden]}"/></span><br>
 							<c:set var="SPTotalPrice2Before" value="${fn:substringBefore(outPutForm.getOtherTotalPrice2()[varPlanNoHidden], '＋')}"/>
 							<c:set var="SPTotalPrice2After" value="${fn:substringAfter(outPutForm.getOtherTotalPrice2()[varPlanNoHidden], '＋')}"/>

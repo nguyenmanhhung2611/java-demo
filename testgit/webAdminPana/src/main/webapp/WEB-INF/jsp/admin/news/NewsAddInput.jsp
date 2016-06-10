@@ -30,7 +30,7 @@
 		<div class="btnBlockC18">
 			<div class="btnBlockC18Inner">
 				<div class="btnBlockC18Inner2">
-					<p><a href="javascript:linkToUrl('../confirm/', '');"><span>Confirm</span></a></p>
+					<p><a href="javascript:linkToUrl('../confirm/', '');"><span>Add</span></a></p>
 				</div>
 			</div>
 		</div>

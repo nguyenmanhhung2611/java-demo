@@ -7,55 +7,58 @@
                            http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
 
   <!-- お知らせの検索・一覧画面 -->
-   <bean id="newsListCommand" class="jp.co.transcosmos.dm3.webAdmin.news.command.PanaNewsListCommand" 
+   <bean id="newsListCommand" class="jp.co.transcosmos.dm3.webAdmin.news.command.NewsListCommand" 
   		scope="prototype">
     <property name="newsManager" ref="newsManager"/>
-    <property name="authLogging" ref="authLogging"/>
     <property name="rowsPerPage" value="10"/>
     <property name="visibleNavigationPageCount" value="5"/>
     <property name="mode" value="search" />
   </bean>
   
-  <bean id="newsAddInputCommand" class="jp.co.transcosmos.dm3.adminCore.news.command.NewsInputCommand" scope="prototype">
+  <bean id="newsAddInputCommand" class="jp.co.transcosmos.dm3.webAdmin.news.command.NewsInputCommand" scope="prototype">
     <property name="mode" value="insert"/>
   </bean>
   
-  <bean id="newsAddConfirmCommand" class="jp.co.transcosmos.dm3.adminCore.news.command.NewsConfirmCommand" scope="prototype">
+  <bean id="newsAddConfirmCommand" class="jp.co.transcosmos.dm3.webAdmin.news.command.NewsConfirmCommand" scope="prototype">
     <property name="mode" value="insert"/>
     <property name="memberInfoDAO" ref="memberInfoDAO" />
   </bean>
   
   <!-- お知らせ情報新規登録完了画面 -->
-  <bean id="newsAddCompCommand" class="jp.co.transcosmos.dm3.webAdmin.news.command.PanaNewsCompCommand" scope="prototype">
+  <bean id="newsAddCompCommand" class="jp.co.transcosmos.dm3.webAdmin.news.command.NewsCompCommand" scope="prototype">
     <property name="newsManager" ref="newsManager"/>
     <property name="mode" value="insert"/>
     <property name="useUserIdValidation" value="false"/>
   </bean>
   
   <!-- お知らせ情報変更入力画面 -->
-  <bean id="newsUpdInputCommand" class="jp.co.transcosmos.dm3.adminCore.news.command.NewsInputCommand" scope="prototype">
+  <bean id="newsUpdInputCommand" class="jp.co.transcosmos.dm3.webAdmin.news.command.NewsInputCommand" scope="prototype">
     <property name="newsManager" ref="newsManager"/>
     <property name="mode" value="update"/>
   </bean>
   <!-- お知らせ情報変更入力確認画面 -->
-  <bean id="newsUpdConfirmCommand" class="jp.co.transcosmos.dm3.adminCore.news.command.NewsConfirmCommand" scope="prototype">
+  <bean id="newsUpdConfirmCommand" class="jp.co.transcosmos.dm3.webAdmin.news.command.NewsConfirmCommand" scope="prototype">
     <property name="mode" value="update"/>
   </bean>
 
   <!-- お知らせ情報変更登録完了画面 -->
-  <bean id="newsUpdCompCommand" class="jp.co.transcosmos.dm3.webAdmin.news.command.PanaNewsCompCommand" scope="prototype">
+  <bean id="newsUpdCompCommand" class="jp.co.transcosmos.dm3.webAdmin.news.command.NewsCompCommand" scope="prototype">
     <property name="newsManager" ref="newsManager"/>
     <property name="mode" value="update"/>
   </bean>
   
-  
-  <bean id="newsDelCompCommand" class="jp.co.transcosmos.dm3.webAdmin.news.command.PanaNewsListCommand" scope="prototype">
+  <bean id="newsDelInputCommand" class="jp.co.transcosmos.dm3.webAdmin.news.command.DelInputCommand" scope="prototype">
     <property name="newsManager" ref="newsManager"/>
-    <property name="authLogging" ref="authLogging"/>
+    <property name="mode" value="delete"/>
+  </bean>
+  
+  <bean id="newsDelCompCommand" class="jp.co.transcosmos.dm3.webAdmin.news.command.NewsListCommand" scope="prototype">
+    <property name="newsManager" ref="newsManager"/>
     <property name="rowsPerPage" value="10"/>
     <property name="visibleNavigationPageCount" value="10"/>
     <property name="mode" value="delete"/>
   </bean>
+  
   
   <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMappingList">
     <property name="commandURLMapper" ref="commandURLMapper"/>
@@ -63,11 +66,12 @@
       <list>
 	        <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
 	          <property name="urlPattern" value="/top/news/list/"/>
-	          <property name="namedCommands">
+	          <property name="defaultCommandName" value="newsListCommand"/>
+	          <!-- <property name="namedCommands">
 	            <props>
 	              <prop key="list">newsListCommand</prop>
 	            </props>
-	          </property>
+	          </property> -->
 	          <property name="defaultViewName" value="/WEB-INF/jsp/admin/news/NewsInit.jsp"/>
 	        </bean>
 	        
@@ -130,8 +134,16 @@
 	          </property>
 	        </bean>
 	        
-	        <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+	       
+	        
+	         <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
 	          <property name="urlPattern" value="/top/news/delConfirm/" />
+	          <property name="defaultCommandName" value="newsDelInputCommand"/>
+	          <property name="defaultViewName" value="/WEB-INF/jsp/admin/news/NewsDeleteConfirm.jsp"/>
+	        </bean>
+	        
+	         <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+	          <property name="urlPattern" value="/top/news/delresult/" />
 	          <property name="defaultCommandName" value="newsDelCompCommand"/>
 	          <property name="defaultViewName" value="/WEB-INF/jsp/admin/news/NewsListDeleteCompRedirect.jsp"/>
 	        </bean>
@@ -139,6 +151,7 @@
   		</list>
     </property>
   </bean>
+
 </beans>
 
 

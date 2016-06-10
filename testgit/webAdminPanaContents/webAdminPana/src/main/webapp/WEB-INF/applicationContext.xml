@@ -1473,7 +1473,7 @@
   <!-- 認証用ロギングクラス -->
   <bean id="authLogging" class="jp.co.transcosmos.dm3.utils.SimpleLogging">
     <property name="timeout" value="3000" />
-    <property name="logFileName" value="D:\logs\auth.log" />
+    <property name="logFileName" value="E:\logs\auth.log" />
     <property name="rotate" value="day" />
   </bean>
   

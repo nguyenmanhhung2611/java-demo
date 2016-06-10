@@ -172,7 +172,12 @@
             <!-- ログイン画面 -->
             <prop key="loginID">メールアドレス</prop>
             <prop key="password">パスワード</prop>
-
+            
+            <!-- Key of screen social -->
+			<prop key="social.input.commentContent">Comment Content</prop>
+			<prop key="social.input.newsId">New Id</prop>
+			<prop key="social.input.insUserId">User Id insert</prop>
+			<prop key="social.input.updUserId">User Id update</prop>
           </props>
         </entry>
 

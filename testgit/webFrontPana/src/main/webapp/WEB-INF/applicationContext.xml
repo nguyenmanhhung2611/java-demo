@@ -17,9 +17,9 @@
   <!-- DB 接続 定義 （MySQL 用）-->
   <bean id="mysqlDS" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
     <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-    <property name="url" value="jdbc:mysql://localhost:3306/panasonicdb?characterEncoding=ms932&amp;zeroDateTimeBehavior=convertToNull&amp;profileSQL=false&amp;traceProtocol=false" />
+    <property name="url" value="jdbc:mysql://172.20.36.21:3306/panasonic1?characterEncoding=ms932&amp;zeroDateTimeBehavior=convertToNull&amp;profileSQL=false&amp;traceProtocol=false" />
     <property name="username" value="root" />
-    <property name="password" value="root" />
+    <property name="password" value="dmtest" />
   </bean>
 
   <!--
@@ -1517,7 +1517,8 @@
 
   <!-- 共通設定情報管理クラス -->
   <bean id="commonParameters" class="jp.co.transcosmos.dm3.corePana.constant.PanaCommonParameters">
-    <property name="janetUrl" value="https://mail.tctav.com//"/>
+    <property name="yahooCodeSrc" value="//b91.yahoo.co.jp/pagead/conversion/1000277438/imp.gif"/>
+    <property name="janetUrl" value="https://action.j-a-net.jp//"/>
     <property name="janetMemberSid" value="404221"/>
     <property name="janetAssessmentSid" value="404222"/>
     <property name="inquiryIdPrefix" value="A"/>
@@ -1590,7 +1591,7 @@
 
   <!-- サムネイル画像作成クラス -->
   <bean id="imgUtils" class="jp.co.transcosmos.dm3.core.util.imgUtils.ImgUtilImageMagick">
-    <property name="convertCommand" value="E:\tools\ImageMagic\convert.exe" />
+    <property name="convertCommand" value="C:\Workspace\ImageMagick-6.9.1-0\convert" />
   </bean>
 
   <bean id="thumbnailCreator" class="jp.co.transcosmos.dm3.core.util.ThumbnailCreator">

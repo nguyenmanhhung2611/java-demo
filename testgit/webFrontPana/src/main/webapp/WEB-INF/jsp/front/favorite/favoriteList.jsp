@@ -3,7 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://dm3.transcosmos.co.jp/tags/lookup" prefix="dm3lookup" %>
 <%@ taglib uri="http://dm3.transcosmos.co.jp/tags/functions" prefix="dm3functions" %>
-
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="keywords" content="<c:out value="${commonParameters.defaultKeyword}"/>">
@@ -38,7 +39,7 @@ $(document).ready(function() {
 			openEffect	: 'none',
 			closeEffect	: 'none'
 		});
-    }
+	}
 	else {
 		$(".favdelete").fancybox({
 			fitToView	: false,
@@ -48,8 +49,15 @@ $(document).ready(function() {
 			openEffect	: 'none',
 			closeEffect	: 'none'
 		});
+		
 	}
+	$(".favdelete").on('click', function() {
+        setTimeout(function() {
+            $.fancybox.close();
+            $("[id^='personalInfo'] .favorite").text(getFavoriteCount());
+        }, 30000)
 
+    });
 
 	$("#sortOrder1").click(function(){
 		if($("#sortOrder1").html() == "お気に入り登録日 ▲"){
@@ -101,7 +109,6 @@ $(document).ready(function() {
 	});
 
 });
-
 
 function orderLinkToUrl(url) {
 	document.inputForm.action = url;
@@ -402,7 +409,7 @@ text-overflow: ellipsis;
 				<p class="bold mb30 spMb10 f18 spF16 center spLeft">現在、お気に入り登録されている物件はありません。</p>
 			</div>
 			<div class="contentsInner01">
-				<p class="center spPb10"><a href="<c:out value="${commonParameters.resourceRootUrl}"/>buy/#search" class="secondaryBtn">買いたいTOPへ</a></p>
+				<p class="center spPb10"><a href="<c:out value="${commonParameters.resourceRootUrl}"/>buy/" class="secondaryBtn">買いたいTOPへ</a></p>
 			</div>
 		<!-- / .section01 --></div>
 		</c:if>

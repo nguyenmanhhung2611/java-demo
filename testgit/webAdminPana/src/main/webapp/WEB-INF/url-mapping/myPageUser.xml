@@ -1,327 +1,398 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:util="http://www.springframework.org/schema/util"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
                            http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
 
-  <!--
-  	マイページ用ランダムパスワード生成クラス
-  	デフォルト設定では、８桁の大小英字、数字を含む文字列を生成する。
-  	パスワード強度の変更等により、記号文字の生成を強制する場合はこのクラスのプロパティを変更する事。
-  -->
-  <bean id="memberInfoPwdCreatetor" class="jp.co.transcosmos.dm3.core.util.CreatePassword" />
+	<!-- マイページ用ランダムパスワード生成クラス デフォルト設定では、８桁の大小英字、数字を含む文字列を生成する。 パスワード強度の変更等により、記号文字の生成を強制する場合はこのクラスのプロパティを変更する事。 -->
+	<bean id="memberInfoPwdCreatetor" class="jp.co.transcosmos.dm3.core.util.CreatePassword" />
 
 
-  <!-- CSV 出力設定 -->
-  <bean id="memberCsvConverter" class="jp.co.transcosmos.dm3.webAdmin.memberInfo.CsvConverter">
-    <property name="codeLookupManager" ref="codeLookupManager"/>
-    <property name="adminLoginInfoDAO" ref="adminLoginInfoDAO"/>
-  </bean>
+	<!-- CSV 出力設定 -->
+	<bean id="memberCsvConverter" class="jp.co.transcosmos.dm3.webAdmin.memberInfo.CsvConverter">
+		<property name="codeLookupManager" ref="codeLookupManager" />
+		<property name="adminLoginInfoDAO" ref="adminLoginInfoDAO" />
+	</bean>
 
-  <bean id="memberInfoCsvConfig" class="jp.co.transcosmos.dm3.csv.CsvConfig">
-    <property name="fileName" value="kaiin_###yyyyMMdd###" />
-    <property name="headerColumns">
-      <list>
-        <value>会員番号</value>
-		<value>お名前(姓)</value>
-		<value>お名前（名）</value>
-		<value>フリガナ(セイ)</value>
-		<value>フリガナ（メイ）</value>
-		<value>プロモコード</value>
-		<value>メールアドレス</value>
-		<value>登録経路</value>
-		<value>流入経路</value>
-		<value>住所1 </value>
-		<value>住所2</value>
-		<value>電話番号</value>
-		<value>FAX</value>
-		<value>居住状況</value>
-		<value>希望地域(都道府県)</value>
-		<value>希望地域(市区町村番地)</value>
-		<value>メール配信</value>
-		<value>新規登録日</value>
-		<value>新規登録者</value>
-		<value>最終更新日</value>
-		<value>最終更新者</value>
-      </list>
-    </property>
-    <property name="dbColumns">
-      <list>
-        <value>memberInfo.userId</value>
-        <value>memberInfo.memberLname</value>
-        <value>memberInfo.memberFname</value>
-        <value>memberInfo.memberLnameKana</value>
-        <value>memberInfo.memberFnameKana</value>
-        <value>memberInfo.promoCd</value>
-        <value>memberInfo.email</value>
-        <value>memberInfo.entryRoute</value>
-        <value>memberInfo.refCd</value>
-        <value>prefMst.prefName</value>
-        <value>memberInfo.address</value>
-        <value>memberInfo.tel</value>
-        <value>memberInfo.fax</value>
-        <value>memberInfo.residentFlg</value>
-        <value>hopePrefMst.prefName</value>
-        <value>memberInfo.hopeAddress</value>
-        <value>memberInfo.mailSendFlg</value>
-        <value>memberInfo.insDate</value>
-        <value>memberInfo.insUserId</value>
-        <value>memberInfo.updDate</value>
-        <value>memberInfo.updUserId</value>
-      </list>
-    </property>
-    <property name="csvValueConverter" ref="memberCsvConverter"/>
-    <property name="useBOM" value="true"/>
-  </bean>
+	<bean id="memberInfoCsvConfig" class="jp.co.transcosmos.dm3.csv.CsvConfig">
+		<property name="fileName" value="kaiin_###yyyyMMdd###" />
+		<property name="headerColumns">
+			<list>
+				<value>会員番号</value>
+				<value>お名前(姓)</value>
+				<value>お名前（名）</value>
+				<value>フリガナ(セイ)</value>
+				<value>フリガナ（メイ）</value>
+				<value>プロモコード</value>
+				<value>メールアドレス</value>
+				<value>登録経路</value>
+				<value>流入経路</value>
+				<value>住所1 </value>
+				<value>住所2</value>
+				<value>電話番号</value>
+				<value>FAX</value>
+				<value>居住状況</value>
+				<value>希望地域(都道府県)</value>
+				<value>希望地域(市区町村番地)</value>
+				<value>メール配信</value>
+
+				<value>birthday</value>
+				<value>spouse</value>
+				<value>children</value>
+				<value>childrennumber</value>
+				<value>hopecontents</value>
+				<value>hopecontentstext</value>
 
 
-  <!-- 会員検索画面 (ポップアップ)初期化 -->
-  <bean id="userListPopupInitCommand" class="jp.co.transcosmos.dm3.webAdmin.userListPopup.command.UserListPopupInitCommand" scope="prototype">
-	<property name="panamCommonManager" ref="panamCommonManager"/>
-  </bean>
-
-  <!-- 会員検索画面 (ポップアップ) -->
-  <bean id="userListPopupCommand" class="jp.co.transcosmos.dm3.webAdmin.userListPopup.command.UserListPopupCommand" scope="prototype">
-    <property name="userManager" ref="panaMypageUserManager" />
-    <property name="panamCommonManager" ref="panamCommonManager"/>
-    <property name="rowsPerPage" value="50"/>
-    <property name="visibleNavigationPageCount" value="10"/>
-  </bean>
-
-  <!-- CSV 出力 -->
-  <bean id="memberInfoCsvCommand" class="jp.co.transcosmos.dm3.webAdmin.memberInfo.command.CsvCommand" scope="prototype">
-    <property name="memberManager" ref="panaMypageUserManager"/>
-    <property name="panamCommonManager" ref="panamCommonManager"/>
-    <property name="authLogging" ref="adminLogging"/>
-    <property name="mode" value="csv" />
-  </bean>
-
-
-  <!-- 会員検索画面初期化 -->
-  <bean id="memberInfoInitCommand" class="jp.co.transcosmos.dm3.webAdmin.memberInfo.command.MemberInfoInitCommand" scope="prototype">
-	<property name="panamCommonManager" ref="panamCommonManager"/>
-  </bean>
-
-  <!-- 会員検索・一覧画面 -->
-  <bean id="memberInfoListCommand" class="jp.co.transcosmos.dm3.webAdmin.memberInfo.command.MemberInfoListCommand" scope="prototype">
-    <property name="memberManager" ref="panaMypageUserManager" />
-    <property name="panamCommonManager" ref="panamCommonManager"/>
-    <property name="panaFavoriteManager" ref="panaFavoriteManager"/>
-    <property name="authLogging" ref="authLogging"/>
-    <property name="rowsPerPage" value="50"/>
-    <property name="visibleNavigationPageCount" value="10"/>
-    <property name="mode" value="search" />
-  </bean>
-
-  <!-- 会員削除・一覧画面 -->
-  <bean id="memberInfoDelCommand" class="jp.co.transcosmos.dm3.webAdmin.memberInfo.command.MemberInfoListCommand" scope="prototype">
-    <property name="memberManager" ref="panaMypageUserManager" />
-    <property name="panamCommonManager" ref="panamCommonManager"/>
-    <property name="panaFavoriteManager" ref="panaFavoriteManager"/>
-    <property name="authLogging" ref="authLogging"/>
-    <property name="rowsPerPage" value="50"/>
-    <property name="visibleNavigationPageCount" value="10"/>
-    <property name="mode" value="delete" />
-  </bean>
-
-  <!-- 会員情報入力画面 -->
-  <bean id="memberInfoEditCommandNew" class="jp.co.transcosmos.dm3.webAdmin.memberInfo.command.MemberInfoEditCommand" scope="prototype">
-    <property name="panamCommonManager" ref="panamCommonManager"/>
-    <property name="mypageUserManager" ref="panaMypageUserManager"/>
-    <property name="userManager" ref="mypageUserManager"/>
-    <property name="mode" value="insert"/>
-  </bean>
-
-  <!-- 会員情報編集画面 -->
-  <bean id="memberInfoEditCommandUpdate" class="jp.co.transcosmos.dm3.webAdmin.memberInfo.command.MemberInfoEditCommand" scope="prototype">
-    <property name="panamCommonManager" ref="panamCommonManager"/>
-    <property name="mypageUserManager" ref="panaMypageUserManager"/>
-    <property name="userManager" ref="mypageUserManager"/>
-    <property name="mode" value="update"/>
-  </bean>
-
-  <!-- 住所取得 -->
-  <bean id="memberInfoEditCommandGetAddress" class="jp.co.transcosmos.dm3.webAdmin.memberInfo.command.MemberInfoEditCommand" scope="prototype">
-    <property name="panamCommonManager" ref="panamCommonManager"/>
-    <property name="mypageUserManager" ref="panaMypageUserManager"/>
-    <property name="mode" value="getAddress"/>
-  </bean>
-
-  <!-- 会員情報入力確認画面 -->
-  <bean id="memberInfoConfirmCommandNew" class="jp.co.transcosmos.dm3.webAdmin.memberInfo.command.MemberInfoConfirmCommand" scope="prototype">
-  	<property name="panamCommonManager" ref="panamCommonManager"/>
-    <property name="userManager" ref="mypageUserManager"/>
-    <property name="mode" value="insert"/>
-  </bean>
-
-  <!-- 会員情報編集確認画面 -->
-  <bean id="memberInfoConfirmCommandUpdate" class="jp.co.transcosmos.dm3.webAdmin.memberInfo.command.MemberInfoConfirmCommand" scope="prototype">
-  	<property name="panamCommonManager" ref="panamCommonManager"/>
-    <property name="userManager" ref="mypageUserManager"/>
-    <property name="mode" value="update"/>
-  </bean>
-
-  <!-- 会員情報入力完了画面 -->
-  <bean id="memberInfoCompCommandNew" class="jp.co.transcosmos.dm3.webAdmin.memberInfo.command.MemberInfoCompCommand" scope="prototype">
-    <property name="panamCommonManager" ref="panamCommonManager"/>
-    <property name="userManager" ref="panaMypageUserManager"/>
-    <property name="sendMypagePasswordTemplate" ref="sendMypagePasswordTemplate"/>
-    <property name="mode" value="insert"/>
-    <property name="useUserIdValidation" value="false"/>
-  </bean>
-
-  <!-- 会員情報編集完了画面 -->
-  <bean id="memberInfoCompCommandUpdate" class="jp.co.transcosmos.dm3.webAdmin.memberInfo.command.MemberInfoCompCommand" scope="prototype">
-    <property name="panamCommonManager" ref="panamCommonManager"/>
-    <property name="userManager" ref="panaMypageUserManager"/>
-    <property name="sendMypagePasswordTemplate" ref="sendMypagePasswordTemplate"/>
-    <property name="mode" value="update"/>
-  </bean>
-
-  <!-- ランダムパスワード生成　（Web API） -->
-  <bean id="memberInfoRandomPwdCommand" class="jp.co.transcosmos.dm3.core.command.RandomPwdCommand" scope="prototype">
-    <property name="createPassword" ref="memberInfoPwdCreatetor" />
-  </bean>
+				<value>新規登録日</value>
+				<value>新規登録者</value>
+				<value>最終更新日</value>
+				<value>最終更新者</value>
 
 
 
-  <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMappingList">
-    <property name="commandURLMapper" ref="commandURLMapper"/>
-    <property name="mappings">
-      <list>
-        <!-- 会員検索・一覧画面 -->
-        <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
-          <property name="urlPattern" value="/top/mypage/list/"/>
-          <property name="defaultCommandName" value="memberInfoInitCommand"/>
-          <property name="namedCommands">
-            <props>
-              <prop key="list">memberInfoListCommand</prop>
-            </props>
-          </property>
-          <property name="defaultViewName" value="/WEB-INF/jsp/admin/memberInfo/MemberList.jsp"/>
-        </bean>
+			</list>
+		</property>
+		<property name="dbColumns">
+			<list>
+				<value>memberInfo.userId</value>
+				<value>memberInfo.memberLname</value>
+				<value>memberInfo.memberFname</value>
+				<value>memberInfo.memberLnameKana</value>
+				<value>memberInfo.memberFnameKana</value>
+				<value>memberInfo.promoCd</value>
+				<value>memberInfo.email</value>
+				<value>memberInfo.entryRoute</value>
+				<value>memberInfo.refCd</value>
+				<value>prefMst.prefName</value>
+				<value>memberInfo.address</value>
+				<value>memberInfo.tel</value>
+				<value>memberInfo.fax</value>
+				<value>memberInfo.residentFlg</value>
+				<value>hopePrefMst.prefName</value>
+				<value>memberInfo.hopeAddress</value>
+				<value>memberInfo.mailSendFlg</value>
 
-        <!-- 会員削除・一覧画面 -->
-        <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
-          <property name="urlPattern" value="/top/mypage/delConfirm/"/>
-          <property name="defaultCommandName" value="memberInfoDelCommand"/>
-          <property name="defaultViewName" value="/WEB-INF/jsp/admin/memberInfo/MemberListDeleteCompRedirect.jsp"/>
-        </bean>
+				<value>memberInfo.birthDay</value>
+				<value>memberInfo.spouseFlg</value>
+				<value>memberInfo.childrenFlg</value>
+				<value>memberInfo.childrenNumber</value>
+				<value>memberInfo.hopeContents</value>
+				<value>memberInfo.hopeContentsText</value>
 
-        <!-- CSV 出力 -->
-        <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
-          <property name="urlPattern" value="/top/mypage/csv/"/>
-          <property name="defaultCommandName" value="memberInfoCsvCommand"/>
-          <property name="defaultViewName" value="/WEB-INF/jsp/admin/memberInfo/MemberList.jsp"/>
-          <property name="namedViews">
-            <props>
-              <prop key="success">csvh:memberInfoCsvConfig</prop>
-            </props>
-          </property>
-        </bean>
-
-        <!-- 会員情報入力画面 -->
-        <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
-          <property name="urlPattern" value="/top/mypage/new/input/" />
-          <property name="defaultCommandName" value="memberInfoEditCommandNew"/>
-          <property name="defaultViewName" value="/WEB-INF/jsp/admin/memberInfo/MemberAddInput.jsp"/>
-        </bean>
+				<value>memberInfo.insDate</value>
+				<value>memberInfo.insUserId</value>
+				<value>memberInfo.updDate</value>
+				<value>memberInfo.updUserId</value>
 
 
 
-        <!-- 会員情報編集画面 -->
-        <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
-          <property name="urlPattern" value="/top/mypage/update/input/" />
-          <property name="defaultCommandName" value="memberInfoEditCommandUpdate"/>
-          <property name="defaultViewName" value="/WEB-INF/jsp/admin/memberInfo/MemberAddInput.jsp"/>
-        </bean>
-
-        <!-- 住所取得（insert） -->
-        <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
-          <property name="urlPattern" value="/top/mypage/new/getAddress/" />
-          <property name="defaultCommandName" value="memberInfoEditCommandGetAddress"/>
-          <property name="defaultViewName" value="/WEB-INF/jsp/admin/memberInfo/MemberAddInput.jsp"/>
-        </bean>
-
-        <!-- 住所取得（update） -->
-        <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
-          <property name="urlPattern" value="/top/mypage/update/getAddress/" />
-          <property name="defaultCommandName" value="memberInfoEditCommandGetAddress"/>
-          <property name="defaultViewName" value="/WEB-INF/jsp/admin/memberInfo/MemberAddInput.jsp"/>
-        </bean>
-
-        <!-- 会員情報入力確認画面 -->
-        <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
-          <property name="urlPattern" value="/top/mypage/new/confirm/" />
-          <property name="defaultCommandName" value="memberInfoConfirmCommandNew"/>
-          <property name="defaultViewName" value="/WEB-INF/jsp/admin/memberInfo/MemberAddConfirm.jsp"/>
-          <property name="namedViews">
-            <props>
-              <prop key="input">/WEB-INF/jsp/admin/memberInfo/MemberAddInput.jsp</prop>
-            </props>
-          </property>
-        </bean>
-
-        <!-- 会員情報編集確認画面 -->
-        <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
-          <property name="urlPattern" value="/top/mypage/update/confirm/" />
-          <property name="defaultCommandName" value="memberInfoConfirmCommandUpdate"/>
-          <property name="defaultViewName" value="/WEB-INF/jsp/admin/memberInfo/MemberAddConfirm.jsp"/>
-          <property name="namedViews">
-            <props>
-              <prop key="input">/WEB-INF/jsp/admin/memberInfo/MemberAddInput.jsp</prop>
-            </props>
-          </property>
-        </bean>
-
-        <!-- 会員情報入力完了画面 -->
-        <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
-          <property name="urlPattern" value="/top/mypage/new/result/" />
-          <property name="defaultCommandName" value="memberInfoCompCommandNew"/>
-          <property name="defaultViewName" value="/WEB-INF/jsp/admin/memberInfo/MemberCompRedirect.jsp"/>
-          <property name="namedViews">
-            <props>
-              <prop key="input">/WEB-INF/jsp/admin/memberInfo/MemberAddInput.jsp</prop>
-              <prop key="comp">/WEB-INF/jsp/admin/memberInfo/MemberComp.jsp</prop>
-            </props>
-          </property>
-        </bean>
-
-        <!-- 会員情報編集完了画面 -->
-        <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
-          <property name="urlPattern" value="/top/mypage/update/result/" />
-          <property name="defaultCommandName" value="memberInfoCompCommandUpdate"/>
-          <property name="defaultViewName" value="/WEB-INF/jsp/admin/memberInfo/MemberCompRedirect.jsp"/>
-          <property name="namedViews">
-            <props>
-              <prop key="input">/WEB-INF/jsp/admin/memberInfo/MemberAddInput.jsp</prop>
-              <prop key="comp">/WEB-INF/jsp/admin/memberInfo/MemberComp.jsp</prop>
-            </props>
-          </property>
-        </bean>
+			</list>
+		</property>
+		<property name="csvValueConverter" ref="memberCsvConverter" />
+		<property name="useBOM" value="true" />
+	</bean>
 
 
-        <!-- ランダムパスワードの生成（Web API） -->
-        <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
-          <property name="urlPattern" value="/top/mypage/mkpwd/" />
-          <property name="defaultCommandName" value="memberInfoRandomPwdCommand"/>
-          <property name="defaultViewName" value="json"/>
-        </bean>
+	<!-- 会員検索画面 (ポップアップ)初期化 -->
+	<bean id="userListPopupInitCommand"
+		class="jp.co.transcosmos.dm3.webAdmin.userListPopup.command.UserListPopupInitCommand"
+		scope="prototype">
+		<property name="panamCommonManager" ref="panamCommonManager" />
+	</bean>
 
-        <!-- 会員検索画面 (ポップアップ) -->
-        <bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
-          <property name="urlPattern" value="/top/mypage/search/"/>
-          <property name="defaultCommandName" value="userListPopupInitCommand"/>
-          <property name="namedCommands">
-            <props>
-              <prop key="list">userListPopupCommand</prop>
-            </props>
-          </property>
-          <property name="defaultViewName" value="/WEB-INF/jsp/admin/userListPopup/UserSearch.jsp"/>
-        </bean>
-      </list>
-    </property>
-  </bean>
+	<!-- 会員検索画面 (ポップアップ) -->
+	<bean id="userListPopupCommand"
+		class="jp.co.transcosmos.dm3.webAdmin.userListPopup.command.UserListPopupCommand"
+		scope="prototype">
+		<property name="userManager" ref="panaMypageUserManager" />
+		<property name="panamCommonManager" ref="panamCommonManager" />
+		<property name="rowsPerPage" value="50" />
+		<property name="visibleNavigationPageCount" value="10" />
+	</bean>
+
+	<!-- CSV 出力 -->
+	<bean id="memberInfoCsvCommand"
+		class="jp.co.transcosmos.dm3.webAdmin.memberInfo.command.CsvCommand"
+		scope="prototype">
+		<property name="memberManager" ref="panaMypageUserManager" />
+		<property name="panamCommonManager" ref="panamCommonManager" />
+		<property name="authLogging" ref="adminLogging" />
+		<property name="mode" value="csv" />
+	</bean>
+
+
+	<!-- 会員検索画面初期化 -->
+	<bean id="memberInfoInitCommand"
+		class="jp.co.transcosmos.dm3.webAdmin.memberInfo.command.MemberInfoInitCommand"
+		scope="prototype">
+		<property name="panamCommonManager" ref="panamCommonManager" />
+	</bean>
+
+
+
+
+
+	<!-- 会員検索・一覧画面 -->
+	<bean id="memberInfoListCommand"
+		class="jp.co.transcosmos.dm3.webAdmin.memberInfo.command.MemberInfoListCommand"
+		scope="prototype">
+		<property name="memberManager" ref="panaMypageUserManager" />
+		<property name="panamCommonManager" ref="panamCommonManager" />
+		<property name="panaFavoriteManager" ref="panaFavoriteManager" />
+		<property name="authLogging" ref="authLogging" />
+		<property name="rowsPerPage" value="50" />
+		<property name="visibleNavigationPageCount" value="10" />
+		<property name="mode" value="search" />
+	</bean>
+
+	<!-- 会員削除・一覧画面 -->
+	<bean id="memberInfoDelCommand"
+		class="jp.co.transcosmos.dm3.webAdmin.memberInfo.command.MemberInfoListCommand"
+		scope="prototype">
+		<property name="memberManager" ref="panaMypageUserManager" />
+		<property name="panamCommonManager" ref="panamCommonManager" />
+		<property name="panaFavoriteManager" ref="panaFavoriteManager" />
+		<property name="authLogging" ref="authLogging" />
+		<property name="rowsPerPage" value="50" />
+		<property name="visibleNavigationPageCount" value="10" />
+		<property name="mode" value="delete" />
+	</bean>
+
+	<!-- 会員情報入力画面 -->
+	<bean id="memberInfoEditCommandNew"
+		class="jp.co.transcosmos.dm3.webAdmin.memberInfo.command.MemberInfoEditCommand"
+		scope="prototype">
+		<property name="panamCommonManager" ref="panamCommonManager" />
+		<property name="mypageUserManager" ref="panaMypageUserManager" />
+		<property name="userManager" ref="mypageUserManager" />
+		<property name="mode" value="insert" />
+	</bean>
+
+	<!-- 会員情報編集画面 -->
+	<bean id="memberInfoEditCommandUpdate"
+		class="jp.co.transcosmos.dm3.webAdmin.memberInfo.command.MemberInfoEditCommand"
+		scope="prototype">
+		<property name="panamCommonManager" ref="panamCommonManager" />
+		<property name="mypageUserManager" ref="panaMypageUserManager" />
+		<property name="userManager" ref="mypageUserManager" />
+		<property name="mode" value="update" />
+	</bean>
+
+	<!-- 住所取得 -->
+	<bean id="memberInfoEditCommandGetAddress"
+		class="jp.co.transcosmos.dm3.webAdmin.memberInfo.command.MemberInfoEditCommand"
+		scope="prototype">
+		<property name="panamCommonManager" ref="panamCommonManager" />
+		<property name="mypageUserManager" ref="panaMypageUserManager" />
+		<property name="mode" value="getAddress" />
+	</bean>
+
+	<!-- 会員情報入力確認画面 -->
+	<bean id="memberInfoConfirmCommandNew"
+		class="jp.co.transcosmos.dm3.webAdmin.memberInfo.command.MemberInfoConfirmCommand"
+		scope="prototype">
+		<property name="panamCommonManager" ref="panamCommonManager" />
+		<property name="userManager" ref="mypageUserManager" />
+		<property name="mode" value="insert" />
+	</bean>
+
+	<!-- 会員情報編集確認画面 -->
+	<bean id="memberInfoConfirmCommandUpdate"
+		class="jp.co.transcosmos.dm3.webAdmin.memberInfo.command.MemberInfoConfirmCommand"
+		scope="prototype">
+		<property name="panamCommonManager" ref="panamCommonManager" />
+		<property name="userManager" ref="mypageUserManager" />
+		<property name="mode" value="update" />
+	</bean>
+
+	<!-- 会員情報入力完了画面 -->
+	<bean id="memberInfoCompCommandNew"
+		class="jp.co.transcosmos.dm3.webAdmin.memberInfo.command.MemberInfoCompCommand"
+		scope="prototype">
+		<property name="panamCommonManager" ref="panamCommonManager" />
+		<property name="userManager" ref="panaMypageUserManager" />
+		<property name="sendMypagePasswordTemplate" ref="sendMypagePasswordTemplate" />
+		<property name="mode" value="insert" />
+		<property name="useUserIdValidation" value="false" />
+	</bean>
+
+	<!-- 会員情報編集完了画面 -->
+	<bean id="memberInfoCompCommandUpdate"
+		class="jp.co.transcosmos.dm3.webAdmin.memberInfo.command.MemberInfoCompCommand"
+		scope="prototype">
+		<property name="panamCommonManager" ref="panamCommonManager" />
+		<property name="userManager" ref="panaMypageUserManager" />
+		<property name="sendMypagePasswordTemplate" ref="sendMypagePasswordTemplate" />
+		<property name="mode" value="update" />
+	</bean>
+
+	<!-- ランダムパスワード生成 （Web API） -->
+	<bean id="memberInfoRandomPwdCommand" class="jp.co.transcosmos.dm3.core.command.RandomPwdCommand"
+		scope="prototype">
+		<property name="createPassword" ref="memberInfoPwdCreatetor" />
+	</bean>
+
+
+
+	
+	
+
+
+	<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMappingList">
+		<property name="commandURLMapper" ref="commandURLMapper" />
+		<property name="mappings">
+			<list>
+				<!-- 会員検索・一覧画面 -->
+				<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+					<property name="urlPattern" value="/top/mypage/list/" />
+					<property name="defaultCommandName" value="memberInfoInitCommand" />
+					<property name="namedCommands">
+						<props>
+							<prop key="list">memberInfoListCommand</prop>
+						</props>
+					</property>
+					<property name="defaultViewName"
+						value="/WEB-INF/jsp/admin/memberInfo/MemberList.jsp" />
+				</bean>
+
+				<!-- 会員削除・一覧画面 -->
+				<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+					<property name="urlPattern" value="/top/mypage/delConfirm/" />
+					<property name="defaultCommandName" value="memberInfoDelCommand" />
+					<property name="defaultViewName"
+						value="/WEB-INF/jsp/admin/memberInfo/MemberListDeleteCompRedirect.jsp" />
+				</bean>
+
+				<!-- CSV 出力 -->
+				<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+					<property name="urlPattern" value="/top/mypage/csv/" />
+					<property name="defaultCommandName" value="memberInfoCsvCommand" />
+					<property name="defaultViewName"
+						value="/WEB-INF/jsp/admin/memberInfo/MemberList.jsp" />
+					<property name="namedViews">
+						<props>
+							<prop key="success">csvh:memberInfoCsvConfig</prop>
+						</props>
+					</property>
+				</bean>
+
+				<!-- 会員情報入力画面 -->
+				<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+					<property name="urlPattern" value="/top/mypage/new/input/" />
+					<property name="defaultCommandName" value="memberInfoEditCommandNew" />
+					<property name="defaultViewName"
+						value="/WEB-INF/jsp/admin/memberInfo/MemberAddInput.jsp" />
+				</bean>
+
+
+
+				<!-- 会員情報編集画面 -->
+				<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+					<property name="urlPattern" value="/top/mypage/update/input/" />
+					<property name="defaultCommandName" value="memberInfoEditCommandUpdate" />
+					<property name="defaultViewName"
+						value="/WEB-INF/jsp/admin/memberInfo/MemberAddInput.jsp" />
+				</bean>
+
+				<!-- 住所取得（insert） -->
+				<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+					<property name="urlPattern" value="/top/mypage/new/getAddress/" />
+					<property name="defaultCommandName" value="memberInfoEditCommandGetAddress" />
+					<property name="defaultViewName"
+						value="/WEB-INF/jsp/admin/memberInfo/MemberAddInput.jsp" />
+				</bean>
+
+				<!-- 住所取得（update） -->
+				<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+					<property name="urlPattern" value="/top/mypage/update/getAddress/" />
+					<property name="defaultCommandName" value="memberInfoEditCommandGetAddress" />
+					<property name="defaultViewName"
+						value="/WEB-INF/jsp/admin/memberInfo/MemberAddInput.jsp" />
+				</bean>
+
+				<!-- 会員情報入力確認画面 -->
+				<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+					<property name="urlPattern" value="/top/mypage/new/confirm/" />
+					<property name="defaultCommandName" value="memberInfoConfirmCommandNew" />
+					<property name="defaultViewName"
+						value="/WEB-INF/jsp/admin/memberInfo/MemberAddConfirm.jsp" />
+					<property name="namedViews">
+						<props>
+							<prop key="input">/WEB-INF/jsp/admin/memberInfo/MemberAddInput.jsp
+							</prop>
+						</props>
+					</property>
+				</bean>
+
+				<!-- 会員情報編集確認画面 -->
+				<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+					<property name="urlPattern" value="/top/mypage/update/confirm/" />
+					<property name="defaultCommandName" value="memberInfoConfirmCommandUpdate" />
+					<property name="defaultViewName"
+						value="/WEB-INF/jsp/admin/memberInfo/MemberAddConfirm.jsp" />
+					<property name="namedViews">
+						<props>
+							<prop key="input">/WEB-INF/jsp/admin/memberInfo/MemberAddInput.jsp
+							</prop>
+						</props>
+					</property>
+				</bean>
+
+				<!-- 会員情報入力完了画面 -->
+				<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+					<property name="urlPattern" value="/top/mypage/new/result/" />
+					<property name="defaultCommandName" value="memberInfoCompCommandNew" />
+					<property name="defaultViewName"
+						value="/WEB-INF/jsp/admin/memberInfo/MemberCompRedirect.jsp" />
+					<property name="namedViews">
+						<props>
+							<prop key="input">/WEB-INF/jsp/admin/memberInfo/MemberAddInput.jsp
+							</prop>
+							<prop key="comp">/WEB-INF/jsp/admin/memberInfo/MemberComp.jsp
+							</prop>
+						</props>
+					</property>
+				</bean>
+
+				<!-- 会員情報編集完了画面 -->
+				<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+					<property name="urlPattern" value="/top/mypage/update/result/" />
+					<property name="defaultCommandName" value="memberInfoCompCommandUpdate" />
+					<property name="defaultViewName"
+						value="/WEB-INF/jsp/admin/memberInfo/MemberCompRedirect.jsp" />
+					<property name="namedViews">
+						<props>
+							<prop key="input">/WEB-INF/jsp/admin/memberInfo/MemberAddInput.jsp
+							</prop>
+							<prop key="comp">/WEB-INF/jsp/admin/memberInfo/MemberComp.jsp
+							</prop>
+						</props>
+					</property>
+				</bean>
+
+
+				<!-- ランダムパスワードの生成（Web API） -->
+				<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+					<property name="urlPattern" value="/top/mypage/mkpwd/" />
+					<property name="defaultCommandName" value="memberInfoRandomPwdCommand" />
+					<property name="defaultViewName" value="json" />
+				</bean>
+
+				<!-- 会員検索画面 (ポップアップ) -->
+				<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+					<property name="urlPattern" value="/top/mypage/search/" />
+					<property name="defaultCommandName" value="userListPopupInitCommand" />
+					<property name="namedCommands">
+						<props>
+							<prop key="list">userListPopupCommand</prop>
+						</props>
+					</property>
+					<property name="defaultViewName"
+						value="/WEB-INF/jsp/admin/userListPopup/UserSearch.jsp" />
+				</bean>
+			</list>
+		</property>
+	</bean>
 </beans>

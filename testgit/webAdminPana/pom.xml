@@ -83,7 +83,7 @@
   	<dependency>
   		<groupId>jp.co.transcosmos.dm3</groupId>
   		<artifactId>dm3fw-spring3</artifactId>
-		<version>1.6.6</version>
+  		<version>1.6.6</version>
   		<scope>system</scope>
   		<systemPath>${basedir}/src/main/webapp/WEB-INF/lib/dm3fw-spring3-1.6.6-jdk8.jar</systemPath>
   	</dependency>

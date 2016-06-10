@@ -10,7 +10,6 @@ import jp.co.transcosmos.dm3.core.model.exception.NotFoundException;
 import jp.co.transcosmos.dm3.core.model.housing.Housing;
 import jp.co.transcosmos.dm3.core.vo.BuildingInfo;
 import jp.co.transcosmos.dm3.corePana.model.ReformManage;
-import jp.co.transcosmos.dm3.corePana.model.housing.PanaHousing;
 import jp.co.transcosmos.dm3.corePana.model.housing.PanaHousingPartThumbnailProxy;
 import jp.co.transcosmos.dm3.corePana.model.reform.form.ReformDtlForm;
 import jp.co.transcosmos.dm3.corePana.model.reform.form.ReformImgForm;
@@ -37,6 +36,7 @@ import org.springframework.util.StringUtils;
  * 担当者		修正日		修正内容
  * ------------ ----------- -----------------------------------------------------
  * TRANS		2015.03.10	新規作成
+ * Thi Tran     2015.12.18      Search housing by cd
  * </pre>
  * <p>
  * 注意事項<br/>
@@ -536,6 +536,7 @@ public class ReformManageImpl implements ReformManage {
 
 				UpdateExpression[] expression;
 				// 画像タイプが前回の行と同じ場合、メイン画像をオフとして枝番を更新する。
+
 				expression = new UpdateExpression[] {new UpdateValue("divNo", divNo)};
 
 				this.reformDtlDAO.updateByCriteria(updCri, expression);
@@ -543,11 +544,6 @@ public class ReformManageImpl implements ReformManage {
 		}
 	}
 
-	public static void main(String[] args) {
-        String s = "R00";
-        System.out.println(s.endsWith("0"));
-    }
-	
     /**
      * リフォーム関連情報（ReformPlan, ReformChart, ReformDtl, ReformImg)を検索し、結果Mapを復帰する。<br/>
      * 引数で渡された sysReformCd パラメータの値で検索条件を生成し、リフォーム情報を検索する。<br/>
@@ -729,12 +725,6 @@ public class ReformManageImpl implements ReformManage {
     }
 
     /**
-     * Search housing by cd
-     */
-    public Housing searchHousingByPk(String sysHousingCd) throws Exception{
-    	return this.panaHousingManager.searchHousingPk(sysHousingCd);
-    }
-    /**
      * パラメータ システム建物CD をキーに、物件基本情報を検索する。<br/>
      * <br/>
      * @param sysHousingCd システム建物CD
@@ -880,4 +870,15 @@ public class ReformManageImpl implements ReformManage {
         this.reformPlanDAO.updateByCriteria(criteria, updateExpression);
     }
 
+    /**
+     * Search all housing by the given housing cd
+     * @param sysHousingCd the housing cd
+     * @param full Return public housing if false. Else, return all
+     * @return Housing
+     * @exception Exception is thrown while implementing
+     */
+    public Housing searchHousingByPk(String sysHousingCd, boolean full)
+            throws Exception {
+        return this.panaHousingManager.searchHousingPk(sysHousingCd, full);
+    }
 }

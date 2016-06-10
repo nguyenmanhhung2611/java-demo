@@ -25,6 +25,9 @@
 <div class="modalBlock">
 	<p class="title pt40 center"><c:out value='${alertMessage}'/></p>
 </div>
-
+<c:if test="${messageId == '0' }">
+    <!-- Yahoo Code for your Conversion Page -->
+    <img height="1" width="1" alt="" src="<c:out value='${commonParameters.yahooCodeSrc}'/>?value=0&label=AqbJCLTXvGMQze_kvQM&guid=ON&script=0"/>
+</c:if>
 </body>
 </html>

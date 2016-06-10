@@ -90,7 +90,7 @@
 	$(".favadd").on('click', function() {
 		setTimeout(function() {
 			$.fancybox.close();
-			$("#personalInfo .favorite").text(getFavoriteCount());
+			$("[id^='personalInfo'] .favorite").text(getFavoriteCount());
 		}, 1500)
 	});
 
@@ -152,16 +152,6 @@
 
 	});
 
-	function getFavoriteCount() {
-		var arrStr = document.cookie.split(";");
-		for (var i = 0; i < arrStr.length; i++) {
-			var temp = arrStr[i].split("=");
-			if ($.trim(temp[0]) == "favoriteCount") {
-				return unescape(temp[1]);
-			}
-		}
-	}
-
 	function orderLinkToUrl(url, keyOrder) {
 		document.inputForm.keyOrderType.value = keyOrder;
 		clearPlaceholder();
@@ -186,7 +176,7 @@
 	function orderSelect(url) {
 		document.inputForm.action = url;
 		document.inputForm.keyOrderType.value = $("#selKeyOrderType").val();
-		document.inputForm.submit();
+		searchLinkToUrl(encodeURI(url + "?selectedPage=1"), $("#housingKindCd").val());
 	}
 
 // -->
@@ -241,9 +231,9 @@
 
 						</h1>
 
-
+						<c:if test="${housingDtlListSize != '0'}">
 						<p class="linkAnotherType">
-							<c:if test="${housingDtlListSize != '0'}">
+							
 								<c:set var="changeUrlPath" value="list/" />
 								<c:if test="${housingListMationForm.getKeyAddressCd() != null}">
 									<c:set var="addressUrl"
@@ -272,9 +262,9 @@
 										class="SPdisplayBlock">中古マンションを探す
 									</a>
 								</c:if>
-							</c:if>
+							
 						</p>
-
+						</c:if>
 
 						<ul class="changeArea clearfix">
 							<c:if test="${housingDtlListSize != '0'}">
@@ -293,7 +283,7 @@
 					</div>
 					<div class="contentsInner01 mb30 spMb00">
 						<p class="center mb10">
-						<a href="<c:out value="${commonParameters.resourceRootUrl}"/>buy/#search" class="secondaryBtn spMb10">買いたいTOPへ</a>
+						<a href="<c:out value="${commonParameters.resourceRootUrl}"/>buy/" class="secondaryBtn spMb10">買いたいTOPへ</a>
 						<dm3login:hasRole roleName="mypage">
 								<!-- User is logged in -->
 								<a href="<c:out value="${commonParameters.resourceRootUrl}"/>mypage/request/input/" class="secondaryBtn pcMl15">物件をリクエストする</a>
@@ -363,7 +353,7 @@
 					</ul>
 
 					<p class="SPdisplayBlock"><span>並べ替え</span>
-						<select name="selKeyOrderType" id="selKeyOrderType" onchange="javascript:orderSelect('<c:out value="${sortOrder}"/>');">
+						<select name="selKeyOrderType" id="selKeyOrderType" onchange="javascript:orderSelect('<c:out value="${pageContext.request.contextPath}"/><c:out value="${urlPath}"/>');">
 							<option <c:if test="${housingListMationForm.getKeyOrderType() == '4'}">selected="selected"</c:if> value="4" label="物件登録日（新着順） ▼">物件登録日（新着順） ▼</option>
 							<option <c:if test="${housingListMationForm.getKeyOrderType() == '3'}">selected="selected"</c:if> value="3" label="物件登録日（新着順） ▲">物件登録日（新着順） ▲</option>
 							<option <c:if test="${housingListMationForm.getKeyOrderType() == '1'}">selected="selected"</c:if> value="1" label="物件価格 ▲">物件価格 ▲</option>

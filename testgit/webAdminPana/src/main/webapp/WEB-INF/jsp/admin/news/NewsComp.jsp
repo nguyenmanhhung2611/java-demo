@@ -55,7 +55,7 @@
 <%-- ユーザ編集入力formパラメータ引き継ぎ --%>
 <form method="post" name="inputdate" >
 	<input type="hidden" name="command" value="">
-	<c:import url="/WEB-INF/admin/default_jsp/include/news/searchParams.jsh" />
+	<c:import url="/WEB-INF/jsp/admin/include/news/searchParams.jsh" />
 </form>
 
 </c:param>

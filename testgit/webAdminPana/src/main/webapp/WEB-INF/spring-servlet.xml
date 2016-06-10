@@ -103,14 +103,12 @@
                         <property name="menuItemUrl" value="/top/information/list/" />
                       </bean>
                     </entry>
-                    
                     <entry key="news">
                       <bean class="jp.co.transcosmos.dm3.adminCore.menu.MenuItemInfo">
                         <property name="menuItemName" value="List News" />
                         <property name="menuItemUrl" value="/top/news/list/" />
                       </bean>
                     </entry>
-
                   </util:map>
                 </property>
               </bean>

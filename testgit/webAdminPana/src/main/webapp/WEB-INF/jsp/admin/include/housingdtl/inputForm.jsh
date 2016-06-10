@@ -122,7 +122,7 @@
 			<tr>
 				<th class="head_tr">所在階数</th>
 				<td>
-					<input type="text" name="floorNo" value="<c:out value="${inputForm.floorNo}"/>" size="8" maxlength="3" class="input2 ime-disabled">階
+					<input type="text" name="floorNo" value="<c:out value="${inputForm.floorNo}"/>" size="7" maxlength="3" class="input2 ime-disabled">階
 				</td>
 				<th class="head_tr">所在階数コメント</th>
 				<td colspan="4"><input type="text" name="floorNoNote" value="<c:out value="${inputForm.floorNoNote}"/>" size="10" maxlength="10" class="input2"></td>
@@ -136,9 +136,9 @@
 			</tr>
 			<tr>
 				<th class="head_tr">管理費</th>
-				<td><input type="text" name="upkeep" value="<c:out value="${inputForm.upkeep}"/>" size="6" maxlength="11" class="input2 ime-disabled">円／月</td>
+				<td><input type="text" name="upkeep" value="<c:out value="${inputForm.upkeep}"/>" size="5" maxlength="11" class="input2 ime-disabled">円／月</td>
 				<th class="head_tr">修繕積立費</th>
-				<td><input type="text" name="menteFee" value="<c:out value="${inputForm.menteFee}"/>" size="6" maxlength="11" class="input2 ime-disabled">円／月</td>
+				<td><input type="text" name="menteFee" value="<c:out value="${inputForm.menteFee}"/>" size="5" maxlength="11" class="input2 ime-disabled">円／月</td>
 				<th class="head_tr">管理形態・方式</th>
 				<td><input type="text" name="upkeepType" value="<c:out value="${inputForm.upkeepType}"/>" size="4" maxlength="20" class="input2"></td>
 			</tr>

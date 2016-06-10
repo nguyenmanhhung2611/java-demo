@@ -16,7 +16,7 @@
 <!--headingAreaInner -->
 <div class="headingAreaInner">
 	<div class="headingAreaB01 start">
-		<h2>Add News Confirm</h2>
+		<h2>Confirm Page</h2>
 	</div>
 	<c:import url="/WEB-INF/jsp/admin/include/news/confirm.jsh" />
 </div>
@@ -39,7 +39,7 @@
 		<div class="btnBlockC14">
 			<div class="btnBlockC14Inner">
 				<div class="btnBlockC14Inner2">
-					<p><a href="javascript:linkToUrl('../input/', 'back');"><span>Back</span></a></p>
+					<p><a href="javascript:linkToUrl('../input/', 'back');"><span>BACK</span></a></p>
 				</div>
 			</div>
 		</div>

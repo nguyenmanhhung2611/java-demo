@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+                           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+
+	<!-- CommentInnit Tho -->
+		<bean id="commentInfoInitCommand"
+			class="jp.co.transcosmos.dm3.webAdmin.comment.command.CommentListCommand"
+			scope="prototype">
+			<property name="commentManager" ref="commentsManager" />
+			<property name="rowsPerPage" value="20" />
+			<property name="visibleNavigationPageCount" value="10" />
+			<property name="mode" value="search" />
+		</bean>
+
+		<!-- CommentList tho -->
+		<bean id="commentInfoListCommand"
+			class="jp.co.transcosmos.dm3.webAdmin.comment.command.CommentListCommand"
+			scope="prototype">
+			<property name="commentManager" ref="commentsManager" />
+			<property name="rowsPerPage" value="20" />
+			<property name="visibleNavigationPageCount" value="10" />
+			<property name="mode" value="search" />
+		</bean>
+
+		<!-- Comment Delete comment item tho -->
+		<bean id="commentInfoDelCommand"
+			class="jp.co.transcosmos.dm3.webAdmin.comment.command.CommentListCommand"
+			scope="prototype">
+			<property name="commentManager" ref="commentsManager" />
+			<property name="rowsPerPage" value="20" />
+			<property name="visibleNavigationPageCount" value="10" />
+			<property name="mode" value="delete" />
+		</bean>
+	
+
+	<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMappingList">
+		<property name="commandURLMapper" ref="commandURLMapper" />
+		<property name="mappings">
+			<list>
+				<!-- comment controller -->
+				<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+					<property name="urlPattern" value="/top/comment/list/###newsId###/" />
+					<property name="defaultCommandName" value="commentInfoInitCommand" />
+					<property name="namedCommands">
+						<props>
+							<prop key="list">commentInfoListCommand</prop>
+						</props>
+					</property>
+					<property name="defaultViewName"
+						value="/WEB-INF/jsp/admin/comment/CommentList.jsp" />
+				</bean>
+
+				<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+					<property name="urlPattern" value="/top/comment/delConfirm/###newsId###/" />
+					<property name="defaultCommandName" value="commentInfoDelCommand" />
+					<property name="defaultViewName"
+						value="/WEB-INF/jsp/admin/comment/CommentListDeleteCompRedirect.jsp" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+</beans>

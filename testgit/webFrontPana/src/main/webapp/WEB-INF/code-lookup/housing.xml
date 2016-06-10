@@ -11,6 +11,14 @@
 		</property>
 		<property name="lookups">
 			<map>
+				<!-- reform categories -->
+				<entry key="iconPlanCategories">
+                    <list>
+                        <value>R00:iconPlan01</value>
+                        <value>R10:iconPlan02</value>
+                        <value>R20:iconPlan03</value>
+                    </list>
+                </entry>
 				<!-- ステータスCD -->
 				<entry key="statusCd">
 					<list>

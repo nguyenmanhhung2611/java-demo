@@ -47,7 +47,7 @@ $(document).ready(function(){
 	$(".favadd").on('click', function() {
 		setTimeout(function() {
 			$.fancybox.close();
-			$("#personalInfo .favorite").text(getFavoriteCount());
+			$("[id^='personalInfo'] .favorite").text(getFavoriteCount());
 		}, 1500)
 
 	});
@@ -101,16 +101,6 @@ $(document).ready(function(){
 	 });
 
 });
-
-function getFavoriteCount() {
-	var arrStr = document.cookie.split(";");
-	for (var i = 0; i < arrStr.length; i++) {
-		var temp = arrStr[i].split("=");
-		if ($.trim(temp[0]) == "favoriteCount") {
-			return unescape(temp[1]);
-		}
-	}
-}
 
 function linkToUrl(url, sysHousingCd) {
 	document.inputForm.action=url;
@@ -253,6 +243,9 @@ function orderSelect(url) {
 										<li class="icoMansion01"><c:out value="${value}"/></li>
 									</c:if>
 								</dm3lookup:lookupForEach>
+								<c:if test="${housingKindCd != '03' && reformPlanList.get(EditItem.index) != null}">
+								   <li class="icoReform01">リフォームプランあり</li>
+								</c:if>
 							</ul>
 							<div class="buildingFeatures clearfix">
 								<p class="caption"><c:out value="${housingDtlList.get(EditItem.index).getDtlComment()}" escapeXml="false"/></p>
@@ -469,7 +462,7 @@ function orderSelect(url) {
 						</c:if>
 						<div class="contactBlock">
 
-
+							<p class="btnBlack01"><a target="_blank" href="<c:out value="${pageContext.request.contextPath}"/>/buy/<c:out value="${housingKindName}"/>/<c:out value="${buildingList.get(EditItem.index).prefCd}"/>/detail/<c:out value="${housingList.get(EditItem.index).getSysHousingCd()}"/>/">詳細はこちら</a></p>
 							<c:if test="${buildingList.get(EditItem.index).getHousingKindCd() != '03'}">
 								<c:if test="${loginFlg != '0'}">
 									<p class="btnOrange01"><a href="javascript:linkToUrl('<c:out value="${pageContext.request.contextPath}"/>/buy/inquiry/division/', '<c:out value="${housingList.get(EditItem.index).getSysHousingCd()}"/>');">この物件に関するお問い合わせ</a></p>
@@ -492,6 +485,7 @@ function orderSelect(url) {
 							</c:if>
 
 						</div>
+						
 						<c:if test="${housingKindCd != '03'}">
 							<div class="reformPlan">
 
@@ -507,15 +501,14 @@ function orderSelect(url) {
 										<thead>
 											<tr>
 												<th>リフォームプラン</th>
-												<th>総額<span>※下段は個別価格</span></th>
+												<th>総額<span>※下段は内訳総額</span></th>
 											</tr>
 										</thead>
 										<tbody>
-											<c:forEach  var="reformPlanList" items="${reformPlanList.get(EditItem.index)}" varStatus="reformPlanListItem">
+											<c:forEach  var="reformPlanList" items="${reformPlanList.get(EditItem.index)}" varStatus="reformPlanListItem" end="2">
 												<tr>
 
-													<th>
-													<a target="_blank" href="<c:out value="${pageContext.request.contextPath}"/>/buy/<c:out value="${housingKindName}"/>/<c:out value="${buildingList.get(EditItem.index).prefCd}"/>/detail/<c:out value="${housingList.get(EditItem.index).getSysHousingCd()}"/>/<c:out value="${reformPlanList.getSysReformCd()}"/>/#anc01"><c:out value="${reformPlanList.getPlanName()}"/></a></th>
+													<th><a class="<dm3lookup:lookup lookupName="iconPlanCategories" lookupKey="${reformPlanList.getPlanCategory1()}"/>" target="_blank" href="<c:out value="${pageContext.request.contextPath}"/>/buy/<c:out value="${housingKindName}"/>/<c:out value="${buildingList.get(EditItem.index).prefCd}"/>/detail/<c:out value="${housingList.get(EditItem.index).getSysHousingCd()}"/>/<c:out value="${reformPlanList.getSysReformCd()}"/>/#anc01"><c:out value="${reformPlanList.getPlanName()}"/></a></th>
 													<td>
 
 														<c:if test="${!empty housingList.get(EditItem.index).getPrice() || !empty reformPlanList.getPlanPrice()}">
@@ -551,11 +544,11 @@ function orderSelect(url) {
 									</table>
 
 						<ul class="SPdisplayBlock">
-							<c:forEach  var="reformPlanList" items="${reformPlanList.get(EditItem.index)}" varStatus="reformPlanListItem">
-								<li><a target="_blank" href="<c:out value="${pageContext.request.contextPath}"/>/buy/<c:out value="${housingKindName}"/>/<c:out value="${buildingList.get(EditItem.index).prefCd}"/>/detail/<c:out value="${housingList.get(EditItem.index).getSysHousingCd()}"/>/<c:out value="${reformPlanList.getSysReformCd()}"/>/#anc01"><span><c:out value="${reformPlanList.getPlanName()}"/><br>
+							<c:forEach  var="reformPlanList" items="${reformPlanList.get(EditItem.index)}" varStatus="reformPlanListItem" end="2">
+								<li><a target="_blank" href="<c:out value="${pageContext.request.contextPath}"/>/buy/<c:out value="${housingKindName}"/>/<c:out value="${buildingList.get(EditItem.index).prefCd}"/>/detail/<c:out value="${housingList.get(EditItem.index).getSysHousingCd()}"/>/<c:out value="${reformPlanList.getSysReformCd()}"/>/#anc01"><span><span class="<dm3lookup:lookup lookupName="iconPlanCategories" lookupKey="${reformPlanList.getPlanCategory1()}" />"><c:out value="${reformPlanList.getPlanName()}"/></span>
 								<c:set var="totalPrice" value="${housingList.get(EditItem.index).getPrice() + reformPlanList.getPlanPrice()}"/>
 								<c:set var="price" value="${totalPrice / 10000}"/>
-								総額：約<fmt:formatNumber value="${price + (1 - (price%1))%1}" pattern="###,###" />万円</span><br>
+								総額：約<fmt:formatNumber value="${price + (1 - (price%1))%1}" pattern="###,###" />万円</span>
 								<c:if test="${!empty housingList.get(EditItem.index).getPrice()}">
 								物件：
 									<c:set var="price" value="${housingList.get(EditItem.index).getPrice() / 10000}"/>

@@ -16,6 +16,7 @@
 <link href="<c:out value='${commonParameters.resourceRootUrl}'/>common/css/common.css" rel="stylesheet">
 <link href="<c:out value='${commonParameters.resourceRootUrl}'/>common/css/header_footer.css" rel="stylesheet">
 <link href="<c:out value='${commonParameters.resourceRootUrl}'/>common/css/parts.css" rel="stylesheet">
+<link href="<c:out value='${commonParameters.resourceRootUrl}'/>mypage/css/mypage.css" rel="stylesheet">
 
 <script type="text/javascript" src="<c:out value='${commonParameters.resourceRootUrl}'/>common/js/jquery.min.js"></script>
 <script type="text/javascript" src="<c:out value='${commonParameters.resourceRootUrl}'/>common/js/main.js"></script>
@@ -32,7 +33,7 @@
 <!--#include virtual="/common/ssi/simple-header-D.html"-->
 
 <div id="contents">
-	<div id="contentsInner">
+	<div id="contentsInner" class="mypageMember">
 		<div class="section01">
 			<div class="headingBlockA01 clearfix">
 				<h1 class="ttl">新規会員登録</h1>
@@ -44,9 +45,15 @@
 					<li class="current"><span>完了</span></li>
 				</ul>
 			</nav>
-			<div class="contentsInner01 mb50 spMb15">
-				<p class="bold mb30 spMb10 f18 spF16 center spLeft">新規会員登録が完了しました。</p>
-				<p class="mb30 spMb10 f14 center spLeft">ご登録ありがとうございます。<br>ご登録いただいたメールアドレスにメールを送信しましたのでご確認ください。</p>
+			<div class="bgBlock01">
+				<h2>新規会員登録が完了しました。</h2>
+				<p class="lead">ご登録ありがとうございます。<br>ご登録いただいたメールアドレスにメールを送信しましたのでご確認ください。</p>
+				
+				<div class="requestBlock">
+					<p class="text">併せて「物件リクエスト」はいかがですか？<br>
+					ご希望の所在地、条件に沿った物件が出てきた際にいち早くお伝えいたします。会員登録と併せて是非ご登録ください。</p>
+					<p class="btn"><a href="<c:out value="${pageContext.request.contextPath}"/>/mypage/request/input/" class="secondaryBtn">物件リクエストへ</a></p>
+				</div>
 			</div>
 			<div class="contentsInner01">
 				<p class="center spPb10"><a href="<c:out value="${pageContext.request.contextPath}"/>/mypage/" class="secondaryBtn">マイページへ</a></p>
@@ -56,5 +63,7 @@
 </div>
 <!--#include virtual="/common/ssi/simple-footer-S.html"-->
 <img src="<c:out value="${janetUrl}"/>" width="1" height="1">
+<!-- Yahoo Code for your Conversion Page -->
+<img height="1" width="1" alt="" src="<c:out value='${commonParameters.yahooCodeSrc}'/>?value=0&label=PjVmCI-nzmMQze_kvQM&guid=ON&script=0"/>
 </body>
 </html>

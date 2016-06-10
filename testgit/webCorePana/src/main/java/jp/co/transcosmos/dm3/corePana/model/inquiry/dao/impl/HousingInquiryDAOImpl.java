@@ -90,7 +90,7 @@ public class HousingInquiryDAOImpl implements HousingInquiryDAO {
 	private static final String _HEADER2 = "attachment ;filename=";
 
 	// log
-	private static final Log log = LogFactory.getLog(HousingInquiryDAOImpl.class);
+	private static final Log log = LogFactory.getLog(PanaSearchHousingDAOImpl.class);
 
 
 	/** データソース */

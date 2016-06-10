@@ -24,6 +24,7 @@ import jp.co.transcosmos.dm3.corePana.vo.ReformPlan;
  * 担当者       修正日      修正内容
  * ------------ ----------- -----------------------------------------------------
  * TRANS		2015.03.10	新規作成
+ * Thi Tran     2015.12.18  Update the interface to support searching housing by cd
  * </pre>
  * <p>
  * 注意事項<br/>
@@ -200,13 +201,6 @@ public interface ReformManage {
     public BuildingInfo searchBuildingInfo(String sysHousingCd) throws Exception;
 
     /**
-     * Search housing by cd
-     * @param sysHousingCd
-     * @return
-     * @throws Exception
-     */
-    public Housing searchHousingByPk(String sysHousingCd) throws Exception;
-    /**
      * リフォーム詳細情報を検索し、結果を復帰する。<br/>
      * 引数で渡された Form パラメータの値で検索条件を生成し、リフォーム詳細情報を検索する。<br/>
      * 検索結果は Form オブジェクトに格納され、取得した該当レコードを戻り値として復帰する。<br/>
@@ -256,4 +250,14 @@ public interface ReformManage {
      * @param editUserId 更新者ID
      */
     public void updateEditTimestamp(String sysHousingCd, String sysReformCd, String editUserId) throws Exception;
+
+    /**
+     * Search housing by cd<br/>
+     * <br/>
+     * @param sysHousingCd housing cd
+     * @param full Return public housing if false, return all if true
+     * @return Housing information corresponding to the given housing cd
+     * @throws Exception Exception is thrown while implementing
+     */
+    public Housing searchHousingByPk(String sysHousingCd, boolean full) throws Exception;
 }

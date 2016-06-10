@@ -10,16 +10,16 @@
 <script type ="text/JavaScript">
 <!--
 	function changeTime(obj) {
+		var inputFields = $(obj).closest("td").find("input:text");
 		$(obj).val($.trim($(obj).val()));
-
 		if (!$.isNumeric($(obj).val())) {
-			obj.parentNode.childNodes[6].value = "";
+			$(inputFields[2]).val('');
 			return;
 		}
 		var distance = Number(obj.value);
 		var time = Math.ceil(distance/80);
 		obj.value = distance;
-		obj.parentNode.childNodes[6].value = time;
+		$(inputFields[2]).val(time);
 	}
 
 // -->

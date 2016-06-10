@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+                           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+	
+	<bean id="showListNewsCommand"
+		class="jp.co.trancosmos.dm3.webFront.social.command.ShowListNewsCommand"
+		scope="prototype">
+		<property name="newsManage" ref="newsManage" />
+		<property name="rowsPerPage" value="5" />
+		<property name="visibleNavigationPageCount" value="2" />
+	</bean>
+	
+	<bean id="viewNewsDetailCommand"
+		class="jp.co.trancosmos.dm3.webFront.social.command.ViewNewsDetailCommand"
+		scope="prototype">
+		<property name="newsManage" ref="newsManage" />
+		<property name="rowsPerPage" value="5" />
+		<property name="visibleNavigationPageCount" value="2" />
+	</bean>
+	
+	<bean id="addCommentInputCommand"
+		class="jp.co.trancosmos.dm3.webFront.social.command.AddCommentInputCommand"
+		scope="prototype">
+		<property name="newsManage" ref="newsManage" />
+		<property name="mode" value="initInsert" />
+		<property name="rowsPerPage" value="5" />
+		<property name="visibleNavigationPageCount" value="2" />
+	</bean>
+	<bean id="addCommentCompCommand"
+		class="jp.co.trancosmos.dm3.webFront.social.command.AddCommentCompCommand"
+		scope="prototype">
+		<property name="newsManage" ref="newsManage" />
+		<property name="mode" value="complete" />
+		<property name="rowsPerPage" value="5" />
+		<property name="visibleNavigationPageCount" value="2" />
+	</bean>
+	<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMappingList">
+		<property name="commandURLMapper" ref="commandURLMapper" />
+		<property name="mappings">
+			<list>
+				<!-- List New command -->
+				<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+					<property name="urlPattern" value="/mypage/social/listnews/" />
+					<property name="defaultCommandName" value="showListNewsCommand" />
+					<property name="defaultViewName"
+						value="/WEB-INF/jsp/front/social/showListNews.jsp" />
+				</bean>
+				<!-- View new command -->
+				<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+					<property name="urlPattern" value="/mypage/social/viewNews/" />
+					<property name="defaultCommandName" value="viewNewsDetailCommand" />
+					<property name="defaultViewName"
+						value="/WEB-INF/jsp/front/social/viewNewsDetail.jsp" />
+				</bean>
+				<!-- Add new comment -->
+				<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+					<property name="urlPattern" value="/mypage/social/addComment/input/" />
+					<property name="defaultCommandName" value="addCommentInputCommand" />
+					<property name="defaultViewName"
+						value="/WEB-INF/jsp/front/social/addCommentInput.jsp" />
+				</bean>
+				<!-- confirm new comment -->
+				<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+					<property name="urlPattern" value="/mypage/social/addComment/comp/" />
+					<property name="defaultCommandName" value="addCommentCompCommand" />
+					<property name="defaultViewName"
+						value="/WEB-INF/jsp/front/social/addCommentCompRedirect.jsp" />
+					<property name="namedViews">
+						<props>
+							<prop key="input">/WEB-INF/jsp/front/social/addCommentInput.jsp
+							</prop>
+						</props>
+					</property>
+				</bean>
+			</list>
+		</property>
+	</bean>
+</beans>

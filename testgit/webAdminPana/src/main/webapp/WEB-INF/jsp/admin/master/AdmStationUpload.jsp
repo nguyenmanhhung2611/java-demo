@@ -40,7 +40,7 @@ function btnLock(url){
 			<table width="100%" border="1" cellspacing="0" cellpadding="0" class="tableA1">
 				<tr>
 					<th class="head_tr" width="18%">アップロードファイル</th>
-					<td width="65%"><input type="file" name="csvFile" size="40"></td>
+					<td width="65%"><input type="file" name="csvFile" size="35"></td>
 				</tr>
 			</table>
 		</div>

@@ -57,7 +57,7 @@ $(document).ready(function() {
 	$(".favadd").on('click',function(){
 		setTimeout(function(){
 		$.fancybox.close();
-		$("#personalInfo .favorite").text(getFavoriteCount());
+		$("[id^='personalInfo'] .favorite").text(getFavoriteCount());
 		}, 1500)
 	});
 
@@ -111,16 +111,6 @@ $(document).ready(function() {
 		orderLinkToUrl('');
 	});
 });
-
-function getFavoriteCount() {
-	var arrStr = document.cookie.split(";");
-	for (var i = 0; i < arrStr.length; i++) {
-		var temp = arrStr[i].split("=");
-		if ($.trim(temp[0]) == "favoriteCount") {
-			return unescape(temp[1]);
-		}
-	}
-}
 
 function orderLinkToUrl(url) {
 	document.inputForm.action = url;
@@ -179,7 +169,7 @@ text-overflow: ellipsis;
 					<p class="bold mb30 spMb10 f18 spF16 center spLeft">最近見た物件はありません。</p>
 				</div>
 				<div class="contentsInner01">
-					<p class="center spPb10"><a href="<c:out value="${commonParameters.resourceRootUrl}"/>buy/#search" class="secondaryBtn">買いたいTOPへ</a></p>
+					<p class="center spPb10"><a href="<c:out value="${commonParameters.resourceRootUrl}"/>buy/" class="secondaryBtn">買いたいTOPへ</a></p>
 				</div>
 			</c:if>
 

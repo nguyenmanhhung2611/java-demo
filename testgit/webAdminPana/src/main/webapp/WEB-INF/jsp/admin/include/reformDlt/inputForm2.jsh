@@ -43,7 +43,7 @@
                 <p><a href="<c:out value="${reformDtlForm.hidPath[status.index]}"/>" target="_blank"><img src="<c:out value="${commonParameters.resourceRootUrl}"/>cmn/imgs/pdf_icon.gif" alt="" /></a></p>
 	    	</td>
 	    	<td>
-	    		<input type="text" name="imgName" value="<c:out value="${reformDtlForm.imgName[status.index]}"/>" size="20" maxlength="20" class="input2">
+	    		<input type="text" name="imgName" value="<c:out value="${reformDtlForm.imgName[status.index]}"/>" size="18" maxlength="20" class="input2">
 	    	</td>
 	    	<td>
 	    		<select name="roleId" style="width: 100%; ">
@@ -53,7 +53,7 @@
                 </select>
 	    	</td>
 	    	<td>
-	    		<input type="text" name="reformPrice" value="<c:out value="${reformDtlForm.reformPrice[status.index]}"/>" size="8" maxlength="7" class="input2 ime-disabled" style="text-align:right;">円
+	    		<input type="text" name="reformPrice" value="<c:out value="${reformDtlForm.reformPrice[status.index]}"/>" size="7" maxlength="7" class="input2 ime-disabled" style="text-align:right;">円
 	    	</td>
 	    	<td>
     	    	<input type="checkbox" name="delFlg" value="<c:out value="${status.index}"/>" <c:if test="${reformDtlForm.delFlg[status.index] == 1}"> checked="true"</c:if>>

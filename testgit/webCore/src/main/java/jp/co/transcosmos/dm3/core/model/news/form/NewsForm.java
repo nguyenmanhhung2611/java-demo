@@ -10,6 +10,7 @@ import jp.co.transcosmos.dm3.dao.DAOCriteria;
 import jp.co.transcosmos.dm3.lookup.CodeLookupManager;
 import jp.co.transcosmos.dm3.utils.StringValidateUtil;
 import jp.co.transcosmos.dm3.validation.MaxLengthValidation;
+import jp.co.transcosmos.dm3.validation.NullOrEmptyCheckValidation;
 import jp.co.transcosmos.dm3.validation.Validateable;
 import jp.co.transcosmos.dm3.validation.ValidationChain;
 import jp.co.transcosmos.dm3.validation.ValidationFailure;
@@ -23,15 +24,7 @@ import org.apache.commons.logging.LogFactory;
  * 
  * 担当者       修正日      修正内容
  * ------------ ----------- -----------------------------------------------------
- * I.Shu		2015.02.06	新規作成
- * H.Mizuno		2015.02.26	パッケージ移動、コンストラクターの隠蔽
- * 
- * 注意事項
- * この Form のバリデーションは、使用するモード（追加処理 or 更新処理）で異なるので、
- * フレームワークが提供する Validateable インターフェースは実装していない。
- * バリデーション実行時のパラメータが通常と異なるので注意する事。
- *
- * </pre>
+ * @author hiennt
  */
 public class NewsForm implements Validateable {
 
@@ -172,6 +165,7 @@ public class NewsForm implements Validateable {
 		// タイトル入力チェック
 		ValidationChain valTitle = new ValidationChain("information.search.keyTitle", this.newsTitle);
 		// 桁数チェック
+		valTitle.addValidation(new NullOrEmptyCheckValidation());
 		valTitle.addValidation(new MaxLengthValidation(this.lengthUtils.getLength("information.search.keyTitle", 50)));
 		valTitle.validate(errors);
 	}
@@ -180,8 +174,8 @@ public class NewsForm implements Validateable {
 		// タイトル入力チェック
 		ValidationChain valContent = new ValidationChain("information.search.keyTitle", this.newsContent);
 		// 桁数チェック
-		valContent
-				.addValidation(new MaxLengthValidation(this.lengthUtils.getLength("information.search.keyTitle", 200)));
+		valContent.addValidation(new NullOrEmptyCheckValidation());
+		valContent.addValidation(new MaxLengthValidation(this.lengthUtils.getLength("information.search.keyTitle", 200)));
 		valContent.validate(errors);
 	}
 
@@ -227,18 +221,6 @@ public class NewsForm implements Validateable {
 		this.userId = userId;
 	}
 
-	/**
-	 * 渡されたバリーオブジェクトから Form へ初期値を設定する。<br/>
-	 * <br/>
-	 * 
-	 * @param news
-	 *            News　を実装した、お知らせ情報管理用バリーオブジェクト
-	 * @param newsTarget
-	 *            NewsTarget を実装したお知らせ公開先情報管理用バリーオブジェクト
-	 * @param mypageUserInterface
-	 *            MypageUserInterface を実装したマイページ会員情報管理用バリーオブジェクト
-	 */
-
 	public void setDefaultData(News news) {
 
 		this.newsId = (String) news.getNewsId();
@@ -274,11 +256,10 @@ public class NewsForm implements Validateable {
 		news.setNewsContent(this.newsContent);
 
 		Date date = new Date();
-		news.setInsDate(date);
 		news.setUpdDate(date);
 
 		news.setUpdUserId(editUserId);
-		news.setDelFlg(false);
+		news.setDelFlg(true);
 	}
 
 	/**

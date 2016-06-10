@@ -5,7 +5,12 @@
 <%@ taglib uri="http://dm3.transcosmos.co.jp/tags/lookup" prefix="dm3lookup" %>
 <%@ taglib uri="http://dm3.transcosmos.co.jp/tags/functions" prefix="dm3functions" %>
 <!doctype html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<!--[if lt IE 7 ]> <html class="ie6"> <![endif]-->
+<!--[if IE 7 ]> <html class="ie7"> <![endif]-->
+<!--[if IE 8 ]> <html class="ie8"> <![endif]-->
+<!--[if IE 9 ]> <html class="ie9"> <![endif]-->
+<!--[if IE 10 ]> <html class="ie10"> <![endif]-->
+<!--[if (gt IE 10)|!(IE)]><!--> <html> <!--<![endif]-->
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="keywords" content="<c:out value='${commonParameters.defaultKeyword}'/>">
@@ -20,96 +25,15 @@
 
 <script type="text/javascript" src="<c:out value='${commonParameters.resourceRootUrl}'/>common/js/jquery.min.js"></script>
 <script type="text/javascript" src="<c:out value='${commonParameters.resourceRootUrl}'/>common/js/main.js"></script>
-<script type="text/javascript" src="<c:out value='${commonParameters.resourceRootUrl}'/>common/js/jquery.ah-placeholder.js"></script>
-
+<script type="text/javascript" src="<c:out value='${commonParameters.resourceRootUrl}'/>common/js/jquery.ah-placeholder_mod.js"></script>
+<link href="<c:out value='${commonParameters.resourceRootUrl}'/>common/css/efoBase.css" rel="stylesheet">
+<script src="<c:out value='${commonParameters.resourceRootUrl}'/>common/js/efoBase.js"></script>
+<script src="<c:out value='${commonParameters.resourceRootUrl}'/>common/js/efoAssessment.js"></script>
 <!--[if lte IE 9]><script src="<c:out value='${commonParameters.resourceRootUrl}'/>common/js/html5.js" type="text/javascript"></script>
 	<![endif]-->
 <!--[if lt IE 9]><![endif]-->
 
 <script type="text/javascript">
-	$(document).ready(function() {
-		if (!$("#ansCd08").prop('checked')) {
-			$("#etcAnswer1").attr('disabled', 'disabled');
-		}
-
-		if (!$("#ansCd09").prop('checked')) {
-			$("#etcAnswer2").attr('disabled', 'disabled');
-		}
-
-		if (!$("#ansCd10").prop('checked')) {
-			$("#etcAnswer3").attr('disabled', 'disabled');
-		}
-		$("#ansCd08").on("change", function() {
-			if ($("#ansCd08").prop('checked')) {
-				$("#etcAnswer1").removeAttr('disabled');
-			} else {
-				$("#etcAnswer1").attr('disabled', 'disabled');
-			}
-		});
-		$("#ansCd09").on("change", function() {
-			if ($("#ansCd09").prop('checked')) {
-				$("#etcAnswer2").removeAttr('disabled');
-			} else {
-				$("#etcAnswer2").attr('disabled', 'disabled');
-			}
-		});
-		$("#ansCd10").on("change", function() {
-			if ($("#ansCd10").prop('checked')) {
-				$("#etcAnswer3").removeAttr('disabled');
-			} else {
-				$("#etcAnswer3").attr('disabled', 'disabled');
-			}
-		});
-	});
-
-	$(function(){
-		$("#radioForSale li.mansion dd, #radioForSale li.house dd, #radioForSale li.land dd").hide();
-		if ($("#radMansion").prop('checked')) {
-			$("#radioForSale li.mansion dd").show();
-		}
-		if ($("#radHouse").prop('checked')) {
-			$("#radioForSale li.house dd").show();
-		}
-		if ($("#radLand").prop('checked')) {
-			$("#radioForSale li.land dd").show();
-		}
-
-		$("#radioForSale dt input").on("change", function(){
-			$("#radioForSale li dd").hide();
-			if($(this).prop('checked')){
-				$(this).parent().parent().next("dd").show();
-			}
-		});
-	});
-
-	$(function(){
-		if ($("#switchChk").prop('checked')) {
-			$("#inputSwitchArea .mask").show();
-		} else {
-			$("#inputSwitchArea .mask").hide();
-		}
-
-		$("#switchChk").on("change", function(){
-			if($(this).prop('checked')){
-				$("#inputSwitchArea .mask").show();
-			} else {
-				$("#inputSwitchArea .mask").hide();
-			}
-		});
-	});
-
-	$(function(){
-		var $submitBtn = $("#confirmBtn");
-		var $agreeCheck = $("#agreeChk");
-		$submitBtn.attr('disabled', 'disabled').addClass('disabled');
-		$agreeCheck.on("click", function() {
-				if ($(this).prop('checked')) {
-						$submitBtn.removeAttr('disabled').removeClass('disabled');
-				} else {
-						$submitBtn.attr('disabled', 'disabled').addClass('disabled');
-				}
-		});
-	});
 
 	$(function(){
 		if ((navigator.userAgent.indexOf('iPhone') > 0 && navigator.userAgent.indexOf('iPad') == -1) || navigator.userAgent.indexOf('iPod') > 0 || navigator.userAgent.indexOf('Android') > 0) {
@@ -161,11 +85,6 @@
 		});
 	}
 
-	function linkToUrl(url, cmd) {
-		document.inputForm.action = url;
-		document.inputForm.command.value = cmd;
-		document.inputForm.submit();
-	}
 </script>
 
 
@@ -181,8 +100,8 @@
 <div id="contents">
 	<div id="contentsInner">
 		<div class="section01">
-			<form action="./confirm" method="post" name="inputForm">
-				<input type="hidden" name="command" value="<c:out value="${inputForm.command}"/>">
+			<form action="../confirm/" method="post" name="inputForm">
+				<input type="hidden" name="command" value=""/>
 				<div class="headingBlockA01 clearfix">
 					<h1 class="ttl">査定のお申し込み</h1>
 				</div><!-- /.headingBlockA01 -->
@@ -193,7 +112,6 @@
 						<li><span>完了</span></li>
 					</ul>
 				</nav>
-				<p><c:import url="/WEB-INF/front/default_jsp/include/validationerrors.jsh" /></p>
 				<div class="contentsInner01">
 					<p class="f14">査定のお申し込みをいただきましたら、査定担当者よりご連絡いたします。</p>
 				</div>
@@ -225,7 +143,7 @@
 															<c:param name="targetLabel" value="assessment.input.buildAge1"/>
 														</c:import>
 															<div class="cell"><span class="bold">間取り</span>
-																<select name="layoutCd1" class="selectType01">
+																<select id="layoutCd1" name="layoutCd1" class="selectType01">
 																	<option value="">タイプ</option>
 																	<dm3lookup:lookupForEach lookupName="layoutCd">
 																		<option value="<c:out value="${key}"/>" <c:if test="${inputForm.layoutCd1 == key}">selected</c:if>><c:out value="${value}"/></option>
@@ -234,12 +152,12 @@
 															</div>
 															<div class="cell"><span class="bold">専有面積</span>
 																<span class="pl10">約</span>
-																<input type="text" name="personalArea" class="inputType01 <c:if test="${personalAreahasError}">error</c:if>" value="<c:out value="${inputForm.personalArea}"/>" maxlength="8">m&sup2;<br>
-																<span class="note01 pl20 spPl50">(半角英数)</span>
+																<input type="tel" id="personalArea" name="personalArea" class="inputType01 <c:if test="${personalAreahasError}">error</c:if>" value="<c:out value="${inputForm.personalArea}"/>" maxlength="8">m&sup2;<br>
+																<span class="note01 pl20 spPl50">(半角数字)</span>
 															</div>
 															<div class="cell"><span class="bold">築年数</span>
-																<input type="text" name="buildAge1" class="inputType01 <c:if test="${dm3hasError}">error</c:if>" value="<c:out value="${inputForm.buildAge1}"/>" maxlength="3">年<br>
-																<span class="note02">(半角英数)</span>
+																<input type="tel" id="buildAge1" name="buildAge1" class="inputType01 <c:if test="${dm3hasError}">error</c:if>" value="<c:out value="${inputForm.buildAge1}"/>" maxlength="3">年<br>
+																<span class="note02">(半角数字)</span>
 															</div>
 														</dd>
 													</dl>
@@ -256,7 +174,7 @@
 														</c:import>
 															<div class="mb20 spMb00">
 																<div class="cell"><span class="bold">間取り</span>
-																	<select name="layoutCd2" class="selectType01">
+																	<select id="layoutCd2" name="layoutCd2" class="selectType01">
 																		<option value="">タイプ</option>
 																		<dm3lookup:lookupForEach lookupName="layoutCd">
 																			<option value="<c:out value="${key}"/>" <c:if test="${inputForm.layoutCd2 == key}">selected</c:if>><c:out value="${value}"/></option>
@@ -264,8 +182,8 @@
 																	</select>
 																</div>
 																<div class="cell"><span class="bold">築年数</span>
-																	<input type="text" name="buildAge2" class="inputType01 <c:if test="${dm3hasError}">error</c:if>" value="<c:out value="${inputForm.buildAge2}"/>" maxlength="3">年<br>
-																	<span class="note01">(半角英数)</span>
+																	<input type="tel" id="buildAge2" name="buildAge2" class="inputType01 <c:if test="${dm3hasError}">error</c:if>" value="<c:out value="${inputForm.buildAge2}"/>" maxlength="3">年<br>
+																	<span class="note01">(半角数字)</span>
 																</div>
 															</div>
 														<c:import url="/WEB-INF/jsp/front/include/panaValidationFieldErrors.jsh">
@@ -285,17 +203,17 @@
 															<div>
 																<div class="cell"><span class="bold">土地面積</span>
 																	<span class="pl10">約</span>
-																	<input type="text" name="landArea2" class="inputType01 <c:if test="${landArea2hasError}">error</c:if>" value="<c:out value="${inputForm.landArea2}"/>" maxlength="8">
+																	<input type="tel" id="landArea2" name="landArea2" class="inputType01 <c:if test="${landArea2hasError}">error</c:if>" value="<c:out value="${inputForm.landArea2}"/>" maxlength="8">
 																	<span><label onClick=""><input type="radio" name="landAreaCrs2" value="00" checked>坪</label>
 																	<label onClick="" class="ml10"><input type="radio" name="landAreaCrs2" value="01" <c:if test="${inputForm.landAreaCrs2 == '01'}">checked</c:if>>m&sup2;</label></span><br>
-																	<span class="note02">(半角英数)</span>
+																	<span class="note02">(半角数字)</span>
 																</div>
 																<div class="cell"><span class="bold">建物面積</span>
 																	<span class="pl10">約</span>
-																	<input type="text" name="buildingArea" class="inputType01 <c:if test="${buildingAreahasError}">error</c:if>" value="<c:out value="${inputForm.buildingArea}"/>" maxlength="8">
+																	<input type="tel" id="buildingArea" name="buildingArea" class="inputType01 <c:if test="${buildingAreahasError}">error</c:if>" value="<c:out value="${inputForm.buildingArea}"/>" maxlength="8">
 																	<span><label onClick=""><input type="radio" name="buildingAreaCrs" value="00" checked>坪</label>
 																	<label onClick="" class="ml10"><input type="radio" name="buildingAreaCrs" value="01" <c:if test="${inputForm.buildingAreaCrs == '01'}">checked</c:if>>m&sup2;</label></span><br>
-																	<span class="note02">(半角英数)</span>
+																	<span class="note02">(半角数字)</span>
 																</div>
 															</div>
 														</dd>
@@ -314,9 +232,9 @@
 														</c:import>
 															<div class="cell"><span class="bold">土地面積</span>
 																<span class="pl10">約</span>
-																<input type="text" name="landArea3" class="inputType01 <c:if test="${landArea3hasError}">error</c:if>" value="<c:out value="${inputForm.landArea3}"/>" maxlength="8">m&sup2;<br>
+																<input type="tel" id="landArea3" name="landArea3" class="inputType01 <c:if test="${landArea3hasError}">error</c:if>" value="<c:out value="${inputForm.landArea3}"/>" maxlength="8">m&sup2;<br>
 																<input type="hidden" name="landAreaCrs3" value="01">
-																<span class="note02">(半角英数)</span>
+																<span class="note02">(半角数字)</span>
 															</div>
 														</dd>
 													</dl>
@@ -335,7 +253,7 @@
 										<c:import url="/WEB-INF/jsp/front/include/panaValidationFieldErrors.jsh">
 											<c:param name="targetLabel" value="assessment.input.zip"/>
 										</c:import>
-										<input type="text" id="zip" name="zip" class="inputType02 <c:if test="${dm3hasError}">error</c:if>" placeholder="例：1234567" value="<c:out value="${inputForm.zip}"/>" maxlength="7">
+										<input type="tel" id="zip" name="zip" class="inputType02 <c:if test="${dm3hasError}">error</c:if>" placeholder="例：1234567" value="<c:out value="${inputForm.zip}"/>" maxlength="7">
 										<a href="javascript:zipToAddress1();" class="addressBtn">住所検索</a>
 										<a href="http://www.post.japanpost.jp/zipcode/" target="_blank" class="link02">郵便番号がわからない方</a>
 										<div class="mt10">※半角数字、ハイフンなしで入力してください。</div>
@@ -451,8 +369,8 @@
 									<c:param name="targetLabel" value="assessment.input.fname"/>
 								</c:import>
 								<div>
-								姓 <input type="text" id="name01" name="lname" class="inputType05 <c:if test="${lnamehasError}">error</c:if>" placeholder="例：松下" value="<c:out value="${inputForm.getInquiryHeaderForm().lname}"/>" maxlength="30">
-								名 <input type="text" name="fname" class="inputType05 <c:if test="${dm3hasError}">error</c:if>" placeholder="例：太郎" value="<c:out value="${inputForm.getInquiryHeaderForm().fname}"/>" maxlength="30"></div>
+								姓 <input type="text" id="lname" name="lname" class="inputType05 <c:if test="${lnamehasError}">error</c:if>" placeholder="例：松下" value="<c:out value="${inputForm.getInquiryHeaderForm().lname}"/>" maxlength="30">
+								名 <input type="text" id="fname" name="fname" class="inputType05 <c:if test="${dm3hasError}">error</c:if>" placeholder="例：太郎" value="<c:out value="${inputForm.getInquiryHeaderForm().fname}"/>" maxlength="30"></div>
 							</td>
 						</tr>
 						<tr>
@@ -466,8 +384,8 @@
 									<c:param name="targetLabel" value="assessment.input.fnameKana"/>
 								</c:import>
 								<div>
-								姓 <input type="text" id="name02" name="lnameKana" class="inputType05 <c:if test="${lnameKanahasError}">error</c:if>" placeholder="例：マツシタ" value="<c:out value="${inputForm.getInquiryHeaderForm().lnameKana}"/>" maxlength="30">
-								名 <input type="text" name="fnameKana" class="inputType05 <c:if test="${dm3hasError}">error</c:if>" placeholder="例：タロウ" value="<c:out value="${inputForm.getInquiryHeaderForm().fnameKana}"/>" maxlength="30"></div>
+								姓 <input type="text" id="lnameKana" name="lnameKana" class="inputType05 <c:if test="${lnameKanahasError}">error</c:if>" placeholder="例：マツシタ" value="<c:out value="${inputForm.getInquiryHeaderForm().lnameKana}"/>" maxlength="30">
+								名 <input type="text" id="fnameKana" name="fnameKana" class="inputType05 <c:if test="${dm3hasError}">error</c:if>" placeholder="例：タロウ" value="<c:out value="${inputForm.getInquiryHeaderForm().fnameKana}"/>" maxlength="30"></div>
 							</td>
 						</tr>
 						<tr>
@@ -476,7 +394,7 @@
 								<c:import url="/WEB-INF/jsp/front/include/panaValidationFieldErrors.jsh">
 									<c:param name="targetLabel" value="assessment.input.email"/>
 								</c:import>
-								<div><input type="text" name="email" class="inputType04 <c:if test="${dm3hasError}">error</c:if>" placeholder="例：panasonic＠panasonic.com" value="<c:out value="${inputForm.getInquiryHeaderForm().email}"/>" maxlength="255"></div>
+								<div><input type="email" id="email" name="email" class="inputType04 <c:if test="${dm3hasError}">error</c:if>" placeholder="例：panasonic＠panasonic.com" value="<c:out value="${inputForm.getInquiryHeaderForm().email}"/>" maxlength="255"></div>
 							</td>
 						</tr>
 						<tr>
@@ -485,8 +403,9 @@
 								<c:import url="/WEB-INF/jsp/front/include/panaValidationFieldErrors.jsh">
 									<c:param name="targetLabel" value="assessment.input.tel"/>
 								</c:import>
-								<div><input type="text" id="tel01" name="tel" class="inputType04 <c:if test="${dm3hasError}">error</c:if>" placeholder="例：1234567890" value="<c:out value="${inputForm.getInquiryHeaderForm().tel}"/>" maxlength="11"></div>
-								<div class="mt05">※半角数字、ハイフンなしで市外局番から入力してください。</div>
+								<div><input type="tel" id="tel01" name="tel" class="inputType04 <c:if test="${dm3hasError}">error</c:if>" placeholder="例：1234567890" value="<c:out value="${inputForm.getInquiryHeaderForm().tel}"/>" maxlength="11"></div>
+								<div class="mt05">※半角数字、ハイフンなしで市外局番から入力してください。<br>
+									※携帯電話・PHSの番号でもご登録いただけます。</div>
 							</td>
 						</tr>
 						<tr>
@@ -495,7 +414,7 @@
 								<c:import url="/WEB-INF/jsp/front/include/panaValidationFieldErrors.jsh">
 									<c:param name="targetLabel" value="assessment.input.fax"/>
 								</c:import>
-								<div><input type="text" id="fax01" name="fax" class="inputType04 <c:if test="${dm3hasError}">error</c:if>" placeholder="例：1234567890" value="<c:out value="${inputForm.getInquiryHeaderForm().fax}"/>" maxlength="11"></div>
+								<div><input type="tel" id="fax01" name="fax" class="inputType04 <c:if test="${dm3hasError}">error</c:if>" placeholder="例：1234567890" value="<c:out value="${inputForm.getInquiryHeaderForm().fax}"/>" maxlength="11"></div>
 							</td>
 						</tr>
 						<tr>
@@ -537,7 +456,7 @@
 			</div><!-- /.itemBlockA01 -->
 				<div class="itemBlockA01 spMb00" id="inputSwitchArea">
 					<div class="headingBlockD01 clearfix">
-						<h2 class="ttl"><label onClick=""><input type="checkbox" name="sameWithHousing" class="middle mr10" id="switchChk" value="1" <c:if test="${sameWithHousingFG || inputForm.sameWithHousing == '1'}">checked</c:if>>売却物件と同じ</label></h2>
+						<h2 class="ttl"><label onClick=""><input type="checkbox" name="sameWithHousing" class="middle mr10" id="switchChk" value="1" <c:if test="${sameWithHousingFG || inputForm.sameWithHousing == '1'}">checked</c:if>>お客様のご住所と同一</label></h2>
 					</div><!-- /.headingBlockD01 -->
 					<div class="columnInner">
 						<table class="tableBlockA01">
@@ -548,7 +467,7 @@
 										<c:import url="/WEB-INF/jsp/front/include/panaValidationFieldErrors.jsh">
 											<c:param name="targetLabel" value="assessment.input.userZip"/>
 										</c:import>
-										<input type="text" id="userZip" name="userZip" class="inputType02 <c:if test="${dm3hasError}">error</c:if>" placeholder="例：1234567" value="<c:out value="${inputForm.userZip}"/>" maxlength="7">
+										<input type="tel" id="userZip" name="userZip" class="inputType02 <c:if test="${dm3hasError}">error</c:if>" placeholder="例：1234567" value="<c:out value="${inputForm.userZip}"/>" maxlength="7">
 										<a href="javascript:zipToAddress2();" class="addressBtn">住所検索</a>
 										<a href="http://www.post.japanpost.jp/zipcode/" target="_blank" class="link02">郵便番号がわからない方</a>
 										<br>
@@ -616,7 +535,7 @@
 											</li>
 										</dm3lookup:lookupForEach>
 									</ul>
-									<ul class="checkList03">
+									<ul class="checkList03 gearCheck2TextList">
 										<li><div style="margin-bottom:5px !important;"><label onClick="" ><input type="checkbox" id="ansCd08" name="ansCd" value="008" <c:forEach items="${inputForm.ansCd}" var="selectedQuestion"><c:if test="${selectedQuestion == '008'}">checked</c:if></c:forEach>>
 												<dm3lookup:lookup lookupName="ans_etcAr" lookupKey="008"/>
 											</label></div>
@@ -676,7 +595,7 @@
 								<!--#include virtual="/common/ssi/privacy.html"-->
 							</div>
 							<p class="mb15 center spLeft"><label onClick=""><input type="checkbox" id="agreeChk"> 個人情報の取り扱いに同意する</label></p>
-							<p class="center mb15"><button type="submit" name="confirmBtn" id="confirmBtn" class="primaryBtn01" disabled onclick="javascript:linkToUrl('../confirm/', '');">入力内容を確認する</button></p>
+							<p class="center mb15"><button type="submit" name="confirmBtn" id="confirmBtn" class="primaryBtn01">入力内容を確認する</button></p>
 						</div><!-- /.columnInner -->
 				</div>
 			</form>
@@ -685,6 +604,8 @@
 </div>
 
 <!--#include virtual="/common/ssi/simple-footer-S.html"-->
-
+<div class="naviWindow">
+  <div>必須の入力項目が<br>あと<span></span>ヵ所あります</div>
+</div>
 </body>
 </html>

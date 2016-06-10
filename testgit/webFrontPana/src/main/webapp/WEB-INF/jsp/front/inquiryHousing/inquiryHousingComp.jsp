@@ -50,11 +50,13 @@
 				<p class="f14 center spLeft">ご登録いただいたメールアドレスにメールを送信しましたのでご確認ください。<br>お問い合わせ内容を確認の上、不動産会社担当者よりご連絡させていただきます。</p>
 			</div>
 			<div class="contentsInner01">
-				<p class="center spPb10"><a href="<c:out value="${commonParameters.resourceRootUrl}"/>buy/#search" class="secondaryBtn">トップページへ</a></p>
+				<p class="center spPb10"><a href="<c:out value="${commonParameters.resourceRootUrl}"/>buy/" class="secondaryBtn">トップページへ</a></p>
 			</div>
 		<!-- / .section01 --></div>
 	<!-- / #contentsInner --></div>
 <!-- / #contents --></div>
 
 <!--#include virtual="/common/ssi/simple-footer-S.html"-->
+<!-- Yahoo Code for your Conversion Page -->
+<img height="1" width="1" alt="" src="<c:out value='${commonParameters.yahooCodeSrc}'/>?value=0&label=Wj8LCKiozmMQze_kvQM&guid=ON&script=0"/>
 </body>

@@ -1,9 +1,11 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://dm3.transcosmos.co.jp/tags/login" prefix="dm3login" %>
 <%@ taglib uri="http://dm3.transcosmos.co.jp/tags/lookup" prefix="dm3lookup" %>
 <%@ taglib uri="http://dm3.transcosmos.co.jp/tags/token" prefix="dm3token" %>
+
 
 <%-- ----------------------------------------------------------------
  名称： お知らせ一覧画面
@@ -30,13 +32,18 @@
 		document.inputdate.submit();
 	}
 	
-	function linkToUpd(url, newsId) {
+	function linkToComment(url) {		
+		document.linkComment.action = url;
+		document.linkComment.submit();
+	}
+	function linkToUpd(url, newsId) {		
 		document.inputdate.action = url;
 		document.inputdate.newsId.value = newsId;
 		document.inputdate.command.value = 'update';
 		document.inputdate.submit();
 	}
-	function linkToDel(url, newsId) {
+	
+	/* function linkToDel(url, newsId) {
 		var returenValue = window.confirm("削除を行います。よろしいですか？")
 		if (returenValue == true) {
 			document.inputdate.action = url;
@@ -44,15 +51,29 @@
 			document.inputdate.command.value = 'delete';
 			document.inputdate.submit();
 		}
+	} */
+	
+	function linkToDel(url, newsId) {
+		document.inputdate.action = url;
+		document.inputdate.newsId.value = newsId;
+		document.inputdate.command.value = 'delete';
+		document.inputdate.submit();
+		
 	}
-   
+    
+	 function KeyForm(page) {
+	   		document.inputdate.action = '';
+	   		document.inputdate.selectedPage.value = page;
+	    	document.inputdate.command.value = 'list';
+	   		document.inputdate.submit();
+	    }
 
 </script>
 
 	<!--headingAreaInner -->
 	<div class="headingAreaInner">
 		<div class="headingAreaB01 start">
-			<h2>Search</h2>
+			<h2>お知らせの検索</h2>
 		</div>
 		<form action="./list/" method="post" name="newsform">
 	    <input type="hidden" name="command" value="list">
@@ -61,26 +82,15 @@
 		<!--flexBlockA01 -->
 		<div class="flexBlockA01">
 			<table width="100%" cellspacing="0" cellpadding="0" class="tableA1">
-				<tr>
-					<th class="head_tr" width="15%">News ID</th>
-					<td><input name="keyNewsId" value="<c:out value="${searchForm.keyNewsId}"/>" 
-						type="text" size="25" maxlength="<dm3lookup:lookup lookupName="inputLength" 
-						lookupKey="information.input.informationNo" defaultValue="13"/>" 
-						class="input2 ime-disabled"></td>
-				</tr>
 				
 				<tr>
 					<th class="head_tr" width="15%">Title</th>
-					<td ><input name="keyNewsTitle"  value="<c:out value="${searchForm.keyNewsTitle}"/>" 
-					type="text" size="25" maxlength="<dm3lookup:lookup lookupName="inputLength" 
-					lookupKey="information.input.title" defaultValue="200"/>" ></td>
+					<td><input name="keyNewsTitle"  value="<c:out value="${searchForm.keyNewsTitle}"/>" type="text" size="25" maxlength="<dm3lookup:lookup lookupName="inputLength" lookupKey="information.input.title" defaultValue="50"/>" class="input2"></td>
 				</tr>
 				
 				<tr>
 					<th class="head_tr" width="15%">Content</th>
-					<td ><input name="keyNewsContent" value="<c:out value="${searchForm.keyNewsContent}"/>"
-					 type="text" size="25" maxlength="<dm3lookup:lookup lookupName="inputLength" 
-					 lookupKey="information.input.insDateFrom" defaultValue="25"/>" class="input2 ime-disabled"></td>
+					<td><input name="keyNewsContent" value="<c:out value="${searchForm.keyNewsContent}"/>" type="text" size="25" maxlength="<dm3lookup:lookup lookupName="inputLength" lookupKey="information.input.insDateFrom" defaultValue="200"/>" class="input2 ime-disabled"> </td>
 				</tr> 
 				
 			</table>
@@ -114,10 +124,8 @@
 		</div>
 	</div>
 
-	
-
 	<div class="headingAreaInner"><p>
-	<c:import url="/WEB-INF/admin/default_jsp/include/news/validationerrors.jsh" />
+	<c:import url="/WEB-INF/jsp/admin/include/news/validationerrors.jsh" />
 	<c:if test="${hitcont == 0}"> <span class="errorMessage">検索結果が１件も取得できません、再度条件を見直し検索を行ってください。</span></c:if>
 	</p></div><br>
 
@@ -125,7 +133,7 @@
 	<!-- 初期画面表示判定 -->
 	<c:if test="${hitcont != 0 && hitcont != null}">
 		<div class="headingAreaB01 start">
-			<h2>List News</h2>
+			<h2>お知らせ一覧</h2>
 		</div>
 
 		<div class="flexBlockA01">
@@ -135,9 +143,9 @@
 						<c:set var="strBefore" value="javascript:KeyForm('" scope="request"/>
 						<c:set var="strAfter" value="')" scope="request"/>
 						<c:set var="pagingForm" value="${searchForm}" scope="request"/>
-						<c:import url="/WEB-INF/admin/default_jsp/include/news/pagingCnt.jsh" />
+						<c:import url="/WEB-INF/jsp/admin/include/news/pagingCnt.jsh" />
 										
-						<c:import url="/WEB-INF/admin/default_jsp/include/news/pagingjs.jsh" />
+						<c:import url="/WEB-INF/jsp/admin/include/news/pagingjs.jsh" />
 					</td>
 				</tr>
 			</table>
@@ -146,21 +154,39 @@
 			<table width="100%" border="1" cellspacing="0" cellpadding="0" class="tableA1">
 				<tr class="head_tr">
 					<td width="20%">News ID</td>
-					<td width="45%">News Title</td>
-					<td width="18%">News Content</td>
-					<td width="17%">Select</td>
+					<td width="23%">News Title</td>
+					<td width="25%">News Content</td>
+					<td width="10%">Del Flag</td>
+					<td width="20%">Option</td>
 				</tr>
 				<!-- 検索結果画面表示判定 -->
 				<c:forEach items="${searchForm.visibleRows}" var="information">
 					<tr>
-						<td width="420"><a href="javascript:linkToUpd('../update/input/','<c:out value="${information.getNewsId()}"/>')"><c:out value="${information.getNewsId()}"/></a>&nbsp;</td>
-						<td width="420"><c:out value="${information.getNewsTitle()}"/>&nbsp;</td>
-						<td width="420"><c:out value="${information.newsContent}"/>&nbsp;</td>
-	 					<td width="150">
+						<td width="200"><a href="javascript:linkToComment('../../comment/list/${information.getNewsId()}')"><c:out value="${information.getNewsId()}"/></a></td>
+						<td width="420">
+							<c:if test="${fn:length(information.getNewsTitle())>20}">
+								<c:out value="${fn:substring(information.getNewsTitle(), 0, 20)}"/>...
+							</c:if>
+							<c:if test="${fn:length(information.getNewsTitle())<20}">
+								<c:out value="${information.getNewsTitle()}"/>
+							</c:if>
+						</td>
+						
+						<td width="420">
+							<c:if test="${fn:length(information.newsContent)>40}">
+								<c:out value="${fn:substring(information.newsContent, 0, 40)}"/>...
+							</c:if>
+							<c:if test="${fn:length(information.newsContent)<40}">
+								<c:out value="${information.newsContent}"/>
+							</c:if>
+						</td>
+						
+						<td width="200"><c:out value="${information.delFlg}"/></td>
+	 					<td width="180">
 	 						<div class="btnBlockC11">
 								<div class="btnBlockC11Inner">
 									<div class="btnBlockC11Inner2">
-											<p><a class="tblSmallBtn" href="javascript:linkToUpd('../update/input/','<c:out value="${information.newsId}"/>');"><span>編集</span></a></p>
+											<p><a class="tblSmallBtn" href="javascript:linkToUpd('../update/input/','<c:out value="${information.newsId}"/>');"><span>Update</span></a></p>
 									</div>
 								</div>
 							</div>
@@ -168,7 +194,7 @@
 							<div class="btnBlockC12">
 								<div class="btnBlockC12Inner">
 									<div class="btnBlockC12Inner2">
-											<p><a class="tblSmallBtn" href="javascript:linkToDel('../delConfirm/','<c:out value="${information.newsId}"/>');"><span>削除</span></a></p>
+											<p><a class="tblSmallBtn" href="javascript:linkToDel('../delConfirm/','<c:out value="${information.newsId}"/>');"><span>Delete</span></a></p>
 									</div>
 								</div>
 							</div>
@@ -189,6 +215,9 @@
  	<input type="hidden" name="newsId" value=""/>
 	<c:import url="/WEB-INF/jsp/admin/include/news/searchParams.jsh" />
 	<dm3token:oneTimeToken/>
+	</form>
+	
+	<form action="" method="post" name="linkComment">
 	</form>
 
 </c:param>

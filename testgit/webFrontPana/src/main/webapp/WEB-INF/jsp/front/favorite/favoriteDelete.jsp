@@ -19,8 +19,9 @@
 <!--[if lte IE 9]><script src="<c:out value='${commonParameters.resourceRootUrl}'/>common/js/html5.js" type="text/javascript"></script>
 <![endif]-->
 <!--[if lt IE 9]><![endif]-->
-<script type="text/javascript" src="<c:out value='${commonParameters.resourceRootUrl}'/>common/js/main-S.js"></script>
 <script type="text/javascript" src="<c:out value='${commonParameters.resourceRootUrl}'/>common/js/jquery.min.js"></script>
+<script type="text/javascript" src="<c:out value='${commonParameters.resourceRootUrl}'/>common/js/jquery.tooltipster.min.js"></script>
+<script type="text/javascript" src="<c:out value='${commonParameters.resourceRootUrl}'/>common/js/main.js"></script>
 <script type="text/javascript">
 
 $(document).ready( function() {

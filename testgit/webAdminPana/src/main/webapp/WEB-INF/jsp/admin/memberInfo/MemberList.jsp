@@ -63,7 +63,7 @@
 			<table width="100%" border="1" cellspacing="0" cellpadding="0" class="tableA1">
 				<tr>
 					<th class="head_tr" width="15%">メールアドレス</th>
-					<td width="35%"><input name="keyEmail" value="<c:out value="${searchForm.keyEmail}"/>" type="text" size="18" maxlength="255" class="input2 ime-disabled"></td>
+					<td width="35%"><input name="keyEmail" value="<c:out value="${searchForm.keyEmail}"/>" type="text" size="17" maxlength="255" class="input2 ime-disabled"></td>
 					<th class="head_tr" width="15%">プロモコード</th>
 					<td width="35%"><input name="keyPromo" value="<c:out value="${searchForm.keyPromo}"/>" type="text" size="10" maxlength="20" class="input2 ime-disabled"></td>
 				</tr>

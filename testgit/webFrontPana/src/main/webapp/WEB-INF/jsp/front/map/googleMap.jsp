@@ -1,5 +1,7 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<jsp:useBean id="date" class="java.util.Date"/>
 <html>
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -55,11 +57,11 @@
 	<header id="mapheader">
 		<div class="mapheaderInner">
 			<div id="logoBlock">
-				<p class="brandlogo"><img src="<c:out value='${commonParameters.resourceRootUrl}'/>common/img/header_logo_01.png" alt="Panasonic"></p>
-				<p class="sitelogo"><img src="<c:out value='${commonParameters.resourceRootUrl}'/>common/img/header_logo_02.png" alt="ReaRie"></p>
+				<p class="sitelogo"><a href="/"><img src="<c:out value='${commonParameters.resourceRootUrl}'/>common/img/header_logo_02.png" alt="ReaRie"></a></p>
+				<p class="lead">パナソニックの中古不動産売買＆リフォーム紹介サイト「リアリエ」</p>
 			</div>
 		</div>
-	</header>
+    </header>
 
 	<div id="contents">
 		<div id="contentsInner">
@@ -81,7 +83,7 @@
 	<footer id="mapfooter">
 		<div id="copyright">
 			<div class="copyrightInner">
-				<p>&reg; Panasonic Corporation 2015</p>
+				<p>Copyright &copy; <fmt:formatDate value="${date}" pattern="yyyy" /> Panasonic Corporation</p>
 			</div>
 		</div>
 	</footer>
