@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+	<bean id="newsInputCommand"
+		class="jp.co.transcosmos.dm3.webFront.news.command.NewsInitCommand"
+		scope="prototype">
+		<property name="panaCommonManage" ref="panamCommonManager" />
+	</bean>
+
+	<!-- 画面初期化 -->
+	<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMappingList">
+		<property name="commandURLMapper" ref="commandURLMapper" />
+		<property name="mappings">
+			<list>
+				<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+					<property name="urlPattern" value="/mypage/news/" />
+					<property name="defaultCommandName" value="newsInputCommand" />
+					<property name="defaultViewName"
+						value="/WEB-INF/jsp/front/news/NewsInit.jsp" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+</beans>

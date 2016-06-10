@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+	<!-- リフォーム詳細情報編集画面 -->
+	<bean id="addressMstCommand"
+		class="jp.co.transcosmos.dm3.webFront.addressMst.command.AddressMstInputCommand"
+		scope="prototype">
+		<property name="panamCommonManager" ref="panamCommonManager" />
+		<property name="panaHousingManager" ref="panaHousingManager" />
+	</bean>
+
+
+	<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMappingList">
+		<property name="commandURLMapper" ref="commandURLMapper" />
+		<property name="mappings">
+			<list>
+				<!-- リフォーム詳細情報編集画面 -->
+				<bean class="jp.co.transcosmos.dm3.servlet.URLCommandViewMapping">
+					<property name="urlPattern" value="/top/addressMst/addressMstSecrch" />
+					<property name="defaultCommandName" value="addressMstCommand" />
+					<property name="defaultViewName"
+						value="/WEB-INF/jsp/front/addressMst/addressMstSearch.jsp" />
+				</bean>
+
+			</list>
+		</property>
+	</bean>
+</beans>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+                           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+                           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+                           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+
+  <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <property name="location" value="classpath:site.properties" />
+  </bean>
+
+  <!-- DB 接続 定義 （MySQL 用）-->
+  <bean id="mysqlDS" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
+    <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+    <property name="url" value="jdbc:mysql://10.96.146.82:3306/panasonicDb?characterEncoding=utf8&amp;zeroDateTimeBehavior=convertToNull&amp;profileSQL=false&amp;traceProtocol=false" />
+    <property name="username" value="panasonic" />
+    <property name="password" value="panasonic" />
+  </bean>
+
+  <!-- サムネイル画像作成クラス -->
+  <bean id="imgUtils" class="jp.co.transcosmos.dm3.core.util.imgUtils.ImgUtilImageMagick">
+    <property name="convertCommand" value="/ImageMagick-6.9.1-0/convert" />
+  </bean>
+
+  <!-- マイページログイン処理　（cookie の sequre 属性削除） -->
+  <bean id="mypageAuthTarget" class="jp.co.transcosmos.dm3.frontCore.auth.MypageAuth">
+    <property name="userDAO" ref="memberInfoDAO" />
+    <property name="userDAOUserIdField" value="userId"/>
+    <property name="userDAOLoginIdField" value="email"/>
+  </bean>
+
+  <!-- 匿名ログイン処理　（cookie の sequre 属性削除） -->
+  <bean id="anonymousAuth" class="jp.co.transcosmos.dm3.frontCore.auth.AnonymousAuth">
+    <property name="mypageUserManage" ref="mypageUserManager" />
+    <property name="commonParameters" ref="commonParameters" />
+    <property name="mypageAuth" ref="mypageAuth" />
+    <property name="userDAO" ref="userInfoDAO" />
+    <property name="userDAOUserIdField" value="userId"/>
+    <property name="userDAOLoginIdField" value="userId"/>
+    <property name="loginUserSessionParameter" value="anonLoggedInUser"/>
+    <property name="loginUserIdSessionParameter" value="anonLoggedInUserId"/>
+  </bean>
+
+</beans>

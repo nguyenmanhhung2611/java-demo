@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+  <!--
+  　	エリア検索に非表示にする市区町村を定義する。
+  	key=市区町村CD、Value=市区町村名
+  <bean class="jp.co.transcosmos.dm3.lookup.CodeLookupList">
+    <property name="codeLookupManager"><ref bean="codeLookupManager"/></property>
+    <property name="lookups">
+      <map>
+        <entry key="addressMstException">
+          <props>
+            <prop key="47201">那覇市</prop>
+          </props>
+        </entry>
+      </map>
+    </property>
+  </bean>
+  -->
+  
+</beans>

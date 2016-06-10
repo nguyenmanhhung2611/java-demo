@@ -1,0 +1,246 @@
+@charset "UTF-8";
+
+/*====================================================================
+ contents
+====================================================================*/
+
+.searchPage .section01 {
+	padding: 0 32px 40px;
+}
+.searchPage .headingBlock01 {
+	letter-spacing: -.40em;
+	margin-bottom: 20px;
+}
+.searchPage .headingBlock01 h1 {
+	font-size: 200%;
+	font-weight: bold;
+	display: inline-block;
+	letter-spacing: normal;
+}
+.searchPage .headingBlock01 h1 span {
+	font-weight: normal;
+}
+.searchPage .headingBlock01 p {
+	font-size: 113%;
+	display: inline-block;
+	margin-left: 40px;
+	vertical-align: top;
+	padding-top: 6px;
+	letter-spacing: normal;
+}
+
+/*accordionBlock01*/
+.searchPage .accordionBlock01 {
+	margin-bottom: 20px;
+}
+.searchPage .accordionBlock01.last {
+	margin-bottom: 30px;
+}	
+.searchPage .accordionBlock01 .head {
+	background: #e5e3de;
+	margin-bottom: 0px;
+	font-size: 130%;
+	padding: 0;
+}
+.searchPage .accordionBlock01 .head span {
+	display: block;
+	padding: 10px 20px;
+}
+.searchPage .accordionBlock01 .head span em {
+	font-weight: bold;
+}
+.searchPage .accordionBlock01 .body {
+	background: #ffffff;
+	padding: 20px 20px;
+	font-size: 113%;
+	border-radius: 0 0 5px 5px;
+}
+.searchPage .accordionBlock01 .body01 {
+	border-radius: 5px;
+}
+.searchPage .accordionBlock01 .body .checkList01 {
+	letter-spacing: -.40em;
+}
+.searchPage .accordionBlock01 .body .checkList01 li {
+	width: 202px;
+	display: inline-block;
+	letter-spacing: normal;
+	margin-bottom: 30px;
+	vertical-align: top;
+	padding-right: 10px;
+}
+.searchPage .accordionBlock01 .body  .checkList01 li.btm {
+	margin-bottom: 0px;
+}
+.searchPage .accordionBlock01 label {
+	margin-left: 6px;
+}
+.searchPage .accordionBlock01 input[type="checkbox"] {
+	vertical-align: middle;
+}
+
+/*submitBlock01*/
+.searchPage .submitBlock01 .searchText {
+	float: left;
+}
+.searchPage .submitBlock01 .searchText em {
+	font-size: 200%;
+	font-weight: bold;
+	color: #f36d00;
+}
+.searchPage .submitBlock01 .searchText .txt01 {
+	font-size: 148%;
+	font-weight: bold;
+}
+.searchPage .submitBlock01 .searchText .txt02 {
+	font-size: 113%;
+}
+.searchPage .submitBlock01 .searchBtnList {
+	float: right;
+	width: 480px;
+}
+.searchPage .submitBlock01 .searchBtnList ul {
+	text-align: right;
+	letter-spacing: -.40em;
+}
+.searchPage .submitBlock01 .searchBtnList li {
+	display: inline-block;
+	letter-spacing: normal;
+	margin-left: 20px;
+}
+.searchPage .submitBlock01 button {
+	width: 214px;
+	border: 0;
+	background: #2b2b2b url(/buy/img/buy_icon_01.png) 12px center no-repeat;
+	padding: 7px 10px 5px 26px;
+	color: #ffffff;
+	font-weight: bold;
+	font-size: 130%;
+	font-family: Meiryo,'Lucida Grande','Hiragino Kaku Gothic ProN',sans-serif;
+	border-radius: 4px;
+}
+.searchPage .submitBlock01 .button01 {
+	width: 250px;
+}
+.searchPage .submitBlock01 button:hover {
+	filter: alpha(opacity=70);
+	-moz-opacity: 0.7;
+	opacity: 0.7;
+}
+
+@media only screen and (max-width: 736px) and (-webkit-min-device-pixel-ratio: 1.5) {
+	.searchPage .section01 {
+		padding: 0px;
+	}
+	.searchPage .headingBlock01 {
+		padding-top: 10px;
+		margin: 0 10px 10px;
+	}
+	.searchPage .headingBlock01 h1 {
+		font-size: 16px;
+		display: block;
+	}
+	.searchPage .headingBlock01 p {
+		font-size: 12px;
+		display: block;
+		margin-left: 0px;
+	}
+	/*accordionBlock01*/
+	.searchPage .accordionBlock01 {
+		margin-bottom: 0px;
+	}
+	.searchPage .accordionBlock01.parts-sp-accordion h2 {
+		border-top: 2px solid #dadada;
+		padding: 0;
+		margin: 0;
+	}
+	.searchPage .accordionBlock01.parts-sp-accordion h2 a {
+		display: block;
+		background: url(/buy/img/sp_buy_icon_07.png) 97% center no-repeat;
+		background-size: 16px 10px;
+		padding: 10px 30px 10px 10px;
+		color: #2b2b2b;
+	}
+	.searchPage .accordionBlock01.parts-sp-accordion h2.open a {
+		background: url(/buy/img/sp_buy_icon_08.png) 97% center no-repeat;
+		background-size: 16px 10px;
+	}
+	.searchPage .accordionBlock01.last {
+		border-bottom: 2px solid #dadada;
+		margin-bottom: 10px;
+	}
+	.searchPage .accordionBlock01 .head {
+		border-radius: 0px;
+		font-size: 16px;
+	}
+	.searchPage .accordionBlock01 .head span {
+		display: block;
+		padding: 0px;
+	}
+	.searchPage .accordionBlock01 .body.box-sp-accordion {
+		display: none;
+	}
+	.searchPage .accordionBlock01 .body {
+		border-top: 2px solid #dadada;
+		padding: 0;
+		font-size: 16px;
+	}
+	.searchPage .accordionBlock01 .body01 {
+		border-radius: 0;
+	}
+	.searchPage .accordionBlock01 .body .checkList01 li {
+		width: auto;
+		display: block;
+		padding: 10px;
+		border-bottom: 2px solid #dadada;
+		margin-bottom: 0px;
+	}
+	.searchPage .accordionBlock01 .body .checkList01 li.btm {
+		margin-bottom: 0px;
+	}
+	.searchPage .accordionBlock01 .body .checkList01 li.last {
+		border-bottom: none;
+	}
+	/*submitBlock01*/
+	.searchPage .submitBlock01 .searchText {
+		padding: 0 10px 10px;
+		float: none;
+	}
+	.searchPage .submitBlock01 .searchText em {
+		font-size: 14px;
+	}
+	.searchPage .submitBlock01 .searchText .txt01 {
+		font-size: 12px;
+	}
+	.searchPage .submitBlock01 .searchText .txt02 {
+		font-size: 10px;
+	}
+	.searchPage .submitBlock01 .searchBtnList{
+		padding: 0 10px 10px;
+		float: none;
+		width: auto;
+	}
+	.searchPage .submitBlock01 .searchBtnList ul {
+		width: 100%;
+		display: table;
+	}
+	.searchPage .submitBlock01 .searchBtnList li {
+		margin-left: 0px;
+		display: table-cell;
+		width: 50%;
+		text-align: left;
+		vertical-align: middle;
+	}
+	.searchPage .submitBlock01 .searchBtnList li:first-child {
+		padding-right: 4px;
+	}
+	.searchPage .submitBlock01 button,
+	.searchPage .submitBlock01 .button01 {
+		width: 100%;
+		height: 48px;
+		font-size: 13px;
+		text-align: left;
+		padding-top: 0;
+		padding-bottom: 0;
+	}
+}

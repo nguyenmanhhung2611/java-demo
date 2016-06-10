@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+    id="serv" version="3.0">
+  <display-name>webFrontPana</display-name>
+
+  <context-param>
+    <param-name>log4jConfigLocation</param-name>
+    <param-value>/WEB-INF/log4j.xml</param-value>
+  </context-param>
+  <context-param>
+    <param-name>webAppRootKey</param-name>
+    <param-value>webFrontPana.root</param-value>
+  </context-param>
+  <context-param>
+    <param-name>contextClass</param-name>
+    <param-value>jp.co.transcosmos.dm3.spring.context.HostSwitchingSpringContext</param-value>
+  </context-param>
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>/WEB-INF/applicationContext.xml</param-value>
+  </context-param>
+
+
+  <listener>
+    <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+  </listener>
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  <listener>
+    <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+  </listener>
+  <listener>
+    <listener-class>jp.co.transcosmos.dm3.foundation.LoggingHttpSessionListener</listener-class>
+  </listener>
+
+
+  <filter>
+    <filter-name>EncodeFilter</filter-name>
+    <filter-class>jp.co.transcosmos.dm3.foundation.SetEncodingFilter</filter-class>
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+  </filter>
+
+  <filter>
+    <filter-name>BIGIPHttpsFilter</filter-name>
+    <filter-class>jp.co.transcosmos.dm3.https.ImitateHttpsRequestFilter</filter-class>
+  </filter>
+
+  <filter>
+    <filter-name>NoImageFilter</filter-name>
+    <filter-class>jp.co.transcosmos.dm3.webFront.filter.NotFoundImgChkFilter</filter-class>
+    <init-param>
+      <param-name>noImageFileNames</param-name>
+      <param-value>86:nophoto_86.jpg,110:nophoto_110.jpg,200:nophoto_200.jpg,800:nophoto_800.jpg</param-value>
+    </init-param>
+  </filter>
+
+  <filter>
+    <filter-name>ImgLoginChkFilter</filter-name>
+    <filter-class>jp.co.transcosmos.dm3.webFront.filter.ImgLoginChkFilter</filter-class>
+    <init-param>
+      <param-name>authentication</param-name>
+      <param-value>mypageAuth</param-value>
+    </init-param>
+  </filter>
+
+  <filter>
+    <filter-name>CookieSupportCheckFilter</filter-name>
+    <filter-class>jp.co.transcosmos.dm3.supportcheck.CookieSupportCheckFilter</filter-class>
+    <init-param>
+      <param-name>noCookieSupportPage</param-name>
+      <param-value>/error/cookie/</param-value>
+    </init-param>
+    <init-param>
+      <param-name>exceptionPatterns</param-name>
+      <!-- 除外設定はコンテキスト名から記述する必要があるので、ローカルデバッグ時は除外されないので注意する事 -->
+      <param-value>/error/*,/imgs/*,/health_chk/</param-value>
+    </init-param>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>EncodeFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <filter-mapping>
+    <filter-name>BIGIPHttpsFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>BIGIPHttpsFilter</filter-name>
+    <url-pattern>*.jsp</url-pattern>
+  </filter-mapping>
+
+<!-- 認証フィルターの追加後、設定を有効にする。
+  <filter-mapping>
+    <filter-name>loginCheckFilter</filter-name>
+    <url-pattern>/imgs/private/*</url-pattern>
+  </filter-mapping>
+-->
+
+  <filter-mapping>
+    <filter-name>NoImageFilter</filter-name>
+    <url-pattern>/imgs/private/*</url-pattern>
+  </filter-mapping>
+
+  <filter-mapping>
+    <filter-name>ImgLoginChkFilter</filter-name>
+    <url-pattern>/imgs/private/*</url-pattern>
+  </filter-mapping>
+
+  <filter-mapping>
+    <filter-name>CookieSupportCheckFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+
+  <servlet>
+    <servlet-name>spring</servlet-name>
+    <servlet-class>jp.co.transcosmos.dm3.servlet.PatternMatchingDispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextClass</param-name>
+      <param-value>jp.co.transcosmos.dm3.spring.context.HostSwitchingSpringContext</param-value>
+    </init-param>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>/WEB-INF/url-mapping /WEB-INF/code-lookup /WEB-INF/spring-servlet.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <servlet>
+    <servlet-name>error</servlet-name>
+    <servlet-class>jp.co.transcosmos.dm3.error.ErrorServlet</servlet-class>
+    <init-param>
+        <param-name>errorPage</param-name>
+<!--       <param-value>/WEB-INF/jsp/front/common/error.jsp</param-value> -->
+		<param-value>/WEB-INF/jsp/front/common/404.jsp</param-value>
+    </init-param>
+    <init-param>
+      <param-name>optionBeans</param-name>
+      <param-value>commonParameters</param-value>
+    </init-param>
+  </servlet>
+
+
+  <servlet-mapping>
+    <servlet-name>spring</servlet-name>
+    <url-pattern>/mypage/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>spring</servlet-name>
+    <url-pattern>/mypage_service/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>spring</servlet-name>
+    <url-pattern>/buy/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>spring</servlet-name>
+    <url-pattern>/account/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>spring</servlet-name>
+    <url-pattern>/sell/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>spring</servlet-name>
+    <url-pattern>/modal/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>spring</servlet-name>
+    <url-pattern>/inquiry/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>spring</servlet-name>
+    <url-pattern>/history/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>spring</servlet-name>
+    <url-pattern>/health_chk/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>error</servlet-name>
+    <url-pattern>/error/</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>spring</servlet-name>
+    <url-pattern>/error/*</url-pattern>
+  </servlet-mapping>
+
+
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+
+
+  <jsp-config>
+    <jsp-property-group>
+      <url-pattern>*.jsh</url-pattern>
+    </jsp-property-group>
+  </jsp-config>
+
+
+<!-- RuntimeException を 404 にする訳にはいかないので、とりあえずコメントアウト -->
+  <error-page>
+    <exception-type>java.lang.RuntimeException</exception-type>
+    <location>/WEB-INF/jsp/front/common/404.jsp</location>
+  </error-page>
+
+  <error-page>
+    <error-code>404</error-code>
+    <location>/error/404/</location>
+  </error-page>
+  <error-page>
+    <error-code>500</error-code>
+    <location>/error/</location>
+  </error-page>
+
+</web-app>

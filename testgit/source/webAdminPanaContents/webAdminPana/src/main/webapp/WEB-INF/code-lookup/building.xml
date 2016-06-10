@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+  <!-- 建物情報の定数管理 -->
+  <bean class="jp.co.transcosmos.dm3.lookup.CodeLookupList">
+    <property name="codeLookupManager"><ref bean="codeLookupManager"/></property>
+    <property name="lookups">
+      <map>
+        <!-- 物件種類 Admin側用 下記定義同時変更要 -->
+        <entry key="buildingInfo_housingKindCd">
+          <list>
+            <value>01:マンション</value>
+            <value>02:戸建</value>
+            <value>03:土地</value>
+          </list>
+        </entry>
+        <!-- 物件種類 Front側Icon用 上記定義同時変更要 -->
+        <entry key="buildingInfo_housingKindCd_front_icon">
+          <list>
+            <value>01:中古マンション</value>
+            <value>02:中古戸建</value>
+            <value>03:土地</value>
+          </list>
+        </entry>
+        <entry key="buildingInfo_housingKindCd_En">
+          <list>
+            <value>01:mansion</value>
+            <value>02:house</value>
+            <value>03:ground</value>
+          </list>
+        </entry>
+        <entry key="buildingInfo_structCd">
+          <list>
+            <value>001:木造</value>
+            <value>002:鉄骨造</value>
+          </list>
+        </entry>
+        <entry key="buildingStationInfo_wayFromStation">
+          <list>
+            <value>1:徒歩</value>
+            <value>2:バス</value>
+            <value>3:距離</value>
+          </list>
+        </entry>
+        <entry key="buildingLandmark_landmarkType">
+          <list>
+            <value>001:公園</value>
+            <value>002:病院</value>
+            <value>003:保育園/幼稚園</value>
+            <value>004:小学校</value>
+            <value>005:中学校</value>
+            <value>006:スーパー</value>
+            <value>007:コンビニ</value>
+            <value>008:その他施設</value>
+          </list>
+        </entry>
+        <entry key="buildingLandmark_wayFromLandmark">
+          <list>
+            <value>1:徒歩</value>
+            <value>3:距離</value>
+          </list>
+        </entry>
+      </map>
+    </property>
+  </bean>
+
+</beans>
